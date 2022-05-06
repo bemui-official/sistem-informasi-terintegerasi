@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Surat Keluar</title>
+</head>
+<body>
+<form action="postformsk" method="post">
+    {% csrf_token %}
+    Judul:
+    <input type="judul" name="judul"> <br/>
+    Nama Kegiatan:
+    <input type="kegiatan" name="nama_kegiatan"><br/>
+    Deskripsi Kegiatan:
+    <input type="deskription" name="deskripsi"><br/>
+    Jenis Surat:
+    <select id="jenis" name="jenis">
+      <option value="peminjaman">Peminjaman</option>
+      <option value="permintaan">Permintaan</option>
+      <option value="pengajuan">Pengajuan</option>
+    </select><br/>
+    Link Docs:
+    <input type="link" name="linkdocs"><br/>
+    <input type="submit" value="Ajukan">
+</form>
+</body>
+</html>

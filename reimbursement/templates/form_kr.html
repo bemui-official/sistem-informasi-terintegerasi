@@ -1,0 +1,64 @@
+{% load static %}
+
+{% block meta %}
+<title>Form Surat Keluar</title>
+<link rel="stylesheet" href="{% static 'base/css/bootstrap.min.css' %}"/>
+<link rel="stylesheet" href="{% static 'reimbursement/css/style.css' %}"/>
+<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<link href="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.css" rel="stylesheet"/>
+{% endblock meta %}
+
+{% block content %}
+<section>
+<form action="postformkr" method="post">
+    {% csrf_token %}
+    Judul:
+    <input type="judul" name="judul"> <br/>
+    Nama Kegiatan:
+    <input type="kegiatan" name="nama_kegiatan"><br/>
+    Deskripsi Kegiatan:
+    <input type="deskription" name="deskripsi"><br/>
+    Nomor Rekening:
+    <input type="number" name="norek"><br/>
+    Atas Nama Rekening:
+    <input type="text" name="anrek"><br/>
+    Link Docs Voucher:
+    <input type="link" name="link_voucher"><br/>
+    Nominal:
+    <input type="number" name="nominal"><br/>
+    <label class="control-label">Upload File</label>
+    <div id="drag-drop-area"></div>
+    <input name="uploadFiles" type="hidden" id="photodata">
+    <input type="submit" value="Ajukan">
+
+    <script src="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.js"></script>
+    <script>
+      var uppy = new Uppy.Core()
+        .use(Uppy.Dashboard, {
+          inline: true,
+        target: '#drag-drop-area',
+        proudlyDisplayPoweredByUppy:false,
+        showProgressDetails:true,
+        doneButtonHandler: null
+        })
+      uppy.use(Uppy.XHRUpload, {
+            endpoint: '{% url "upload_photo" %}',
+            headers: {'X-CSRFToken':"{{csrf_token}}"},
+            formData: true,
+            fieldName: 'file'
+        }
+        )
+      uppy.on('complete', (result) => {
+        console.log('Upload complete! We’ve uploaded these files:', result.successful)
+      })
+    </script>
+</form>
+
+</section>
+<script src="{% static 'base/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'base/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'reimbursement/js/app.js' %}"></script>
+<script src="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.js"></script>
+
+{% endblock content %}
