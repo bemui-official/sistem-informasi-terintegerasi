@@ -11,6 +11,7 @@ db = firestore.client()
 ds = storage.bucket()
 
 def user_create(idBirdep, email, password, asal, nama, total_pesanan, panggilan, permintaan) :
+    idBirdep = idBirdep+"-"+asal
     try:
         user = auth.create_user(
             uid=idBirdep, email=email, email_verified=False, password=password)
@@ -30,7 +31,7 @@ def user_create(idBirdep, email, password, asal, nama, total_pesanan, panggilan,
         'panggilan': panggilan,
         'permintaan' : permintaan
     }
-    db.collection('users').document(idBirdep+"_"+asal).set(data)
+    db.collection('users').document(idBirdep).set(data)
     return "";
 
 def user_read(idBirdep):

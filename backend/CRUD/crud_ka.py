@@ -1,7 +1,7 @@
 import firebase_admin
 from firebase_admin import credentials, firestore, storage
-from backend.crud_user import user_read
-from backend import firebase_init
+from backend.CRUD.crud_user import user_read
+from backend.misc import firebase_init
 import datetime
 
 

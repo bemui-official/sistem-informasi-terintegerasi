@@ -1,5 +1,5 @@
-from django.urls import path, include
-from . import uploadPhoto
+from django.urls import path
+from .misc import uploadPhoto
 
 urlpatterns = [
     path('upload-photo/', uploadPhoto.uploadPhoto, name='upload_photo')

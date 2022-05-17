@@ -1,8 +1,6 @@
-from django.shortcuts import render, get_object_or_404, redirect, reverse
-from backend.crud_sk import sk_create
-from django.contrib import auth
-from backend import firebase_init
-
+from django.shortcuts import render, redirect
+from backend.CRUD.crud_sk import sk_create
+from backend.misc import firebase_init
 
 fauth = firebase_init.firebaseInit().auth()
 

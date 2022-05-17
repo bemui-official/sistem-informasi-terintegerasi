@@ -1,8 +1,9 @@
 import firebase_admin
 from firebase_admin import credentials, firestore, storage
-from backend.crud_user import user_read
-from backend import firebase_init
+from backend.CRUD.crud_user import user_read
+from backend.misc import firebase_init
 import datetime
+
 
 if not firebase_admin._apps:
     cred = credentials.Certificate("testing-key.json")
@@ -14,15 +15,14 @@ fauth = firebase_init.firebaseInit().auth()
 db = firestore.client()
 ds = storage.bucket()
 
-def sk_create(request, judul, namaKegiatan, deskripsi, jenisSurat, link):
+def kr_create(request, judul, namaKegiatan, deskripsi, norek, anrek, voucher, nominal, buktiPembayaran):
     try:
         print(request.session['uid'])
         user_data = fauth.get_account_info(request.session['uid'])
         idBirdep = user_data['users'][0]['localId']
         user_data2 = user_read(idBirdep)
-        print(user_data2)
         nama_birdep = user_data2['nama']
-        idPermintaan = "sk-" + idBirdep + "-" + str(sk_getCounter())
+        idPermintaan = "kr-" + idBirdep + "-" + str(kr_getCounter())
         data = {
             'idPermintaan': idPermintaan,
             'idBirdep': idBirdep,
@@ -30,32 +30,39 @@ def sk_create(request, judul, namaKegiatan, deskripsi, jenisSurat, link):
             'judul': judul,
             'nama_kegiatan': namaKegiatan,
             'deskripsi': deskripsi,
-            'jenis_surat': jenisSurat,
-            'link_docs': link,
+            'nomor_rekening': norek,
+            'AN_rekening': anrek,
+            'link_voucher': voucher,
+            'isTransfered': False,
+            'total_nominal': nominal,
             'tahapan': 0,
+            'bukti_transaksi': [],
+            'bukti_pembayaran': buktiPembayaran,
             'waktu_pengajuan': datetime.datetime.now()
+
         }
-        db.collection('sk').document(idPermintaan).set(data)
+        db.collection('kr').document(idPermintaan).set(data)
+
+        return ""
     except:
         return "terjadi error"
-    return ""
 
-def sk_read():
+def kr_read():
     return
 
-def sk_delete():
+def kr_delete():
     return
 
-def sk_update():
+def kr_update():
     return
 
-def sk_updateCounter():
-    data = db.collection('sk').document('counter').get().to_dict()
+def kr_updateCounter():
+    data = db.collection('kr').document('counter').get().to_dict()
     data['length'] += 1
-    db.collection('sk').document("counter").set(data)
+    db.collection('kr').document("counter").set(data)
 
-def sk_getCounter():
-    data = db.collection('sk').document('counter').get().to_dict()
+def kr_getCounter():
+    data = db.collection('kr').document('counter').get().to_dict()
     num = data['length']
-    sk_updateCounter()
+    kr_updateCounter()
     return num

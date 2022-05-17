@@ -11,7 +11,7 @@
 
 {% block content %}
 <section>
-<form action="postformkr" method="post">
+<form action="postformkr" method="post" id="form">
     {% csrf_token %}
     Judul:
     <input type="judul" name="judul"> <br/>
@@ -29,31 +29,57 @@
     <input type="number" name="nominal"><br/>
     <label class="control-label">Upload File</label>
     <div id="drag-drop-area"></div>
-    <input name="uploadFiles" type="hidden" id="photodata">
-    <input type="submit" value="Ajukan">
+    <input name="uploadFiles" type="hidden">
+</form>
+    <button type="aisndiaj" id="submitbutton">Ajukan</button>
 
     <script src="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
     <script>
+        function uuidv4() {
+          return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+            (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+          );
+        }
       var uppy = new Uppy.Core()
         .use(Uppy.Dashboard, {
           inline: true,
         target: '#drag-drop-area',
         proudlyDisplayPoweredByUppy:false,
         showProgressDetails:true,
-        doneButtonHandler: null
+        doneButtonHandler: null,
+        hideUploadButton: true,
         })
-      uppy.use(Uppy.XHRUpload, {
-            endpoint: '{% url "upload_photo" %}',
-            headers: {'X-CSRFToken':"{{csrf_token}}"},
-            formData: true,
-            fieldName: 'file'
-        }
-        )
       uppy.on('complete', (result) => {
+          // photos.append(result.successful)
+          // console.log(photos)
         console.log('Upload complete! We’ve uploaded these files:', result.successful)
       })
+      uppy.use(Uppy.XHRUpload, {
+        endpoint: '{% url "upload_photo" %}',
+        headers: {'X-CSRFToken':"{{csrf_token}}"},
+        formData: true,
+        fieldName: 'file'
+      })
+      uppy.use(Uppy.Form, {
+          target: "#form",
+          resultName: 'uploadFiles',
+          getMetaFromForm: false,
+          addResultToForm: true,
+          submitOnSuccess: true,
+          triggerUploadOnSubmit: false,
+      })
+      uppy.on('file-added', (file) => {
+        uppy.setFileMeta(file.id, {
+          id_firebase: uuidv4(),
+            source: "SURAT_KELUAR/"
+        })
+      })
+      document.getElementById("submitbutton").addEventListener("click", function() {
+          console.log("Submit Button")
+          uppy.upload()
+      })
     </script>
-</form>
 
 </section>
 <script src="{% static 'base/js/jquery-3.6.0.min.js' %}"></script>
