@@ -4,7 +4,9 @@ from backend.CRUD.crud_user import user_read
 from backend.misc import firebase_init
 import datetime
 
-
+# --------------------------
+# Initialize Firebase Admin
+# --------------------------
 if not firebase_admin._apps:
     cred = credentials.Certificate("testing-key.json")
     firebase_admin.initialize_app(cred, {
@@ -15,6 +17,10 @@ fauth = firebase_init.firebaseInit().auth()
 db = firestore.client()
 ds = storage.bucket()
 
+
+# --------------------------
+# CRUD Functions
+# --------------------------
 def kr_create(request, judul, namaKegiatan, deskripsi, norek, anrek, voucher, nominal, buktiPembayaran):
     try:
         print(request.session['uid'])
@@ -39,7 +45,6 @@ def kr_create(request, judul, namaKegiatan, deskripsi, norek, anrek, voucher, no
             'bukti_transaksi': [],
             'bukti_pembayaran': buktiPembayaran,
             'waktu_pengajuan': datetime.datetime.now()
-
         }
         db.collection('kr').document(idPermintaan).set(data)
 
@@ -47,8 +52,13 @@ def kr_create(request, judul, namaKegiatan, deskripsi, norek, anrek, voucher, no
     except:
         return "terjadi error"
 
-def kr_read():
-    return
+def kr_read(id):
+    try:
+        data = db.collection('kr').document(id).get().to_dict()
+        return data
+    except:
+        data = []
+    return data
 
 def kr_delete():
     return
@@ -56,13 +66,26 @@ def kr_delete():
 def kr_update():
     return
 
+def kr_update_1(request, id, diterima, voucher):
+    db.collection('kr').document(id).update({
+        "nominal_diterima": diterima,
+        "token_voucher": voucher
+    })
+    return
+
+def kr_update_2(request, id, bukti):
+    db.collection('kr').document(id).update({
+        "bukti_transfer": bukti,
+    })
+    return
+
 def kr_updateCounter():
-    data = db.collection('kr').document('counter').get().to_dict()
+    data = db.collection('counter').document('kr').get().to_dict()
     data['length'] += 1
-    db.collection('kr').document("counter").set(data)
+    db.collection('counter').document("kr").set(data)
 
 def kr_getCounter():
-    data = db.collection('kr').document('counter').get().to_dict()
+    data = db.collection('counter').document('kr').get().to_dict()
     num = data['length']
     kr_updateCounter()
     return num

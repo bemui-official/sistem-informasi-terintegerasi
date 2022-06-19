@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Detail Request</title>
+<link rel="stylesheet" href="{% static 'reimbursement/css/style.css' %}">
+{% endblock meta %}
+
+{% block content %}
+<h1>Detail Request</h1>
+<h2>{{judul}}</h2>
+<h2>{{idPermintaan}}</h2>
+<h2>{{nama_birdep}}</h2>
+{% endblock content %}

@@ -2,11 +2,16 @@ from django.shortcuts import render, redirect
 from backend.CRUD.crud_user import user_create
 from django.contrib import auth
 from backend.misc import firebase_init
+from backend.constants.birdeptim import pi, birdeptim, kode_fungsionaris
 
 fauth = firebase_init.firebaseInit().auth()
 
 def signUp(request):
-	return render(request, 'signUp.html')
+	return render(request, 'signUp.html', {
+		"pi": pi,
+		"birdeptim": birdeptim,
+		"kode_fungsionaris": kode_fungsionaris
+	})
 
 def postSignUp(request):
 	idBirdep = request.POST.get("username")
@@ -16,13 +21,14 @@ def postSignUp(request):
 	asal = request.POST.get("asal")
 	nama = request.POST.get("nama")
 	panggilan = request.POST.get("panggilan")
+	birdeptim = request.POST.get("birdeptim")
 	permintaan = []
 	if (password == password2):
-		message = user_create(idBirdep, email, password, asal, nama, 0, panggilan, permintaan)
+		message = user_create(idBirdep, email, password, asal, nama, 0, panggilan, permintaan, birdeptim)
 	if message == "":
-		return redirect(signIn)
+		return redirect("user:signin")
 	else:
-		return redirect(signUp)
+		return redirect("user:signup")
 
 def signIn(request):
 	return render(request, 'signIn.html')
@@ -41,5 +47,5 @@ def postSignIn(request):
 
 def logout(request):
 	auth.logout(request)
-	return redirect(signIn)
+	return redirect("user:signin")
 

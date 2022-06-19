@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'base/css/style.css' %}">
+  <link rel="shortcut icon" href="{% static 'base/img/favicon.png' %}"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type="application/javascript" src="{% static 'base/js/script.js' %}"></script>
+  {% block meta %}
+  {% endblock meta %}
+</head>
+
+<body>
+	<header {% if '/' == request.path %}class="header-transparent"{% else %}class="header-white"{% endif %}>
+        <a href="{% url 'home:home' %}" class="logo"><img src="{% static 'base/img/logo-biro-jodoh.png' %}" style="width:8.75rem; height:3.5rem;"></a>
+        <input type="checkbox" class="nav-toggle" id="nav-toggle">
+
+        <nav>
+            <ul>
+                <li><a href="{% url 'home:keuangan' %}">Keuangan</a></li>
+                <li><a href="{% url 'home:publikasi' %}">Publikasi</a></li>
+                <li><a href="{% url 'home:surat' %}">Surat</a></li>
+                <li class="nav-only-desktop">
+                    <a href="{% url 'user:signin' %}" class="button fit-content" style="height: fit-content; margin: 0; padding: 0.6em 1em;">Masuk</a>
+                </li>
+                <div class="nav-dropdown-buttons nav-only-mobile">
+                    <a href="{% url 'user:signin' %}" class="nav-only-mobile button btn-dashboard">
+                        Masuk
+                    </a>
+                </div>
+            </ul>
+        </nav>
+
+        <label for="nav-toggle" class="nav-toggle-label" id="nav-toggle-label"><span></span></label>
+
+    </header>
+
+    <div class="content-container">
+      	{% block content %}
+        {% endblock content %}
+	</div>
+
+    <footer>
+        <div class="footer-upper">
+            <div class="footer1">
+                <a href="{% url 'home:home' %}"><img src="{% static 'base/img/logo-biro-jodoh.png' %}" style="width:12.5rem; height:5rem;"></a>
+            </div>
+
+            <div class="footer2">
+                <strong>Kunjungi media sosial kami!</strong>
+                <ul>
+                    <li>
+                        <a target="_blank" href="https://chat.whatsapp.com/LESwRvruZO2IgUKISCoIRn">
+                            <svg width="32" height="32" viewBox="0 0 24 24">
+                                <use href="{% static 'base/svg/base-sprite-sheet.svg' %}#whatsapp-logo"></use>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="https://www.instagram.com/ui.ruangedukasi/">
+                            <svg width="32" height="32" viewBox="0 0 24 24">
+                                <use href="{% static 'base/svg/base-sprite-sheet.svg' %}#instagram-logo"></use>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="https://www.youtube.com/c/bemuiofficial">
+                            <svg width="32" height="32" viewBox="0 0 24 24">
+                                <use href="{% static 'base/svg/base-sprite-sheet.svg' %}#youtube-logo"></use>
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="footer3 nav-only-mobile">
+                <p>
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <use href="{% static 'base/svg/base-sprite-sheet.svg' %}#copyright-logo"></use>
+                    </svg>
+                    Biro Multimedia & Departemen <br>Pendidikan dan Keilmuan BEM UI 2021
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom nav-only-desktop">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+                <use href="{% static 'base/svg/base-sprite-sheet.svg' %}#copyright-logo"></use>
+            </svg>
+            <p>Biro Multimedia & Departemen Pendidikan dan Keilmuan BEM UI 2021</p>
+        </div>
+    </footer>
+</body>
+
+</html>

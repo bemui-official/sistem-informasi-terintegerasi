@@ -1,90 +1,81 @@
 {% load static %}
 
 {% block meta %}
-<title>Form Surat Keluar</title>
-<link rel="stylesheet" href="{% static 'base/css/bootstrap.min.css' %}"/>
-<link rel="stylesheet" href="{% static 'reimbursement/css/style.css' %}"/>
-<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
-<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-<link href="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.css" rel="stylesheet"/>
+    <title>Form Reimbursement</title>
+    <link rel="stylesheet" href="{% static 'base/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'reimbursement/css/style.css' %}"/>
+    <link href="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.css" rel="stylesheet"/>
 {% endblock meta %}
 
 {% block content %}
-<section>
-<form action="postformkr" method="post" id="form">
-    {% csrf_token %}
-    Judul:
-    <input type="judul" name="judul"> <br/>
-    Nama Kegiatan:
-    <input type="kegiatan" name="nama_kegiatan"><br/>
-    Deskripsi Kegiatan:
-    <input type="deskription" name="deskripsi"><br/>
-    Nomor Rekening:
-    <input type="number" name="norek"><br/>
-    Atas Nama Rekening:
-    <input type="text" name="anrek"><br/>
-    Link Docs Voucher:
-    <input type="link" name="link_voucher"><br/>
-    Nominal:
-    <input type="number" name="nominal"><br/>
-    <label class="control-label">Upload File</label>
-    <div id="drag-drop-area"></div>
-    <input name="uploadFiles" type="hidden">
-</form>
-    <button type="aisndiaj" id="submitbutton">Ajukan</button>
+    <div class="form-root">
+        <section>
+            <form action="postformkr" method="post" id="form">
+                {% csrf_token %}
+                Judul:
+                <input type="judul" name="judul"> <br/>
+                Nama Kegiatan:
+                <input type="kegiatan" name="nama_kegiatan"><br/>
+                Deskripsi Kegiatan:
+                <input type="deskription" name="deskripsi"><br/>
+                Nomor Rekening:
+                <input type="number" name="norek"><br/>
+                Atas Nama Rekening:
+                <input type="text" name="anrek"><br/>
+                Link Docs Voucher:
+                <input type="link" name="link_voucher"><br/>
+                Nominal:
+                <input type="number" name="nominal"><br/>
+                <label class="control-label">Upload File</label>
+                <div id="drag-drop-area"></div>
+                <input name="uploadFiles" type="hidden">
+            </form>
 
-    <script src="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
-    <script>
-        function uuidv4() {
-          return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-            (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-          );
-        }
-      var uppy = new Uppy.Core()
-        .use(Uppy.Dashboard, {
-          inline: true,
-        target: '#drag-drop-area',
-        proudlyDisplayPoweredByUppy:false,
-        showProgressDetails:true,
-        doneButtonHandler: null,
-        hideUploadButton: true,
-        })
-      uppy.on('complete', (result) => {
-          // photos.append(result.successful)
-          // console.log(photos)
-        console.log('Upload complete! We’ve uploaded these files:', result.successful)
-      })
-      uppy.use(Uppy.XHRUpload, {
-        endpoint: '{% url "upload_photo" %}',
-        headers: {'X-CSRFToken':"{{csrf_token}}"},
-        formData: true,
-        fieldName: 'file'
-      })
-      uppy.use(Uppy.Form, {
-          target: "#form",
-          resultName: 'uploadFiles',
-          getMetaFromForm: false,
-          addResultToForm: true,
-          submitOnSuccess: true,
-          triggerUploadOnSubmit: false,
-      })
-      uppy.on('file-added', (file) => {
-        uppy.setFileMeta(file.id, {
-          id_firebase: uuidv4(),
-            source: "SURAT_KELUAR/"
-        })
-      })
-      document.getElementById("submitbutton").addEventListener("click", function() {
-          console.log("Submit Button")
-          uppy.upload()
-      })
-    </script>
+            <button type="button" id="submitbutton">Ajukan</button>
 
-</section>
-<script src="{% static 'base/js/jquery-3.6.0.min.js' %}"></script>
-<script src="{% static 'base/js/bootstrap.min.js' %}"></script>
-<script src="{% static 'reimbursement/js/app.js' %}"></script>
-<script src="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.js"></script>
+            <!-- Script upload ke Bukti Pembayaran-->
+            <script src="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.js"></script>
+            <script>
+                var uppy = new Uppy.Core()
 
+                uppy.on('file-added', (file) => {
+                    uppy.setFileMeta(file.id, {
+                        id_firebase: uuidv4(),
+                        source: "KEUANGAN_REIMBURSE/BUKTI_PEMBAYARAN"
+                    })
+                })
+                uppy.use(Uppy.XHRUpload, {
+                    endpoint: '{% url "upload_photo" %}',
+                    headers: {'X-CSRFToken':"{{csrf_token}}"},
+                    formData: true,
+                    fieldName: 'file'
+                })
+                uppy.use(Uppy.Dashboard, {
+                    inline: true,
+                    target: '#drag-drop-area',
+                    proudlyDisplayPoweredByUppy:false,
+                    showProgressDetails:true,
+                    doneButtonHandler: null,
+                    hideUploadButton: true,
+                })
+                uppy.on('complete', (result) => {
+                    console.log('Upload complete! We’ve uploaded these files:', result.successful)
+                })
+                uppy.use(Uppy.Form, {
+                    target: "#form",
+                    resultName: 'uploadFiles',
+                    getMetaFromForm: false,
+                    addResultToForm: true,
+                    submitOnSuccess: true,
+                    triggerUploadOnSubmit: false,
+                })
+            </script>
+            <script type="application/javascript" src="{% static 'reimbursement/js/scripts.js' %}"></script>
+            <script src="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
+        </section>
+    </div>
+
+    <script src="{% static 'base/js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'base/js/bootstrap.min.js' %}"></script>
 {% endblock content %}

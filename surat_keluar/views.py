@@ -5,7 +5,14 @@ from backend.misc import firebase_init
 fauth = firebase_init.firebaseInit().auth()
 
 def formSk(request):
-	return render(request, 'form_sk.html')
+	try:
+		if (request.session['uid']):
+			if (fauth.get_account_info(request.session['uid'])):
+				return render(request, 'form_sk.html')
+			else:
+				return redirect("/user/logout")
+	except:
+		return redirect("/user/signin")
 
 def postFormSk(request):
 	judul = request.POST.get("judul")

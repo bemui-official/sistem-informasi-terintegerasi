@@ -40,8 +40,13 @@ def sk_create(request, judul, namaKegiatan, deskripsi, jenisSurat, link):
         return "terjadi error"
     return ""
 
-def sk_read():
-    return
+def sk_read(id):
+    try:
+        data = db.collection('sk').document(id).get().to_dict()
+        return data
+    except:
+        data = []
+    return data
 
 def sk_delete():
     return

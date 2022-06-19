@@ -1,6 +1,6 @@
 /**
  *
- * app.js
+ * scripts.js
  *
  */
 function readFile(input) {

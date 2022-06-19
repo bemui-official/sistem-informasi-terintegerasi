@@ -10,7 +10,7 @@ if not firebase_admin._apps:
 db = firestore.client()
 ds = storage.bucket()
 
-def user_create(idBirdep, email, password, asal, nama, total_pesanan, panggilan, permintaan) :
+def user_create(idBirdep, email, password, asal, nama, total_pesanan, panggilan, permintaan, birdeptim) :
     idBirdep = idBirdep+"-"+asal
     try:
         user = auth.create_user(
@@ -29,7 +29,8 @@ def user_create(idBirdep, email, password, asal, nama, total_pesanan, panggilan,
         'asal': asal,
         'total_pesanan': total_pesanan,
         'panggilan': panggilan,
-        'permintaan' : permintaan
+        'permintaan' : permintaan,
+        'birdeptim': birdeptim
     }
     db.collection('users').document(idBirdep).set(data)
     return "";

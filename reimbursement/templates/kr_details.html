@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <title>Detail Request</title>
+    <link rel="stylesheet" href="{% static 'reimbursement/css/style.css' %}">
+{% endblock meta %}
+
+{% block content %}
+    <h1>Detail Request</h1>
+    <h2>{{data.judul}}</h2>
+    <h2>{{data.idPermintaan}}</h2>
+    <h2>{{data.nama_birdep}}</h2>
+    <h2>{{data.tahapan}}</h2>
+    <p>{{user}}</p>
+    {% if user.birdeptim in admin.tahap1 and data.tahapan == 0 %}
+        <button>Terima</button>
+    {% elif user.birdeptim in admin.tahap2 and data.tahapan == 1 %}
+        <button>Terima</button>
+    {% endif %}
+
+
+{% endblock content %}
