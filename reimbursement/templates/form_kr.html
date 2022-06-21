@@ -40,8 +40,7 @@
 
                 uppy.on('file-added', (file) => {
                     uppy.setFileMeta(file.id, {
-                        id_firebase: uuidv4(),
-                        source: "KEUANGAN_REIMBURSE/BUKTI_PEMBAYARAN"
+                        id_firebase: "KEUANGAN_REIMBURSE/BUKTI_PEMBAYARAN/" + uuidv4(),
                     })
                 })
                 uppy.use(Uppy.XHRUpload, {

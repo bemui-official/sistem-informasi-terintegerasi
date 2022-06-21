@@ -2,7 +2,7 @@ import json
 from django.shortcuts import render, redirect
 from backend.CRUD.crud_kr import kr_create, kr_read, kr_update_0, kr_update_1, kr_update_2
 from backend.CRUD.crud_user import user_read
-from backend.misc import firebase_init
+from backend.misc import firebase_init, getPhoto
 from backend.constants.admins import reimbursement_admin, reimbursement_admin2
 
 # Initialize Firebase Database
@@ -61,13 +61,19 @@ def detail(request, id):
             data_detail = kr_read(id)
             user = user_read(user_session['users'][0]['localId'])
             if (data_detail != []):
+                data_photo = []
+                for photo in data_detail["bukti_pembayaran"]:
+                    url = getPhoto.getPhoto(photo)
+                    data_photo.append(url)
                 print(data_detail)
                 print(reimbursement_admin)
+                print(data_photo)
                 return render(request, 'kr_details.html', {
                     'data': data_detail,
                     'user': user,
                     'admin': reimbursement_admin,
-                    'id': id
+                    'id': id,
+                    'photos': data_photo
                 })
         else:
             return redirect("/user/logout")
@@ -103,9 +109,9 @@ def form1(request, id):
                     if (data_detail["tahapan"] == 1):
                         return render(request, 'tahap1_form.html', {"id": id})
                     else:
-                        return redirect("/reimbursement/detail" + id)
+                        return redirect("/reimbursement/detail/" + id)
                 else:
-                    return redirect("/reimbursement/detail" + id)
+                    return redirect("/reimbursement/detail/" + id)
             else:
                 return redirect("/user/logout")
         else:

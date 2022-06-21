@@ -14,6 +14,9 @@
     <h2>{{data.tahapan}}</h2>
     <p>{{user}}</p>
     <p>{{data}}</p>
+    {% for photo in photos %}
+    <img src='{{ photo }}'/>
+    {% endfor %}
 
     {% if user.birdeptim in admin.tahap1 and data.tahapan == 0 %}
     <form action="dibatalkan" method="post">
