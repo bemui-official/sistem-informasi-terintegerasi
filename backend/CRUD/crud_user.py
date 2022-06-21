@@ -1,6 +1,9 @@
 import firebase_admin
 from firebase_admin import credentials, firestore, storage, auth
-from uuid import uuid4
+
+# --------------------------
+# Initialize Firebase Admin
+# --------------------------
 if not firebase_admin._apps:
     cred = credentials.Certificate("testing-key.json")
     firebase_admin.initialize_app(cred, {
@@ -10,6 +13,10 @@ if not firebase_admin._apps:
 db = firestore.client()
 ds = storage.bucket()
 
+
+# --------------------------
+# CRUD Functions
+# --------------------------
 def user_create(idBirdep, email, password, asal, nama, total_pesanan, panggilan, permintaan, birdeptim) :
     idBirdep = idBirdep+"-"+asal
     try:

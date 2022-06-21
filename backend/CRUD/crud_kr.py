@@ -48,7 +48,7 @@ def kr_create(request, judul, namaKegiatan, deskripsi, norek, anrek, voucher, no
         }
         db.collection('kr').document(idPermintaan).set(data)
 
-        return ""
+        return idPermintaan
     except:
         return "terjadi error"
 
@@ -63,21 +63,41 @@ def kr_read(id):
 def kr_delete():
     return
 
-def kr_update():
-    return
+# ---------------------
+# Update data per-tahap
+# --------------------
+
+def kr_update_0(request, id, num):
+    try:
+        db.collection('kr').document(id).update({
+            "tahapan": num
+        })
+        return ""
+    except:
+        return "terjadi error"
 
 def kr_update_1(request, id, diterima, voucher):
-    db.collection('kr').document(id).update({
-        "nominal_diterima": diterima,
-        "token_voucher": voucher
-    })
-    return
+    try:
+        db.collection('kr').document(id).update({
+            "nominal_diterima": diterima,
+            "token_voucher": voucher,
+            "tahapan": 2
+        })
+        return ""
+    except:
+        return "terjadi error"
 
 def kr_update_2(request, id, bukti):
     db.collection('kr').document(id).update({
         "bukti_transfer": bukti,
+        "tahapan": 3
     })
-    return
+    return ""
+
+
+# ---------------------
+# Update data counter
+# --------------------
 
 def kr_updateCounter():
     data = db.collection('counter').document('kr').get().to_dict()

@@ -1,9 +1,9 @@
 import json
 from django.shortcuts import render, redirect
-from backend.CRUD.crud_kr import kr_create, kr_read, kr_update_1, kr_update_2
+from backend.CRUD.crud_kr import kr_create, kr_read, kr_update_0, kr_update_1, kr_update_2
 from backend.CRUD.crud_user import user_read
 from backend.misc import firebase_init
-from backend.constants.admins import reimbursement_admin
+from backend.constants.admins import reimbursement_admin, reimbursement_admin2
 
 # Initialize Firebase Database
 fauth = firebase_init.firebaseInit().auth()
@@ -41,8 +41,8 @@ def postFormKr(request):
         for i in photos[0]["successful"]:
             photos_meta.append(i["meta"]["id_firebase"])
         message = kr_create(request, judul, nama_kegiatan, deskripsi, norek, anrek, voucher, nominal, photos_meta)
-        if message == "":
-            return redirect("/")
+        if message != "terjadi error":
+            return redirect("/reimbursement/detail/" + message)
         else:
             message = "Gagal Upload"
             return redirect(formKr)
@@ -66,10 +66,27 @@ def detail(request, id):
                 return render(request, 'kr_details.html', {
                     'data': data_detail,
                     'user': user,
-                    'admin': reimbursement_admin
+                    'admin': reimbursement_admin,
+                    'id': id
                 })
         else:
             return redirect("/user/logout")
+
+
+# ---------------------
+# Form Tahap 0 Reimbursement
+# --------------------
+def diterima(request):
+    print('masuk')
+    id_request = request.POST.get("id_request")
+    kr_update_0(request, id_request, 1)
+    return redirect('detail', id=id_request)
+
+
+def dibatalkan(request):
+    id_request = request.POST.get("id_request")
+    kr_update_0(request, id_request, -1)
+    return redirect('detail', id=id_request)
 
 
 # ---------------------
@@ -78,13 +95,17 @@ def detail(request, id):
 def form1(request, id):
     try:
         if (request.session['uid']):
-            user = user_read(fauth.get_account_info(request.session['uid'])['users'][0]['localId'])
-            data_detail = kr_read(id)
-            if (user.birdeptim in reimbursement_admin["tahap1"]):
-                if (data_detail["tahapan"] == 1):
-                    return render(request, 'tahap1_form.html', {"id": id})
+            user_session = fauth.get_account_info(request.session['uid'])
+            if(user_session):
+                user = user_read(user_session['users'][0]['localId'])
+                data_detail = kr_read(id)
+                if (user['birdeptim'] in reimbursement_admin2["tahap1"]):
+                    if (data_detail["tahapan"] == 1):
+                        return render(request, 'tahap1_form.html', {"id": id})
+                    else:
+                        return redirect("/reimbursement/detail" + id)
                 else:
-                    return redirect("/reimbursement")
+                    return redirect("/reimbursement/detail" + id)
             else:
                 return redirect("/user/logout")
         else:
@@ -103,17 +124,19 @@ def postForm1(request):
     # Upload data to firebase
     try:
         if voucher[0]["successful"] :
+            print("masuk")
             voucher_meta = []
-            voucher_meta.append(voucher[0]["successful"]["meta"]["id_firebase"])
+            voucher_meta.append(voucher[0]["successful"][0]["meta"]["id_firebase"])
             message = kr_update_1(request, id_request, diterima, voucher_meta)
-            if message == "":
-                return redirect("/reimbursement/" + id_request)
+            print(message)
+            if message != "terjadi error":
+                return redirect("/reimbursement/detail/" + id_request)
             else:
                 message = "Gagal Upload"
-                return redirect()
+                return redirect("/reimbursement/detail/" + id_request)
         else:
             message = "Gagal Upload"
-            return redirect(formKr)
+            return redirect("/reimbursement/detail/" + id_request)
     except:
         return redirect("/")
 
@@ -124,13 +147,18 @@ def postForm1(request):
 def form2(request, id):
     try:
         if (request.session['uid']):
-            user = user_read(fauth.get_account_info(request.session['uid'])['users'][0]['localId'])
-            data_detail = kr_read(id)
-            if (user.birdeptim in reimbursement_admin["tahap2"]):
-                if (data_detail["tahapan"] == 1):
-                    return render(request, 'tahap2_form.html', {"id": id})
+            print("masuk")
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                user = user_read(user_session['users'][0]['localId'])
+                data_detail = kr_read(id)
+                if (user['birdeptim'] in reimbursement_admin2["tahap2"]):
+                    if (data_detail["tahapan"] == 2):
+                        return render(request, 'tahap2_form.html', {"id": id})
+                    else:
+                        return redirect("/reimbursement/detail/" + id)
                 else:
-                    return redirect("/reimbursement")
+                    return redirect("/reimbursement/detail/" + id)
             else:
                 return redirect("/user/logout")
         else:
@@ -140,7 +168,6 @@ def form2(request, id):
 
 
 def postForm2(request):
-    diterima = request.POST.get("diterima")
     bukti = request.POST.get("uploadFiles")
     id_request = request.POST.get("id_request")
     bukti = json.loads(bukti)
@@ -150,15 +177,15 @@ def postForm2(request):
     try:
         if bukti[0]["successful"]:
             bukti_meta = []
-            bukti_meta.append(bukti[0]["successful"]["meta"]["id_firebase"])
+            bukti_meta.append(bukti[0]["successful"][0]["meta"]["id_firebase"])
             message = kr_update_2(request, id_request, bukti_meta)
-            if message == "":
-                return redirect("/reimbursement/" + id_request)
+            if message != "terjadi error":
+                return redirect("/reimbursement/detail/" + id_request)
             else:
                 message = "Gagal Upload"
-                return redirect()
+                return redirect("/reimbursement/detail/" + id_request)
         else:
             message = "Gagal Upload"
-            return redirect(formKr)
+            return redirect("/reimbursement/detail/" + id_request)
     except:
         return redirect("/")

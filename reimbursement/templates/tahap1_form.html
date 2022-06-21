@@ -10,7 +10,7 @@
 {% block content %}
     <div class="form-root">
         <section>
-            <form action="postformkr" method="post" id="form">
+            <form action="../../postform1" method="post" id="form">
                 {% csrf_token %}
                 Jumlah Diterima:
                 <input type="number" name="diterima"><br/>
@@ -20,7 +20,7 @@
                 <input name="id_request" type="hidden" value={{ id }}>
             </form>
 
-            <button type="button" id="submitbutton">Ajukan</button>
+            <button type="button" id="submitbutton">Submit</button>
 
             <!-- Script upload ke Voucher-->
             <script src="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.js"></script>

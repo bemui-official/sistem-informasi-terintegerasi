@@ -1,5 +1,4 @@
 
-
 // -----------------
 // UUID4 Function
 // -----------------
@@ -17,32 +16,3 @@ document.getElementById("submitbutton").addEventListener("click", function() {
     uppy.upload()
 })
 
-
-// ---------------
-// Uppy Settings
-// ---------------
-uppy.use(Uppy.XHRUpload, {
-    endpoint: '../backend/upload_photo',
-    headers: {'X-CSRFToken':csrftoken},
-    formData: true,
-    fieldName: 'file'
-})
-uppy.use(Uppy.Dashboard, {
-    inline: true,
-    target: '#drag-drop-area',
-    proudlyDisplayPoweredByUppy:false,
-    showProgressDetails:true,
-    doneButtonHandler: null,
-    hideUploadButton: true,
-})
-uppy.on('complete', (result) => {
-    console.log('Upload complete! We’ve uploaded these files:', result.successful)
-})
-uppy.use(Uppy.Form, {
-    target: "#form",
-    resultName: 'uploadFiles',
-    getMetaFromForm: false,
-    addResultToForm: true,
-    submitOnSuccess: true,
-    triggerUploadOnSubmit: false,
-})

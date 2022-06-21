@@ -15,3 +15,4 @@ document.getElementById("submitbutton").addEventListener("click", function() {
     console.log("Submit Button")
     uppy.upload()
 })
+
