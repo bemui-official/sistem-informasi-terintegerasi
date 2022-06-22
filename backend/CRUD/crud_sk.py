@@ -4,6 +4,9 @@ from backend.CRUD.crud_user import user_read
 from backend.misc import firebase_init
 import datetime
 
+# --------------------------
+# Initialize Firebase Admin
+# --------------------------
 if not firebase_admin._apps:
     cred = credentials.Certificate("testing-key.json")
     firebase_admin.initialize_app(cred, {
@@ -14,6 +17,10 @@ fauth = firebase_init.firebaseInit().auth()
 db = firestore.client()
 ds = storage.bucket()
 
+
+# --------------------------
+# CRUD Functions
+# --------------------------
 def sk_create(request, judul, namaKegiatan, deskripsi, jenisSurat, link):
     try:
         print(request.session['uid'])
@@ -51,16 +58,34 @@ def sk_read(id):
 def sk_delete():
     return
 
-def sk_update():
-    return
+def sk_update(request, id, num):
+    try:
+        db.collection('sk').document(id).update({
+            "tahapan": num
+        })
+        return ""
+    except:
+        return "terjadi error"
 
+def sk_update_3(request, id, num, dokumen):
+    try:
+        db.collection('sk').document(id).update({
+            "tahapan": num,
+            "token_dokumen": dokumen
+        })
+        return ""
+    except:
+        return "terjadi error"
+# ---------------------
+# Update data counter
+# --------------------
 def sk_updateCounter():
-    data = db.collection('sk').document('counter').get().to_dict()
+    data = db.collection('counter').document('sk').get().to_dict()
     data['length'] += 1
-    db.collection('sk').document("counter").set(data)
+    db.collection('counter').document("sk").set(data)
 
 def sk_getCounter():
-    data = db.collection('sk').document('counter').get().to_dict()
+    data = db.collection('counter').document('sk').get().to_dict()
     num = data['length']
     sk_updateCounter()
     return num
