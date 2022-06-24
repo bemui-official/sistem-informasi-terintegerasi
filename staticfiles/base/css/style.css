@@ -6,7 +6,7 @@
     --background-nav: transparent;
     --nav-dropdown: #FFFFFF;
     --nav-color: #144B84;
-    --background-footer: #F1F7FF;
+    --background-footer: #2D2F43;
 
     --button-color: #144B84;
     --button-black: #000000;
@@ -28,7 +28,7 @@
     --neutral-gray: #EBEBEB;
 
     --required-asterisk: #EC4E43;
-    --text-color: black;
+    --text-color: #EBEBEB;
 }
 
 *, *::before, *::after {
@@ -340,6 +340,7 @@ footer {
     align-items: center;
     justify-content: center;
     font-size: 1.7rem;
+    color: var(--text-color);
 }
 
 .footer2 strong {
@@ -373,6 +374,8 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--text-color);
+
 }
 
 .footer3 p {
@@ -1414,18 +1417,7 @@ label.profile-picture-container {
         grid-template-columns: 0.1fr auto minmax(400px, 1fr) 0.1fr;
     }
 
-    .footer-bottom {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: -1em 0 1em 0;
-    }
-
-    .footer-bottom p {
-        margin-left: 0.25em;
-    }
-
-    .footer1 {
+        .footer1 {
         display: grid;
         grid-template-rows: 1fr auto;
         margin: 1.25em 0 0 1em;
@@ -1433,8 +1425,7 @@ label.profile-picture-container {
     }
 
     .footer1 a img {
-        width: 11.5em;
-        height: 3em;
+        width: 1em;
     }
 
     .footer1 div {
@@ -1463,7 +1454,48 @@ label.profile-picture-container {
     .footer2 svg {
         width: 32px;
         height: auto;
+        color: var(--text-color);
+
     }
+
+    .footer-middle {
+        display: grid;
+        grid-template-columns: 0.1fr auto minmax(400px, 1fr) 0.1fr;
+        color: var(--text-color);
+        margin-top: 1.5em;
+    }
+
+    .footer1-middle {
+        grid-column: 2 / 3;
+    }
+
+
+    .footer2-middle {
+        grid-column: 3 / 4;
+        margin-left: 2em;
+    }
+
+    .footer-mid strong{
+        margin-top: 1em;
+        font-size: 1.25em;
+    }
+
+    .footer-mid p{
+        margin: 0;
+        font-size: 0.85em;
+    }
+
+    .footer-bottom {
+        display: grid;
+        grid-template-columns: 0.1fr auto minmax(400px, 1fr) 0.1fr;
+        color: var(--text-color);
+    }
+
+    .footer-bottom div {
+        grid-column: 2 / 3;
+        margin-left: 1.5em;
+    }
+
 
     /* nav dropdown */
     .nav-user-container {

@@ -23,6 +23,7 @@
                 <li><a href="{% url 'home:keuangan' %}">Keuangan</a></li>
                 <li><a href="{% url 'home:publikasi' %}">Publikasi</a></li>
                 <li><a href="{% url 'home:surat' %}">Surat</a></li>
+                <li><a href="{% url 'home:surat' %}">Survei</a></li>
                 <li class="nav-only-desktop">
                     <a href="{% url 'user:signin' %}" class="button fit-content" style="height: fit-content; margin: 0; padding: 0.6em 1em;">Masuk</a>
                 </li>
@@ -81,16 +82,39 @@
                     <svg width="24" height="24" viewBox="0 0 24 24">
                         <use href="{% static 'base/svg/base-sprite-sheet.svg' %}#copyright-logo"></use>
                     </svg>
-                    Biro Multimedia & Departemen <br>Pendidikan dan Keilmuan BEM UI 2021
+                    @ 2022 - Badan Eksekutif Mahasiswa UI - Biro Multimedia
                 </p>
             </div>
         </div>
 
+        <div class="footer-middle nav-only-desktop">
+            <div class="footer1-middle footer-mid">
+                <strong>Keuangan</strong>
+                <p>Reimbursement</p>
+                <p>Advanced</p>
+                <p>Penyetoran</p>
+                <br>
+                <strong>Publikasi</strong>
+                <p>Publikasi</p>
+            </div>
+            <div class="footer2-middle footer-mid">
+                <strong>Surat Menyurat</strong>
+                <p>Dirmawa</p>
+                <p>BEM UI</p>
+                <p>sertifikat</p>
+                <br>
+                <strong>Survei</strong>
+                <p>Survei</p>
+            </div>
+        </div>
+
         <div class="footer-bottom nav-only-desktop">
-            <svg width="24" height="24" viewBox="0 0 24 24">
-                <use href="{% static 'base/svg/base-sprite-sheet.svg' %}#copyright-logo"></use>
-            </svg>
-            <p>Biro Multimedia & Departemen Pendidikan dan Keilmuan BEM UI 2021</p>
+            <div>
+                <svg width="24" height="24" viewBox="0 0 24 24">
+                    <use href="{% static 'base/svg/base-sprite-sheet.svg' %}#copyright-logo"></use>
+                </svg>
+                <p>2022 - Badan Eksekutif Mahasiswa UI - Biro Multimedia</p>
+            </div>
         </div>
     </footer>
 </body>
