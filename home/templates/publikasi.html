@@ -3,9 +3,82 @@
 
 {% block meta %}
     <meta charset="UTF-8">
-    <title>Publikasi</title>
+    <title>Home</title>
+<link rel="stylesheet" href="{% static 'main/css/style-detail.css' %}">
+  <script type="application/javascript" src="{% static 'main/js/script.js' %}"></script>
 {% endblock meta %}
 
 {% block content %}
-<h1>Home Publikasi</h1>
+	<div class="content-home">
+        <div class="filler"></div>
+        <div class="home-top">
+			<div class="home-top-color-filter">
+				<div>
+					<h1>Publikasi</h1>
+					<p>Lakukan pengajuan publikasi konten kamu di kanal media BEM UI dengan memencet tombol di bawah ya</p>
+                    <a href="" class="button fit-content">Ajukan permintaan</a>
+				</div>
+				<object class="only-desktop" data="{% static 'main/svg/Content-pana.svg' %}" type="image/svg+xml"></object>
+			</div>
+		</div>
+        <div class="home-middle">
+			<div class="home-middle-top">
+				<object data="{% static 'main/svg/Questions-pana.svg' %}" type="image/svg+xml"></object>
+				<div class="only-desktop">
+					<h2>Simak cara melakukan permintaan publikasi di bawah ini!</h2>
+					<p>Kalian masih bingung cara menggunakan website SIT? Yuk, Kami ajarin!</p>
+				</div>
+				<div class="only-mobile">
+					<h2>Simak cara melakukan permintaan publikasi di bawah ini!</h2>
+					<p>Kalian masih bingung cara menggunakan website SIT? Yuk, Kami ajarin!</p>
+				</div>
+			</div>
+			<div>
+				<h1 class="home-features">Langkah-langkah</h1>
+				<div class="home-middle-bottom">
+					 <div class="home-card-container">
+						<div class="home-card-top-blank"></div>
+						<object data="{% static 'main/svg/Piggy-bank-pana.svg' %}" type="image/svg+xml"></object>
+						<div class="home-card">
+							<div>
+								<h2>Isi Form</h2>
+								<p>Isi form permintaan dengan memencet tombol di bawah ini</p>
+							</div>
+							<a href="" class="button fit-content">Telusuri</a>
+						</div>
+					 </div>
+					 <div class="home-card-container">
+						<div class="home-card-top-blank"></div>
+						<object data="{% static 'main/svg/Content-pana.svg' %}" type="image/svg+xml"></object>
+						<div class="home-card">
+							<div>
+								<h2 id="tahap-1">Masukkan data yang dibutuhkan</h2>
+								<p>Butuh melakukan permintaan publikasi di kanal media BEM UI?</p>
+							</div>
+						</div>
+					 </div>
+					<div class="home-card-container">
+						<div class="home-card-top-blank"></div>
+						<object data="{% static 'main/svg/Mail-sent-pana.svg' %}" type="image/svg+xml"></object>
+						<div class="home-card">
+							<div>
+								<h2>Pantau progress permintaan</h2>
+								<p>Ingin meminta persetujuan dan tanda tangan dari BEM UI?</p>
+							</div>
+						</div>
+					 </div>
+					 <div class="home-card-container">
+						<div class="home-card-top-blank"></div>
+						<object data="{% static 'main/svg/Customer-Survey-amico.svg' %}" type="image/svg+xml"></object>
+						<div class="home-card">
+							<div>
+								<h2>Selesai</h2>
+								<p>Membutuhkan survei untuk kepentingan penelitian dan pengembangan?</p>
+							</div>
+						</div>
+					 </div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock content %}

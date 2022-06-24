@@ -2,29 +2,30 @@
 /* HOME */
 
 .home-top {
-	margin-top: -74px;
-	height: 40rem;
-	width: 100%;
-	font-size: 0.8em;
-	
-	background-repeat: no-repeat;
-    background-position: top;
-    background-size: cover;
+	width: 90vw;
+
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.6);
+	display: flex;
+    justify-content: center;
+
+	border-radius: 20px;
+
+	margin: auto auto auto auto;
+
 }
 
 .home-top .home-top-color-filter {
-	width: 100%;
-	height: 100%;
-
 	display: flex;
     justify-content: center;
 }
 
 .home-top > div > div {
-	align-items: center;
-	justify-content: center;
 	width: 85%;
-	margin: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
 	color: #1C5188;
 }
 
@@ -50,9 +51,16 @@
 
 .home-middle-top,
 .home-middle-middle {
+	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	text-align: center;
+}
+
+.home-middle-top object{
+	width: 50%;
+	height: 50%;
 }
 
 .home-middle-middle {
@@ -66,17 +74,14 @@
 }
 
 .home-middle-middle div {
+	display: flex;
+	flex-direction: column;
 	align-items: center;
 }
 
-.home-middle-top object {
-	width: 246px;
-	height: 215px;
-}
-
 .home-middle-middle object {
-	width: 247px;
-	height: 264px;
+	width: 20%;
+	height: 20%;
 }
 
 .home-middle-bottom {
@@ -84,6 +89,7 @@
 	flex-direction: column;
 	align-items: center;
 	margin: 0em 0 2em 0;
+	color: #FFFFFF;
 }
 
 .home-middle-bottom .home-card-container {
@@ -120,18 +126,11 @@
 	margin-bottom: 0.5em;
 }
 
-.home-middle-bottom .home-card div h2 {
-		font-size: 1.8em;
-		color: #FFFFFF;
-	}
-
 .home-middle-bottom object {
-	width: 40%;
-}
+	width: 50%;
+	height: 50%;
 
-.home-top > div > object{
-		width: 50%;
-	}
+}
 
 .button {
 	background-color: var(--primary-yellow);
@@ -145,28 +144,28 @@
   	box-shadow: 0 2px 10px rgb(0 0 0 / 0.9);
 }
 
-.only-desktop {
-    display: none;
-}
+.home-card {
+	text-align: center;
+	display: flex;
+	align-items: center;
 
-.only-mobile {
-    display: block;
 }
 
 .home-features {
-		flex-direction: row;
-		text-align: center;
-		font-size: 3em;
-		margin-top: 3em;
-	}
+	flex-direction: row;
+	text-align: center;
+	font-size: 3em;
+	margin-top: 3em;
+}
+
 
 @media only screen and (min-width: 800px) {
 
 	/* HOME */
 
 	.home-top {
-		height: 48rem;
-		font-size: 1.5em;
+		height: 30rem;
+		font-size: 1.2em;
 		padding: 5em;
 		flex-direction: row;
 		text-align: left;
@@ -183,6 +182,16 @@
 		font-size: 1em;
 	}
 
+	.home-top > div > div {
+	width: 85%;
+	display: flex;
+	justify-content: left;
+	}
+
+	.home-top > div > object{
+		width: 30em;
+	}
+
 	.home-middle {
 		padding: 3em;
 		color: #1C5188;
@@ -191,7 +200,6 @@
 
 	.home-middle-top,
 	.home-middle-middle {
-		display: flex;
 		flex-direction: row;
 		text-align: left;
 	}
@@ -221,8 +229,8 @@
 
 	.home-middle-top object,
 	.home-middle-middle object {
-		width: 35%;
-		height: 35%;
+		width: 30%;
+		height: 30%;
 		margin: 2em;
 	}
 
@@ -245,23 +253,19 @@
 	}
 
 	.home-middle-bottom .home-card h2 {
-		font-size: 1.8em;
+		font-size: 1.6em;
 	}
 
 	.home-middle-bottom .home-card p {
 		font-size: 1em;
 	}
+}
 
-	.home-middle-bottom object {
-	width: 75%;
-	}
+.filler {
+	padding: 2em;
+}
 
-	.only-desktop {
-		display: block;
-	}
-
-	.only-mobile {
-		display: none;
-	}
+#tahap-1 {
+	font-size: 1.6em;
 }
 
