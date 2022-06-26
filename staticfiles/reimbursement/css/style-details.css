@@ -1,0 +1,139 @@
+.details-info {
+    font-size: 1.5em;
+    padding: 5em;
+    padding-top: 2em;
+    flex-direction: row;
+    text-align: left;
+}
+
+.content-root{
+
+}
+
+.details-judul{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    font-weight: bold;
+    text-align: center;
+    font-size: 0.75em;
+}
+
+.details-judul h2 {
+    padding: 0;
+    margin: 0;
+}
+/* SVG */
+
+svg {
+    cursor: default;
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(5%);
+  }
+  100% {
+    transform: translateX(calc(21% + var(--progress-bar) * 16.5%));
+  }
+}
+
+#Filling {
+    animation: calc(1s + (var(--progress-bar) * 0.2s)) ease-in-out 0s 1 slideInFromLeft;
+    transform: translateX(calc( (var(--progress-bar) + 1) * 22.5% ));
+}
+
+@keyframes fillTransition {
+  0% {
+    fill: var(--accent);
+  }
+  30% {
+    fill: var(--accent);
+  }
+  100% {
+    fill: white;
+  }
+}
+
+svg .white-text {
+    animation: calc(1s + (var(--progress-bar) * 0.07s)) ease-in-out 0s 1 fillTransition;
+    fill: white;
+}
+
+#OuterLayer text {
+    font-weight: bold;
+}
+
+svg .white-text {
+    animation: calc(1s + (var(--progress-bar) * 0.07s)) ease-in-out 0s 1 fillTransition;
+    fill: white;
+}
+
+/* Style the Image Used to Trigger the Modal */
+.bukti-image {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.bukti-image:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (Image) */
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+/* Add Animation - Zoom in the Modal */
+.modal-content {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {transform:scale(0)}
+  to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  .modal-content {
+    width: 100%;
+  }
+}

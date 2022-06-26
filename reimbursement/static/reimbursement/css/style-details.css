@@ -1,0 +1,201 @@
+/* Root */
+
+.details-info {
+    line-height: 1em;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 0.9);
+    border-radius: 20px;
+    margin-top: 2em;
+    padding: 2em 4em 2em 4em;
+}
+
+.details-info p{
+    line-height: 1.2em;
+}
+
+.content-root{
+    font-size: 1em;
+    padding: 1em;
+    flex-direction: row;
+    text-align: left;
+    margin: 1em;
+    line-height: 2em;
+}
+
+.details-judul{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5em;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1em;
+    line-height: 1.5em;
+}
+
+.details-judul h2 {
+    padding: 0;
+    margin: 0;
+}
+
+/* SVG */
+
+svg {
+    cursor: default;
+}
+
+.BarOuter {
+    padding: 3em;
+}
+
+.button-outer {
+    margin-top: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-sec {
+    margin-right: 3em;
+}
+
+.bukti-pembayaran {
+    font-size: 1.5em;
+    margin-top: 2em;
+    justify-content: center;
+}
+
+#button-kembali {
+    color: var(--primary-blue);
+    margin-bottom: 10em;
+}
+
+#button-kembali:hover {
+    color: blue;
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(5%);
+  }
+  100% {
+    transform: translateX(calc(21% + var(--progress-bar) * 16.5%));
+  }
+}
+
+#Filling {
+    animation: calc(1s + (var(--progress-bar) * 0.2s)) ease-in-out 0s 1 slideInFromLeft;
+    transform: translateX(calc( (var(--progress-bar) + 1) * 22.5% ));
+}
+
+@keyframes fillTransition {
+  0% {
+    fill: var(--accent);
+  }
+  30% {
+    fill: var(--accent);
+  }
+  100% {
+    fill: white;
+  }
+}
+
+svg .white-text {
+    animation: calc(1s + (var(--progress-bar) * 0.07s)) ease-in-out 0s 1 fillTransition;
+    fill: white;
+}
+
+#OuterLayer text {
+    font-weight: bold;
+}
+
+svg .white-text {
+    animation: calc(1s + (var(--progress-bar) * 0.07s)) ease-in-out 0s 1 fillTransition;
+    fill: white;
+}
+
+/*Image Modal*/
+
+.bukti-image {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+    max-width: 15em;
+    margin: 0 0 1em 1em;
+}
+
+.bukti-image:hover {opacity: 0.7;}
+
+.modal-content {
+    background-color: transparent;
+    border-color: transparent;
+    z-index: 100001;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+    width: 100vw;
+
+    margin-top: 20vh;
+}
+
+@keyframes zoom {
+  from {transform:scale(0)}
+  to {transform:scale(1)}
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/*Two Column*/
+
+.column {
+    float: left;
+    width: 50%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.detail-only-desktop {
+    display: none;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (min-width: 800px){
+  .content-root{
+      padding: 5em;
+      padding-top: 2em;
+      margin-left: 3em;
+      margin-right: 3em;
+      margin-top: 1em;
+      line-height: 1em;
+  }
+    .modal-content {
+        margin-top: 2em;
+        display: block;
+        width: 60vw;
+    }
+      .details-judul {
+          line-height: 1em;
+      }
+      .detail-only-desktop {
+        display: block;
+    }
+}
+
+

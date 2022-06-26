@@ -55,28 +55,31 @@ def postFormKr(request):
 # Detail Reimbursement
 # --------------------
 def detail(request, id):
-    if (request.session['uid']):
-        user_session = fauth.get_account_info(request.session['uid'])
-        if (user_session):
-            data_detail = kr_read(id)
-            user = user_read(user_session['users'][0]['localId'])
-            if (data_detail != []):
-                data_photo = []
-                for photo in data_detail["bukti_pembayaran"]:
-                    url = getPhoto.getPhoto(photo)
-                    data_photo.append(url)
-                print(data_detail)
-                print(reimbursement_admin)
-                print(data_photo)
-                return render(request, 'kr_details.html', {
-                    'data': data_detail,
-                    'user': user,
-                    'admin': reimbursement_admin,
-                    'id': id,
-                    'photos': data_photo
-                })
-        else:
-            return redirect("/user/logout")
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                data_detail = kr_read(id)
+                user = user_read(user_session['users'][0]['localId'])
+                if (data_detail != []):
+                    data_photo = []
+                    for photo in data_detail["bukti_pembayaran"]:
+                        url = getPhoto.getPhoto(photo)
+                        data_photo.append(url)
+                    print(data_detail)
+                    print(reimbursement_admin)
+                    print(data_photo)
+                    return render(request, 'kr_details.html', {
+                        'data': data_detail,
+                        'user': user,
+                        'admin': reimbursement_admin,
+                        'id': id,
+                        'photos': data_photo
+                    })
+                else:
+                    return redirect("/user/logout")
+    except:
+        return redirect("/user/signin")
 
 
 # ---------------------

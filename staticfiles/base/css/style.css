@@ -520,7 +520,8 @@ label a.button {
     padding: 0.6em 1em;
     margin: 0.5em 0 0.5em 0;
     color: white;
-    background: var(--button-color);
+	background-color: var(--primary-yellow);
+  	box-shadow: 0 2px 10px rgb(0 0 0 / 0.9);
     border-radius: 0.5em;
     cursor: pointer;
     user-select: none;
@@ -535,8 +536,11 @@ label a.button {
     
 }
 
-.button:hover {
-
+.button:hover{
+	background-color: #9e2f20;
+	animation-timing-function: ease-in;
+	animation-duration: 2s;
+  	box-shadow: 0 2px 10px rgb(0 0 0 / 0.9);
 }
 
 .button-disabled {
@@ -1624,5 +1628,9 @@ label.profile-picture-container {
     .search-bar {
         margin-left: auto;
         width: max(33%, 22.5em);
+    }
+
+    .filler {
+        margin: 2em;
     }
 }

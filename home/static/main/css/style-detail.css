@@ -10,6 +10,8 @@
 
 	border-radius: 20px;
 
+	padding: 2em;
+
 	margin: auto auto auto auto;
 
 }
@@ -166,7 +168,7 @@
 	.home-top {
 		height: 30rem;
 		font-size: 1.2em;
-		padding: 5em;
+		padding: 3em;
 		flex-direction: row;
 		text-align: left;
 	}
@@ -183,9 +185,9 @@
 	}
 
 	.home-top > div > div {
-	width: 85%;
-	display: flex;
-	justify-content: left;
+		width: 85%;
+		display: flex;
+		justify-content: left;
 	}
 
 	.home-top > div > object{

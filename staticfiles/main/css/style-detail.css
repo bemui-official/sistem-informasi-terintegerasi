@@ -10,12 +10,13 @@
 
 	border-radius: 20px;
 
+	padding: 2em;
+
 	margin: auto auto auto auto;
 
 }
 
 .home-top .home-top-color-filter {
-
 	display: flex;
     justify-content: center;
 }
@@ -25,6 +26,8 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	align-items: center;
+	text-align: center;
 	color: #1C5188;
 }
 
@@ -40,6 +43,7 @@
 
 .home-middle {
 	padding: 5em 1em;
+	color: #1C5188;
 }
 
 .home-middle h2,
@@ -54,6 +58,11 @@
 	align-items: center;
 	justify-content: center;
 	text-align: center;
+}
+
+.home-middle-top object{
+	width: 50%;
+	height: 50%;
 }
 
 .home-middle-middle {
@@ -72,14 +81,9 @@
 	align-items: center;
 }
 
-.home-middle-top object {
-	width: 246px;
-	height: 215px;
-}
-
 .home-middle-middle object {
-	width: 247px;
-	height: 264px;
+	width: 20%;
+	height: 20%;
 }
 
 .home-middle-bottom {
@@ -125,7 +129,9 @@
 }
 
 .home-middle-bottom object {
-	width: 75%;
+	width: 50%;
+	height: 50%;
+
 }
 
 .button {
@@ -147,6 +153,14 @@
 
 }
 
+.home-features {
+	flex-direction: row;
+	text-align: center;
+	font-size: 3em;
+	margin-top: 3em;
+}
+
+
 @media only screen and (min-width: 800px) {
 
 	/* HOME */
@@ -154,7 +168,7 @@
 	.home-top {
 		height: 30rem;
 		font-size: 1.2em;
-		padding: 5em;
+		padding: 3em;
 		flex-direction: row;
 		text-align: left;
 	}
@@ -170,8 +184,14 @@
 		font-size: 1em;
 	}
 
+	.home-top > div > div {
+		width: 85%;
+		display: flex;
+		justify-content: left;
+	}
+
 	.home-top > div > object{
-		width: 50%;
+		width: 30em;
 	}
 
 	.home-middle {
@@ -211,8 +231,8 @@
 
 	.home-middle-top object,
 	.home-middle-middle object {
-		width: 35%;
-		height: 35%;
+		width: 30%;
+		height: 30%;
 		margin: 2em;
 	}
 

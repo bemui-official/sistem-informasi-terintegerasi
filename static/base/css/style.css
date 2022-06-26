@@ -17,7 +17,7 @@
     --button-light-bg: #E2E7EE;
     --button-light-color: #144B84;
 
-    --primary-blue: #1C5188;
+    --primary-blue: #2D2F43;
     --primary-yellow: #FF725E;
     --success-color: #3FAF67;
     --error-color: #EC4E43;
@@ -307,6 +307,7 @@ footer {
     font-size: 1rem;
 
     min-height: 50px;
+
 }
 
 .footer-upper {
@@ -323,6 +324,7 @@ footer {
     align-items: center;
     flex-direction: column;
 }
+
 
 .footer1 a img {
     width: 17.25em;
@@ -520,7 +522,29 @@ label a.button {
     padding: 0.6em 1em;
     margin: 0.5em 0 0.5em 0;
     color: white;
-    background: var(--button-color);
+	background-color: var(--primary-yellow);
+  	box-shadow: 0 2px 10px rgb(0 0 0 / 0.9);
+    border-radius: 0.5em;
+    cursor: pointer;
+    user-select: none;
+
+    text-decoration: none;
+    text-align: center;
+
+    transition: opacity 0.25s ease-in-out, color 0.25s ease-in-out, background 0.25s ease-in-out;
+}
+
+.button-sec {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    font-weight: bold;
+    padding: 0.6em 1em;
+    margin: 0.5em 0 0.5em 0;
+    color: var(--primary-yellow);
+    border: var(--primary-yellow);
+	background-color: transparent;
+  	box-shadow: 0 2px 10px rgb(0 0 0 / 0.9);
     border-radius: 0.5em;
     cursor: pointer;
     user-select: none;
@@ -535,8 +559,18 @@ label a.button {
     
 }
 
-.button:hover {
+.button:hover{
+	background-color: #9e2f20;
+	animation-timing-function: ease-in;
+	animation-duration: 2s;
+  	box-shadow: 0 2px 10px rgb(0 0 0 / 0.9);
+}
 
+.button-sec:hover{
+	background-color: #bbb;
+	animation-timing-function: ease-in;
+	animation-duration: 2s;
+  	box-shadow: 0 2px 10px rgb(0 0 0 / 0.9);
 }
 
 .button-disabled {
@@ -681,7 +715,7 @@ input[type="checkbox"]:checked + .slider:before {
     width: 100%; 
     height: 100%; 
     background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,0.8);
 
     justify-content: center;
     align-items: center;
@@ -1334,6 +1368,10 @@ label.profile-picture-container {
     display: block;
 }
 
+.currency:before {
+    content: "Rp";
+}
+
 /* CKEDITOR */
 
 .django-ckeditor-widget {
@@ -1417,7 +1455,7 @@ label.profile-picture-container {
         grid-template-columns: 0.1fr auto minmax(400px, 1fr) 0.1fr;
     }
 
-        .footer1 {
+    .footer1 {
         display: grid;
         grid-template-rows: 1fr auto;
         margin: 1.25em 0 0 1em;
@@ -1624,5 +1662,9 @@ label.profile-picture-container {
     .search-bar {
         margin-left: auto;
         width: max(33%, 22.5em);
+    }
+
+    .filler {
+        margin: 2em;
     }
 }
