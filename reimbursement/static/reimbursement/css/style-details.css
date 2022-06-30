@@ -100,7 +100,7 @@ svg {
 }
 
 svg .white-text {
-    animation: calc(1s + (var(--progress-bar) * 0.07s)) ease-in-out 0s 1 fillTransition;
+    animation: calc(1s + (var(--progress-bar) * 1s)) ease-in-out 0s 1 fillTransition;
     fill: white;
 }
 
@@ -109,7 +109,7 @@ svg .white-text {
 }
 
 svg .white-text {
-    animation: calc(1s + (var(--progress-bar) * 0.07s)) ease-in-out 0s 1 fillTransition;
+    animation: calc(1s + (var(--progress-bar) * 1s)) ease-in-out 0s 1 fillTransition;
     fill: white;
 }
 
