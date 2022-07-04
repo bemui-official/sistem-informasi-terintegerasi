@@ -2,16 +2,27 @@
 {% load static %}
 
 {% block meta %}
-    <title>Title</title>
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'user/css/style.css' %}"/>
 {% endblock meta %}
 
 {% block content %}
-<form action="postsignin" method="post">
-{% csrf_token %}
-    Email:
-    <input type="email" name="email"> <br/>
-    Password:
-    <input type="password" name="password"><br/>
-    <input type="submit" value="SignIn">
-</form>
+<div class="content-root">
+    <div class="form-root">
+        <h1 id="judul-form">Sign In</h1>
+        <section>
+            <form action="postsignin" method="post" id="form">
+            {% csrf_token %}
+                <label for="email" >Email</label>
+                <input type="email" name="email" id="email" placeholder="Masukkan email anda..."> <br/>
+
+                <label for="password" >Password</label>
+                <input type="password" name="password" id="password" placeholder="Masukkan password anda..."><br/>
+
+                <button type="submit" class="button" value="SignIn" id="submitbutton">Sign In</button>
+            </form>
+        </section>
+    </div>
+    <object class="object only-desktop" data="{% static 'user/svg/Computer-login-amico.svg' %}" type="image/svg+xml"></object>
+</div>
 {% endblock content %}

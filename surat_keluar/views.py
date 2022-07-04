@@ -9,33 +9,34 @@ from backend.constants.admins import suratkeluar_admin, suratkeluar_admin2
 # Initialize Firebase Database
 fauth = firebase_init.firebaseInit().auth()
 
+
 # ---------------------
 # Form Request Surat Keluar
 # --------------------
 def formSk(request):
-	try:
-		if (request.session['uid']):
-			if (fauth.get_account_info(request.session['uid'])):
-				return render(request, 'form_sk.html')
-			else:
-				return redirect("/user/logout")
-	except:
-		return redirect("/user/signin")
+    try:
+        if (request.session['uid']):
+            if (fauth.get_account_info(request.session['uid'])):
+                return render(request, 'form_sk.html')
+            else:
+                return redirect("/user/logout")
+    except:
+        return redirect("/user/signin")
 
 
 def postFormSk(request):
-	judul = request.POST.get("judul")
-	nama_kegiatan = request.POST.get("nama_kegiatan")
-	deskripsi = request.POST.get("deskripsi")
-	jenis_surat = request.POST.get("jenis")
-	link = request.POST.get("linkdocs")
+    judul = request.POST.get("judul")
+    nama_kegiatan = request.POST.get("nama_kegiatan")
+    deskripsi = request.POST.get("deskripsi")
+    jenis_surat = request.POST.get("jenis")
+    link = request.POST.get("linkdocs")
 
-	message = sk_create(request, judul, nama_kegiatan, deskripsi, jenis_surat, link)
-	print(message)
-	if message == "":
-		return redirect("/")
-	else:
-		return redirect(formSk)
+    message = sk_create(request, judul, nama_kegiatan, deskripsi, jenis_surat, link)
+    print(message)
+    if message == "":
+        return redirect("/")
+    else:
+        return redirect(formSk)
 
 
 # ---------------------
@@ -88,7 +89,7 @@ def form3(request, id):
     try:
         if (request.session['uid']):
             user_session = fauth.get_account_info(request.session['uid'])
-            if(user_session):
+            if (user_session):
                 user = user_read(user_session['users'][0]['localId'])
                 data_detail = sk_read(id)
                 if (user['birdeptim'] in suratkeluar_admin2["tahap3"]):
@@ -114,7 +115,7 @@ def postForm3(request):
 
     # Upload data to firebase
     try:
-        if dokumen[0]["successful"] :
+        if dokumen[0]["successful"]:
             print("masuk")
             dokumen_meta = []
             dokumen_meta.append(dokumen[0]["successful"][0]["meta"]["id_firebase"])

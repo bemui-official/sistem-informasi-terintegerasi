@@ -24,6 +24,7 @@
                 <li><a href="{% url 'home:publikasi' %}">Publikasi</a></li>
                 <li><a href="{% url 'home:surat' %}">Surat</a></li>
                 <li><a href="{% url 'home:survei' %}">Survei</a></li>
+                {% if not request.session.uid %}
                 <li class="nav-only-desktop">
                     <a href="{% url 'user:signin' %}" class="button fit-content" style="height: fit-content; margin: 0; padding: 0.6em 1em;">Masuk</a>
                 </li>
@@ -32,6 +33,17 @@
                         Masuk
                     </a>
                 </div>
+                {% endif %}
+                {% if request.dashboard %}
+                <li class="nav-only-desktop">
+                    <a href="{{request.dashboard}}" class="button fit-content" style="height: fit-content; margin: 0; padding: 0.6em 1em;">Dashboard</a>
+                </li>
+                <div class="nav-dropdown-buttons nav-only-mobile">
+                    <a href="{{request.dashboard}}" class="nav-only-mobile button btn-dashboard">
+                        Dashboard
+                    </a>
+                </div>
+                {% endif %}
             </ul>
         </nav>
 

@@ -14,9 +14,10 @@
 			<div class="home-top-color-filter">
 				<div class="only-desktop">
 					<h1>Get your task done<br>By using SIT</h1>
+					<p>{{request.dashboard}}</p>
 					<p>Permudah segala urusanmu dengan Sistem Informasi Terintegrasi</p>
-					{% if not request.user.is_authenticated %}
-						<a href="" class="button fit-content">Login Sekarang</a>
+					{% if not request.session.uid %}
+					<a href="{% url 'user:signin' %}" class="button fit-content">Login Sekarang</a>
 					{% endif %}
 				</div>
 				<object class="only-desktop" data="{% static 'main/svg/Scrum-board-pana.svg' %}" type="image/svg+xml"></object>
@@ -25,8 +26,8 @@
 					<div class="only-mobile">
 						<h1>Get your task done<br>By using SIT</h1>
 						<p>Permudah segala urusanmu dengan Sistem Informasi Terintegrasi</p>
-						{% if not request.user.is_authenticated %}
-							<a href="" class="button fit-content">Login Sekarang</a>
+						{% if not request.session.uid %}
+						<a href="{% url 'user:signin' %}" class="button fit-content">Login Sekarang</a>
 						{% endif %}
 					</div>
 				</div>

@@ -1,6 +1,8 @@
 from . import views
 from django.urls import path
 
+app_name = 'sk'
+
 urlpatterns = [
     path('form', views.formSk, name='formsk'),
     path('postform', views.postFormSk, name='postformsk'),

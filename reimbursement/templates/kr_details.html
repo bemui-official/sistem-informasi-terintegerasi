@@ -87,7 +87,7 @@
 			<p>{{data.AN_rekening}}</p>
 			<p>{{data.nomor_rekening}}</p>
 			<h3>Voucher</h3>
-			<a href="{{data.link_voucher}}">Voucher</a>
+			<a href="{{data.link_voucher}}" target="_blank" rel="noopener noreferrer">{{data.link_voucher}}</a>
 		</div>
 
 		<div class="bukti-pembayaran">
@@ -103,24 +103,19 @@
 
 		{% if voucher != "" %}
 		<div class="voucher">
-			<p>{{voucher}}</p>
-			<embed src="https://firebasestorage.googleapis.com/v0/b/sit-bemui.appspot.com/o/KEUANGAN_REIMBURSE%2FVOUCHER%2F%5BSCELE%5D%20Soal%20Essay%20%2B%20Solusi_%20Central%20Limit%20Theorem.pdf?alt=media&token=6f94f27e-ba4e-47dc-9d80-a30faa997a52" />
-			<div id="adobe-dc-view" style="height: 360px; width: 500px;"></div>
-			<script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-			<script type="text/javascript">
-			  document.addEventListener("adobe_dc_view_sdk.ready", function(){
-				var adobeDCView = new AdobeDC.View({clientId: "7ce09ecb13ab4384b24391e74bb0ad11", divId: "adobe-dc-view"});
-				adobeDCView.previewFile({
-				  content:{ location:
-					{ url: "https://firebasestorage.googleapis.com/v0/b/sit-bemui.appspot.com/o/KEUANGAN_REIMBURSE%2FVOUCHER%2F%5BSCELE%5D%20Soal%20Essay%20%2B%20Solusi_%20Central%20Limit%20Theorem.pdf?alt=media&token=6f94f27e-ba4e-47dc-9d80-a30faa997a52"}},
-				  metaData:{fileName: "Bodea Brochure.pdf"}
-				},
-				{
-				  embedMode: "SIZED_CONTAINER"
-				});
-			  });
-			</script>
+			<h3>Voucher</h3>
+			<embed src="{{voucher}}" class="voucher"/>
+		</div>
+		{% endif %}
 
+		{% if transfer != "" %}
+		<div class="transfer">
+			<h3>Bukti Transfer</h3>
+			<img class="bukti-image" src='{{ transfer }}'/>
+			<div class="modal">
+				<span class="close">&times;</span>
+				<img class="modal-content" src="{{transfer}}">
+			</div>
 		</div>
 		{% endif %}
 
@@ -143,7 +138,6 @@
 				<a href="{% url 'kr:form2' id=id %}" class="button">Masukkan bukti transfer</a>
 			{% endif %}
 		</div>
-		<p>{{data}}</p>
 	</div>
     <script type="application/javascript" src="{% static 'reimbursement/js/scripts-details.js' %}"></script>
 {% endblock content %}

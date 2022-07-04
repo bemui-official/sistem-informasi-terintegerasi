@@ -43,6 +43,7 @@ def postSignIn(request):
 	print(fauth.current_user)
 	session_id = user['idToken']
 	request.session['uid'] = str(session_id)
+	request.dashboard = "https://www.google.com"
 	return redirect('/')
 
 def logout(request):

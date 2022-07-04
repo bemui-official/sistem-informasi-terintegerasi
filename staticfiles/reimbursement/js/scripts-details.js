@@ -1,19 +1,44 @@
-// Get the modal
+// -------------
+// FUNGSI MODAL
+// -------------
 var modal = document.getElementsByClassName("modal");
 
 // Get the image and insert it inside the modal - use its "alt" text as a caption
 var img = document.getElementsByClassName("bukti-image");
 var modalImg = document.getElementsByClassName("modal-content");
-img.onclick = function(){
-  console.log("masuk")
-  modal.style.display = "block";
-  modalImg.src = this.src;
+
+console.log(img)
+
+function modalFunction() {
+  console.log(modal)
+  console.log(modalImg)
+  modal[0].style.display = "block";
+  modalImg[0].src = this.src;
+}
+
+function spanFunction() {
+  console.log("masuk2")
+  modal[0].style.display = "none";
+}
+
+for (var i = 0 ; i < img.length; i++) {
+   img[i].addEventListener('click' , modalFunction) ;
+   modal[i].addEventListener('click', spanFunction)
 }
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+var span = document.getElementsByClassName("close");
+for (var i = 0 ; i < span.length; i++) {
+   span[i].addEventListener('click' , spanFunction) ;
+}
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
+// -------------
+// Currency Converter
+// -------------
+let x = document.querySelectorAll(".currency");
+for (let i = 0, len = x.length; i < len; i++) {
+    let num = Number(x[i].innerHTML)
+              .toLocaleString('en');
+    x[i].innerHTML = num;
+    x[i].classList.add("currSign");
 }
