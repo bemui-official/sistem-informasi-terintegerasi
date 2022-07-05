@@ -57,11 +57,12 @@ input[type=password]
 
     .content-root {
         margin-top: 5em;
+        margin-bottom: 8em;
         display: grid;
         position: relative;
         text-align: left;
         grid-row: 3/4;
-        grid-template-columns: 0.25fr 40vw minmax(200px, 1fr) 0.1fr;
+        grid-template-columns: 0.25fr 50vw minmax(200px, 1fr) 0.1fr;
     }
 
     .uppy {
@@ -72,6 +73,7 @@ input[type=password]
         grid-column: 3/4;
         width: 30vw;
         float: right;
+        margin-left: 3em;
     }
 
     input[type=submit] {
@@ -86,7 +88,9 @@ input[type=password]
     }
 
     input[type=email],
-    input[type=password]{
+    input[type=password],
+    input[type=text],
+    select{
       width: 100%;
       padding: 12px 20px;
         margin-bottom: 1em;

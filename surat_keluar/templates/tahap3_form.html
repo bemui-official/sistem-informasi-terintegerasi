@@ -1,14 +1,16 @@
+{% extends 'base.html' %}
 {% load static %}
 
 {% block meta %}
     <title>Form Reimbursement</title>
-    <link rel="stylesheet" href="{% static 'base/css/bootstrap.min.css' %}"/>
-    <link rel="stylesheet" href="{% static 'reimbursement/css/style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'surat_keluar/css/style.css' %}"/>
     <link href="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.css" rel="stylesheet"/>
 {% endblock meta %}
 
 {% block content %}
+<div class="content-root">
     <div class="form-root">
+        <h1 id="judul-form">Form Memasukkan Berkas</h1>
         <section>
             <form action="../../postform3" method="post" id="form">
                 {% csrf_token %}
@@ -18,7 +20,7 @@
                 <input name="id_request" type="hidden" value={{ id }}>
             </form>
 
-            <button type="button" id="submitbutton">Submit</button>
+            <button type="button" id="submitbutton" class="button">Submit</button>
 
             <!-- Script upload ke Voucher-->
             <script src="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.js"></script>
@@ -66,7 +68,7 @@
             <script type="application/javascript" src="{% static 'reimbursement/js/scripts.js' %}"></script>
         </section>
     </div>
-
+</div>
     <script src="{% static 'base/js/jquery-3.6.0.min.js' %}"></script>
     <script src="{% static 'base/js/bootstrap.min.js' %}"></script>
     <script src="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.js"></script>

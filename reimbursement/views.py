@@ -78,7 +78,7 @@ def detail(request, id):
                     url = getPhoto.getPhoto(data_detail["bukti_transfer"][0])
                     transfer = url
                 except:
-                    trasnfer = ""
+                    transfer = ""
                 print(data_detail)
                 print(reimbursement_admin)
                 print(data_photo)

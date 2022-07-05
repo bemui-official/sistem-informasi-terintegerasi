@@ -14,7 +14,6 @@
 			<div class="home-top-color-filter">
 				<div class="only-desktop">
 					<h1>Get your task done<br>By using SIT</h1>
-					<p>{{request.dashboard}}</p>
 					<p>Permudah segala urusanmu dengan Sistem Informasi Terintegrasi</p>
 					{% if not request.session.uid %}
 					<a href="{% url 'user:signin' %}" class="button fit-content">Login Sekarang</a>

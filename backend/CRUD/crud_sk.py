@@ -43,6 +43,8 @@ def sk_create(request, judul, namaKegiatan, deskripsi, jenisSurat, link):
             'waktu_pengajuan': datetime.datetime.now()
         }
         db.collection('sk').document(idPermintaan).set(data)
+
+        return idPermintaan
     except:
         return "terjadi error"
     return ""
@@ -76,6 +78,8 @@ def sk_update_3(request, id, num, dokumen):
         return ""
     except:
         return "terjadi error"
+
+
 # ---------------------
 # Update data counter
 # --------------------

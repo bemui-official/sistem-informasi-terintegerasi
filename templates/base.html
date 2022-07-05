@@ -34,12 +34,12 @@
                     </a>
                 </div>
                 {% endif %}
-                {% if request.dashboard %}
+                {% if request.session.dashboard %}
                 <li class="nav-only-desktop">
-                    <a href="{{request.dashboard}}" class="button fit-content" style="height: fit-content; margin: 0; padding: 0.6em 1em;">Dashboard</a>
+                    <a href="{{request.session.dashboard}}" class="button fit-content" style="height: fit-content; margin: 0; padding: 0.6em 1em;">Dashboard</a>
                 </li>
                 <div class="nav-dropdown-buttons nav-only-mobile">
-                    <a href="{{request.dashboard}}" class="nav-only-mobile button btn-dashboard">
+                    <a href="{{request.session.dashboard}}" class="nav-only-mobile button btn-dashboard">
                         Dashboard
                     </a>
                 </div>

@@ -65,8 +65,8 @@
 					<h3>Nominal Reimbursement</h3>
 					<p class="currency">{{data.total_nominal}}</p>
 					<h3>Data Rekening</h3>
-					<p>{{data.AN_rekening}}</p>
-					<p>{{data.nomor_rekening}}</p>
+					<p>{{data.AN_rekening}}<br>{{data.nomor_rekening}}</p>
+					<p></p>
 					<h3>Voucher</h3>
 					<a href="{{data.link_voucher}}">Voucher</a>
 				</div>
@@ -121,7 +121,7 @@
 
 		<div class="button-outer">
 			{% if user.birdeptim in admin.tahap1 and data.tahapan == 0 %}
-			<form action="dibatalkan" method="post">
+			<form action="../dibatalkan" method="post">
 				{% csrf_token %}
 				<input name="id_request" type="hidden" value={{ id }}>
 				<button class="button-sec" type="submit">Batalkan</button>
