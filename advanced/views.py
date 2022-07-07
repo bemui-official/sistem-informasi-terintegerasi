@@ -16,7 +16,7 @@ def formKa(request):
     try:
         if (request.session['uid']):
             if (fauth.get_account_info(request.session['uid'])):
-                return render(request, 'form_ka.html')
+                return render(request, 'advanced/form_ka.html')
             else:
                 return redirect("/user/logout")
     except:
@@ -65,7 +65,7 @@ def detail(request, id):
                     transfer = ""
                 print(data_detail)
                 print(advanced_admin)
-                return render(request, 'ka_details.html', {
+                return render(request, 'advanced/ka_details.html', {
                     'data': data_detail,
                     'user': user,
                     'admin': advanced_admin,
@@ -107,7 +107,7 @@ def form1(request, id):
                 data_detail = ka_read(id)
                 if (user['birdeptim'] in advanced_admin2["tahap1"]):
                     if (data_detail["tahapan"] == 1):
-                        return render(request, 'tahap1_form.html', {"id": id})
+                        return render(request, 'advanced/tahap1_form.html', {"id": id})
                     else:
                         return redirect("/advanced/detail/" + id)
                 else:
@@ -160,7 +160,7 @@ def form2(request, id):
                 data_detail = ka_read(id)
                 if (user['birdeptim'] in advanced_admin2["tahap2"]):
                     if (data_detail["tahapan"] == 2):
-                        return render(request, 'tahap2_form.html', {"id": id})
+                        return render(request, 'advanced/tahap2_form.html', {"id": id})
                     else:
                         return redirect("/advanced/detail/" + id)
                 else:

@@ -16,7 +16,7 @@ def formKr(request):
     try:
         if (request.session['uid']):
             if (fauth.get_account_info(request.session['uid'])):
-                return render(request, 'form_kr.html')
+                return render(request, 'reimbursement/form_kr.html')
             else:
                 return redirect("/user/logout")
     except:
@@ -83,7 +83,7 @@ def detail(request, id):
                 print(data_detail)
                 print(reimbursement_admin)
                 print(data_photo)
-                return render(request, 'kr_details.html', {
+                return render(request, 'reimbursement/kr_details.html', {
                     'data': data_detail,
                     'user': user,
                     'admin': reimbursement_admin,
@@ -126,7 +126,7 @@ def form1(request, id):
                 data_detail = kr_read(id)
                 if (user['birdeptim'] in reimbursement_admin2["tahap1"]):
                     if (data_detail["tahapan"] == 1):
-                        return render(request, 'tahap1_form.html', {"id": id})
+                        return render(request, 'reimbursement/tahap1_form.html', {"id": id})
                     else:
                         return redirect("/reimbursement/detail/" + id)
                 else:
@@ -179,7 +179,7 @@ def form2(request, id):
                 data_detail = kr_read(id)
                 if (user['birdeptim'] in reimbursement_admin2["tahap2"]):
                     if (data_detail["tahapan"] == 2):
-                        return render(request, 'tahap2_form.html', {"id": id})
+                        return render(request, 'reimbursement/tahap2_form.html', {"id": id})
                     else:
                         return redirect("/reimbursement/detail/" + id)
                 else:

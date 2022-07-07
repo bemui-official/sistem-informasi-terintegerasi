@@ -39,10 +39,6 @@ select {
     width: 100%;
 }
 
-.uppy {
-    width: 85vw;
-}
-
 @media only screen and (min-width: 800px) {
     .form-root{
         grid-column: 2/3;
@@ -62,16 +58,11 @@ select {
 
     .content-root {
         margin-top: 5em;
-        margin-bottom: 4em;
         display: grid;
         position: relative;
         text-align: left;
         grid-row: 3/4;
         grid-template-columns: 0.25fr 60vw minmax(200px, 1fr) 0.1fr;
-    }
-
-    .uppy {
-        width: auto;
     }
 
     .object {

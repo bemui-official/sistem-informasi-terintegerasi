@@ -2,8 +2,8 @@
 {% load static %}
 
 {% block meta %}
-    <title>Form Reimbursement</title>
-    <link rel="stylesheet" href="{% static 'reimbursement/css/style.css' %}"/>
+    <title>Form Pengiriman Voucher</title>
+    <link rel="stylesheet" href="{% static 'penyetoran/css/style.css' %}"/>
     <link href="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.css" rel="stylesheet"/>
 {% endblock meta %}
 
@@ -14,9 +14,6 @@
             <section>
                 <form action="../../postform1" method="post" id="form">
                     {% csrf_token %}
-                    <label for="diterima">Jumlah Diterima</label>
-                    <input type="number" id="diterima" name="diterima" placeholder="Nominal Uang Diterima..."><br/>
-
                     <label class="control-label">Upload Voucher</label>
                     <div class="uppy" id="drag-drop-area"></div>
 
