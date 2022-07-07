@@ -93,3 +93,29 @@ def sk_getCounter():
     num = data['length']
     sk_updateCounter()
     return num
+
+
+# ---------------------
+# Read list of requests
+# --------------------
+def sk_read_requests(idBirdep):
+    try:
+        data_dict = []
+        datas = db.collection('sk').where('idBirdep', '==', idBirdep).get()
+        for data in datas:
+            data_dict.append(data.to_dict())
+        return data_dict
+    except:
+        data_dict = []
+    return data_dict
+
+def sk_read_all():
+    try:
+        data_dict = []
+        datas = db.collection('sk').get()
+        for data in datas:
+            data_dict.append(data.to_dict())
+        return data_dict
+    except:
+        data_dict = []
+    return data_dict

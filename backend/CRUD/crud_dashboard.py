@@ -25,5 +25,7 @@ ds = storage.bucket()
 def read_requests(idBirdep):
     data_dict = {
         'kr': crud_kr.kr_read_requests(idBirdep),
+        'ka': crud_ka.ka_read_requests(idBirdep),
+        'sk': crud_sk.sk_read_requests(idBirdep),
     }
     return data_dict

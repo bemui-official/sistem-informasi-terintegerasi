@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <title>Form Advanced</title>
+    <link rel="stylesheet" href="{% static 'advanced/css/style.css' %}"/>
+{% endblock meta %}
+
+{% block content %}
+    <div class="content-root">
+        <div class="form-root">
+            <h1 id="judul-form">Form Pengajuan Cash Advanced</h1>
+            <section>
+                <form action="postformka" method="post" id="form">
+                    {% csrf_token %}
+                    <label for="judul" >Judul</label>
+                    <input type="text" id="judul" name="judul" placeholder="Judul Permintaan..."> <br/>
+
+                    <label for="kegiatan" >Nama Kegiatan</label>
+                    <input type="text" id="kegiatan" name="nama_kegiatan" placeholder="Nama Kegiatan..."><br/>
+
+                    <label for="deskripsi">Deskripsi Singkat Kegiatan</label>
+                    <input type="text" id="deskripsi" name="deskripsi" placeholder="Deksripsi Singkat..."><br/>
+
+                    <label for="rekening">Nomor Rekening</label>
+                    <input type="number" id="rekening" name="norek" placeholder="Nomor Rekening..."><br/>
+
+                    <label for="atas-nama">Atas Nama Rekening</label>
+                    <input type="text" id="atas-nama" name="anrek" placeholder="Atas Nama Rekening..."><br/>
+
+                    <label for="bank">Nama Bank Rekening</label>
+                    <input type="text" id="bank" name="bank" placeholder="Nama bank rekening anda..."><br/>
+
+                    <label for="link-docs">Link Docs Voucher Pengajuan</label>
+                    <input type="url" id="link-docs" name="link_voucher" placeholder="Link Docs Voucher..."><br/>
+
+                    <label for="nominal">Nominal Advanced</label>
+                    <input type="number" id="nominal" name="nominal" placeholder="Nominal Uang Advanced..."><br/>
+
+                    <div class="filler"></div>
+
+                    <button class="button" type="submit" value="PostFormKa">Ajukan</button>
+                </form>
+                <div class="filler"></div>
+            </section>
+        </div>
+    <object class="object only-desktop" data="{% static 'reimbursement/svg/Topup-credit-bro.svg' %}" type="image/svg+xml"></object>
+    </div>
+{% endblock content %}

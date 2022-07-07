@@ -22,7 +22,7 @@ ds = storage.bucket()
 # --------------------------
 # CRUD Functions
 # --------------------------
-def kr_create(request, judul, namaKegiatan, deskripsi, norek, anrek, voucher, nominal, buktiPembayaran):
+def kr_create(request, judul, namaKegiatan, deskripsi, bank, norek, anrek, voucher, nominal, buktiPembayaran):
     try:
         print(request.session['uid'])
         user_data = fauth.get_account_info(request.session['uid'])
@@ -37,6 +37,7 @@ def kr_create(request, judul, namaKegiatan, deskripsi, norek, anrek, voucher, no
             'judul': judul,
             'nama_kegiatan': namaKegiatan,
             'deskripsi': deskripsi,
+            'bank': bank,
             'nomor_rekening': norek,
             'AN_rekening': anrek,
             'link_voucher': voucher,

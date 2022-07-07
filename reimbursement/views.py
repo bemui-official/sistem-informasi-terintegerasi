@@ -27,6 +27,7 @@ def postFormKr(request):
     judul = request.POST.get("judul")
     nama_kegiatan = request.POST.get("nama_kegiatan")
     deskripsi = request.POST.get("deskripsi")
+    bank = request.POST.get("bank")
     norek = request.POST.get("norek")
     anrek = request.POST.get("anrek")
     voucher = request.POST.get("link_voucher")
@@ -40,7 +41,7 @@ def postFormKr(request):
         photos_meta = []
         for i in photos[0]["successful"]:
             photos_meta.append(i["meta"]["id_firebase"])
-        message = kr_create(request, judul, nama_kegiatan, deskripsi, norek, anrek, voucher, nominal, photos_meta)
+        message = kr_create(request, judul, nama_kegiatan, deskripsi, bank, norek, anrek, voucher, nominal, photos_meta)
         if message != "terjadi error":
             return redirect("/reimbursement/detail/" + message)
         else:

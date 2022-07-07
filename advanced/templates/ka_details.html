@@ -3,7 +3,7 @@
 
 {% block meta %}
     <title>Detail Request</title>
-    <link rel="stylesheet" href="{% static 'reimbursement/css/style-details.css' %}">
+    <link rel="stylesheet" href="{% static 'advanced/css/style-details.css' %}">
 {% endblock meta %}
 
 {% block content %}
@@ -62,7 +62,7 @@
 					<p>{{data.deskripsi}}</p>
 				</div>
 				<div class="column">
-					<h3>Nominal Reimbursement</h3>
+					<h3>Nominal Cash Advanced</h3>
 					<p class="currency">{{data.total_nominal}}</p>
 					<h3>Data Rekening</h3>
 					<p>{{data.AN_rekening}}<br>{{data.nomor_rekening}}<br>{{data.bank}}</p>
@@ -88,17 +88,6 @@
 			<p>{{data.nomor_rekening}}</p>
 			<h3>Voucher</h3>
 			<a href="{{data.link_voucher}}" target="_blank" rel="noopener noreferrer">{{data.link_voucher}}</a>
-		</div>
-
-		<div class="bukti-pembayaran">
-			<h3>Bukti Pembayaran</h3>
-			{% for photo in photos %}
-			<img class="bukti-image" src='{{ photo }}'/>
-			<div class="modal">
-				<span class="close">&times;</span>
-				<img class="modal-content" src="{{photo}}">
-			</div>
-			{% endfor %}
 		</div>
 
 		{% if voucher != "" %}
@@ -133,9 +122,9 @@
 			</form>
 
 			{% elif user.birdeptim in admin.tahap1 and data.tahapan == 1 %}
-				<a href="{% url 'kr:form1' id=id %}" class="button">Masukkan berkas</a>
+				<a href="{% url 'ka:form1' id=id %}" class="button">Masukkan berkas</a>
 			{% elif user.birdeptim in admin.tahap2 and data.tahapan == 2 %}
-				<a href="{% url 'kr:form2' id=id %}" class="button">Masukkan bukti transfer</a>
+				<a href="{% url 'ka:form2' id=id %}" class="button">Masukkan bukti transfer</a>
 			{% endif %}
 		</div>
 	</div>

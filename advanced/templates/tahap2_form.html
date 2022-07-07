@@ -10,55 +10,32 @@
 {% block content %}
     <div class="content-root">
         <div class="form-root">
-            <h1 id="judul-form">Form Pengajuan Reimbursement</h1>
+            <h1 id="judul-form">Form Pengiriman Voucher</h1>
             <section>
-                <form action="postformkr" method="post" id="form">
+                <form action="../../postform2" method="post" id="form">
                     {% csrf_token %}
-                    <label for="judul" >Judul</label>
-                    <input type="text" id="judul" name="judul" placeholder="Judul Permintaan..."> <br/>
-
-                    <label for="kegiatan" >Nama Kegiatan</label>
-                    <input type="text" id="kegiatan" name="nama_kegiatan" placeholder="Nama Kegiatan..."><br/>
-
-                    <label for="deskripsi">Deskripsi Singkat Kegiatan</label>
-                    <input type="text" id="deskripsi" name="deskripsi" placeholder="Deksripsi Singkat..."><br/>
-
-                    <label for="rekening">Nomor Rekening</label>
-                    <input type="number" id="rekening" name="norek" placeholder="Nomor Rekening..."><br/>
-
-                    <label for="atas-nama">Atas Nama Rekening</label>
-                    <input type="text" id="atas-nama" name="anrek" placeholder="Atas Nama Rekening..."><br/>
-
-                    <label for="bank">Nama Bank Rekening</label>
-                    <input type="text" id="bank" name="bank" placeholder="Nama bank rekening anda..."><br/>
-
-                    <label for="link-docs">Link Docs Voucher Pengajuan</label>
-                    <input type="url" id="link-docs" name="link_voucher" placeholder="Link Docs Voucher..."><br/>
-
-                    <label for="nominal">Nominal Reimburse</label>
-                    <input type="number" id="nominal" name="nominal" placeholder="Nominal Uang Reimburse..."><br/>
-
-                    <label class="control-label">Upload Bukti Pembayaran</label>
+                    <label class="control-label">Upload Bukti Transfer</label>
                     <div class="uppy" id="drag-drop-area"></div>
 
-                    <div class="filler"></div>
-
                     <input name="uploadFiles" type="hidden">
-
+                    <input name="id_request" type="hidden" value={{ id }}>
                 </form>
 
-                <button type="button" class="button" id="submitbutton">Ajukan</button>
-
+                <button type="button" class="button" id="submitbutton">Submit</button>
                 <div class="filler"></div>
 
-                <!-- Script upload ke Bukti Pembayaran-->
+                <!-- Script upload ke Voucher-->
                 <script src="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.js"></script>
                 <script>
-                    var uppy = new Uppy.Core()
+                    var uppy = new Uppy.Core({
+                        restrictions: {
+                            maxNumberOfFiles: 1,
+                      },
+                    })
 
                     uppy.on('file-added', (file) => {
                         uppy.setFileMeta(file.id, {
-                            id_firebase: "KEUANGAN_REIMBURSE/BUKTI_PEMBAYARAN/" + uuidv4(),
+                            id_firebase: "KEUANGAN_REIMBURSE/BUKTI_TRANSFER/" + uuidv4(),
                         })
                     })
                     uppy.use(Uppy.XHRUpload, {
@@ -87,8 +64,8 @@
                         triggerUploadOnSubmit: false,
                     })
                 </script>
-                <script type="application/javascript" src="{% static 'reimbursement/js/scripts.js' %}"></script>
                 <script src="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.js"></script>
+                <script type="application/javascript" src="{% static 'reimbursement/js/scripts.js' %}"></script>
             </section>
         </div>
     <object class="object only-desktop" data="{% static 'reimbursement/svg/Topup-credit-bro.svg' %}" type="image/svg+xml"></object>
