@@ -1,11 +1,16 @@
 from django.shortcuts import render, redirect
-from backend.CRUD.crud_user import user_create
+from backend.CRUD.crud_user import user_create, user_read
+from backend.CRUD.crud_dashboard import read_requests
 from django.contrib import auth
 from backend.misc import firebase_init
 from backend.constants.birdeptim import pi, birdeptim, kode_fungsionaris
 
 fauth = firebase_init.firebaseInit().auth()
 
+
+# ---------------------
+# Authentication
+# --------------------
 def signUp(request):
 	return render(request, 'signUp.html', {
 		"pi": pi,
@@ -51,3 +56,21 @@ def logout(request):
 	auth.logout(request)
 	return redirect("user:signin")
 
+
+# ---------------------
+# Dashboard
+# --------------------
+def dashboard(request):
+	if (request.session['uid']):
+		user_session = fauth.get_account_info(request.session['uid'])
+		if (user_session):
+			user = user_read(user_session['users'][0]['localId'])
+			print(user['id'])
+			data = read_requests(user['id'])
+			return render(request, 'dashboard.html', {
+				'data': data,
+			})
+		else:
+			return redirect("/user/logout")
+	# except:
+	#     return redirect("/user/signin")

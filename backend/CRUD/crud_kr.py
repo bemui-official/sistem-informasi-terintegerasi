@@ -1,6 +1,7 @@
 import firebase_admin
 from firebase_admin import credentials, firestore, storage
-from backend.CRUD.crud_user import user_read
+from .crud_user import user_read
+
 from backend.misc import firebase_init
 import datetime
 
@@ -109,3 +110,29 @@ def kr_getCounter():
     num = data['length']
     kr_updateCounter()
     return num
+
+
+# ---------------------
+# Read list of requests
+# --------------------
+def kr_read_requests(idBirdep):
+    try:
+        data_dict = []
+        datas = db.collection('kr').where('idBirdep', '==', idBirdep).get()
+        for data in datas:
+            data_dict.append(data.to_dict())
+        return data_dict
+    except:
+        data_dict = []
+    return data_dict
+
+def kr_read_all():
+    try:
+        data_dict = []
+        datas = db.collection('kr').get()
+        for data in datas:
+            data_dict.append(data.to_dict())
+        return data_dict
+    except:
+        data_dict = []
+    return data_dict

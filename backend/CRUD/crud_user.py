@@ -15,7 +15,7 @@ ds = storage.bucket()
 
 
 # --------------------------
-# CRUD Functions
+# CRUD Functions Authentication
 # --------------------------
 def user_create(idBirdep, email, password, asal, nama, total_pesanan, panggilan, permintaan, birdeptim) :
     idBirdep = idBirdep+"-"+asal
