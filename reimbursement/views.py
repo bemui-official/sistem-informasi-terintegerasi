@@ -6,7 +6,7 @@ from backend.misc import firebase_init, getPhoto
 from backend.constants.admins import reimbursement_admin, reimbursement_admin2
 
 # Initialize Firebase Database
-fauth = firebase_init.firebaseInit().auth()
+fauth = firebase_init
 
 
 # ---------------------
@@ -58,8 +58,10 @@ def postFormKr(request):
 def detail(request, id):
     # try:
     if (request.session['uid']):
+        print("abc")
         user_session = fauth.get_account_info(request.session['uid'])
         if (user_session):
+            print("def")
             data_detail = kr_read(id)
             user = user_read(user_session['users'][0]['localId'])
             if (data_detail != []):

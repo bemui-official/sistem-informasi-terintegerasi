@@ -6,7 +6,7 @@ from backend.misc import firebase_init, getPhoto
 from backend.constants.admins import penyetoran_admin, penyetoran_admin2
 
 # Initialize Firebase Database
-fauth = firebase_init.firebaseInit().auth()
+fauth = firebase_init
 
 
 # ---------------------

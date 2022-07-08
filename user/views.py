@@ -5,7 +5,7 @@ from django.contrib import auth
 from backend.misc import firebase_init
 from backend.constants.birdeptim import pi, birdeptim, kode_fungsionaris
 
-fauth = firebase_init.firebaseInit().auth()
+fauth = firebase_init
 
 
 # ---------------------
@@ -45,11 +45,11 @@ def postSignIn(request):
 		user = fauth.sign_in_with_email_and_password(email, password)
 	except:
 		return redirect(signIn)
-	print(fauth.current_user)
+	print(user)
 	session_id = user['idToken']
 	request.session['uid'] = str(session_id)
 	request.session['dashboard'] = "https://www.google.com"
-	print()
+	print(request.session['uid'])
 	return redirect('/')
 
 def logout(request):

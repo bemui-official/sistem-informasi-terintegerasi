@@ -13,7 +13,7 @@ if not firebase_admin._apps:
         'storageBucket' : 'sit-bemui.appspot.com'
     })
 
-fauth = firebase_init.firebaseInit().auth()
+fauth = firebase_init
 db = firestore.client()
 ds = storage.bucket()
 
