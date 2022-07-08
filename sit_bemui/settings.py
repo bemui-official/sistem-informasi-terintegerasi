@@ -28,7 +28,7 @@ SECRET_KEY = '%*6xd(4q!7f!$9e%ap@x(it_xr7e)zlgf%l)v1_5r*^6a_7sp9'
 PRODUCTION = os.getenv('DATABASE_URL') is not None
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = not PRODUCTION
+DEBUG = True
 
 ALLOWED_HOSTS = ["sitbemui.herokuapp.com"]
 
