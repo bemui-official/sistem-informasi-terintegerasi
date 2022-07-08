@@ -56,48 +56,48 @@ def postFormKr(request):
 # Detail Reimbursement
 # --------------------
 def detail(request, id):
-    # try:
-    if (request.session['uid']):
-        print("abc")
-        user_session = fauth.get_account_info(request.session['uid'])
-        if (user_session):
-            print("def")
-            data_detail = kr_read(id)
-            user = user_read(user_session['users'][0]['localId'])
-            if (data_detail != []):
-                # Get Photos Bukti Pembayaran
-                data_photo = []
-                for photo in data_detail["bukti_pembayaran"]:
-                    url = getPhoto.getPhoto(photo)
-                    data_photo.append(url)
-                # Get Voucher Files
-                try:
-                    url = getPhoto.getPhoto(data_detail["token_voucher"][0])
-                    voucher = url
-                except:
-                    voucher = ""
-                # Get Bukti Transfer
-                try:
-                    url = getPhoto.getPhoto(data_detail["bukti_transfer"][0])
-                    transfer = url
-                except:
-                    transfer = ""
-                print(data_detail)
-                print(reimbursement_admin)
-                print(data_photo)
-                return render(request, 'reimbursement/kr_details.html', {
-                    'data': data_detail,
-                    'user': user,
-                    'admin': reimbursement_admin,
-                    'id': id,
-                    'photos': data_photo,
-                    'voucher': voucher,
-                    'transfer': transfer
-                })
-            else:
-                return redirect("/user/logout")
-    # except:
-    #     return redirect("/user/signin")
+    try:
+        if (request.session['uid']):
+            print("abc")
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                print("def")
+                data_detail = kr_read(id)
+                user = user_read(user_session['users'][0]['localId'])
+                if (data_detail != []):
+                    # Get Photos Bukti Pembayaran
+                    data_photo = []
+                    for photo in data_detail["bukti_pembayaran"]:
+                        url = getPhoto.getPhoto(photo)
+                        data_photo.append(url)
+                    # Get Voucher Files
+                    try:
+                        url = getPhoto.getPhoto(data_detail["token_voucher"][0])
+                        voucher = url
+                    except:
+                        voucher = ""
+                    # Get Bukti Transfer
+                    try:
+                        url = getPhoto.getPhoto(data_detail["bukti_transfer"][0])
+                        transfer = url
+                    except:
+                        transfer = ""
+                    print(data_detail)
+                    print(reimbursement_admin)
+                    print(data_photo)
+                    return render(request, 'reimbursement/kr_details.html', {
+                        'data': data_detail,
+                        'user': user,
+                        'admin': reimbursement_admin,
+                        'id': id,
+                        'photos': data_photo,
+                        'voucher': voucher,
+                        'transfer': transfer
+                    })
+                else:
+                    return redirect("/user/logout")
+    except:
+        return redirect("/user/signin")
 
 
 # ---------------------

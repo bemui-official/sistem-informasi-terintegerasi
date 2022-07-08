@@ -43,28 +43,31 @@ def postFormSk(request):
 # Detail Surat Keluar
 # --------------------
 def detail(request, id):
-    if (request.session['uid']):
-        user_session = fauth.get_account_info(request.session['uid'])
-        if (user_session):
-            data_detail = sk_read(id)
-            user = user_read(user_session['users'][0]['localId'])
-            if (data_detail != []):
-                # Get Dokumen Files
-                try:
-                    url = getPhoto.getPhoto(data_detail["token_dokumen"][0])
-                    dokumen = url
-                except:
-                    dokumen = ""
-                return render(request, 'sk_details.html', {
-                    'data': data_detail,
-                    'user': user,
-                    'admin': suratkeluar_admin,
-                    'id': id,
-                    'dokumen': dokumen
-                })
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                data_detail = sk_read(id)
+                user = user_read(user_session['users'][0]['localId'])
+                if (data_detail != []):
+                    # Get Dokumen Files
+                    try:
+                        url = getPhoto.getPhoto(data_detail["token_dokumen"][0])
+                        dokumen = url
+                    except:
+                        dokumen = ""
+                    return render(request, 'sk_details.html', {
+                        'data': data_detail,
+                        'user': user,
+                        'admin': suratkeluar_admin,
+                        'id': id,
+                        'dokumen': dokumen
+                    })
+            else:
+                return redirect("/user/logout")
         else:
-            return redirect("/user/logout")
-    else:
+            return redirect("/user/signin")
+    except:
         return redirect("/user/signin")
 
 # ---------------------

@@ -44,39 +44,39 @@ def postFormKs(request):
 # Detail Penyetoran
 # --------------------
 def detail(request, id):
-    # try:
-    if (request.session['uid']):
-        user_session = fauth.get_account_info(request.session['uid'])
-        if (user_session):
-            data_detail = ks_read(id)
-            user = user_read(user_session['users'][0]['localId'])
-            if (data_detail != []):
-                # Get Voucher Files
-                try:
-                    url = getPhoto.getPhoto(data_detail["token_voucher"][0])
-                    voucher = url
-                except:
-                    voucher = ""
-                # Get Bukti Transfer
-                try:
-                    url = getPhoto.getPhoto(data_detail["bukti_transfer"][0])
-                    transfer = url
-                except:
-                    transfer = ""
-                print(data_detail)
-                print(penyetoran_admin)
-                return render(request, 'penyetoran/ks_details.html', {
-                    'data': data_detail,
-                    'user': user,
-                    'admin': penyetoran_admin,
-                    'id': id,
-                    'voucher': voucher,
-                    'transfer': transfer
-                })
-            else:
-                return redirect("/user/logout")
-    # except:
-    #     return redirect("/user/signin")
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                data_detail = ks_read(id)
+                user = user_read(user_session['users'][0]['localId'])
+                if (data_detail != []):
+                    # Get Voucher Files
+                    try:
+                        url = getPhoto.getPhoto(data_detail["token_voucher"][0])
+                        voucher = url
+                    except:
+                        voucher = ""
+                    # Get Bukti Transfer
+                    try:
+                        url = getPhoto.getPhoto(data_detail["bukti_transfer"][0])
+                        transfer = url
+                    except:
+                        transfer = ""
+                    print(data_detail)
+                    print(penyetoran_admin)
+                    return render(request, 'penyetoran/ks_details.html', {
+                        'data': data_detail,
+                        'user': user,
+                        'admin': penyetoran_admin,
+                        'id': id,
+                        'voucher': voucher,
+                        'transfer': transfer
+                    })
+                else:
+                    return redirect("/user/logout")
+    except:
+        return redirect("/user/signin")
 
 
 # ---------------------
