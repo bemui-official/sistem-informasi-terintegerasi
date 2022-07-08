@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <title>Form Publikasi</title>
+    <link rel="stylesheet" href="{% static 'surat_keluar/css/style.css' %}"/>
+{% endblock meta %}
+
+{% block content %}
+    <div class="content-root">
+        <div class="form-root">
+            <h1 id="judul-form">Form Pengajuan Surat Menyurat</h1>
+            <section>
+                <form action="postformsk" method="post" id="form">
+                    {% csrf_token %}
+                    <label for="judul" >Judul</label>
+                    <input type="text" id="judul" name="judul" placeholder="Judul Permintaan..."> <br/>
+
+                    <label for="kegiatan" >Nama Kegiatan</label>
+                    <input type="text" id="kegiatan" name="nama_kegiatan" placeholder="Nama Kegiatan..."><br/>
+
+                    <label for="deskripsi">Deskripsi Singkat Kegiatan</label>
+                    <input type="text" id="deskripsi" name="deskripsi" placeholder="Deksripsi Singkat..."><br/>
+
+                    <label for="jenis">Jenis Surat</label>
+                    <select id="jenis" name="jenis">
+                        <option value="peminjaman">Peminjaman</option>
+                        <option value="permintaan">Permintaan</option>
+                        <option value="pengajuan">Pengajuan</option>
+                    </select><br/>
+
+                    <label for="link-docs">Link Docs Surat</label>
+                    <input type="url" name="linkdocs" id="link-docs" placeholder="Masukkan link surat..."><br/>
+
+                    <button class="button" type="submit" value="PostFormSk">Ajukan</button>
+                </form>
+            </section>
+        </div>
+        <object class="object only-desktop" data="{% static 'surat_keluar/svg/Envelope-pana.svg' %}" type="image/svg+xml"></object>
+    </div>
+{% endblock content %}
