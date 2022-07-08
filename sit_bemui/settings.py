@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -105,16 +106,16 @@ DATABASES = {
 # Set database settings automatically using DATABASE_URL.
 if PRODUCTION:
     DATABASES = {
-       'default': {
-          'ENGINE': 'django.db.backends.postgresql_psycopg2',
-          'NAME': os.getenv('DATABASE_NAME', ''),
-          'USER': os.getenv('DATABASE_USER', ''),
-          'PASSWORD': os.getenv('DATABASE_USER_PASSWORD', ''),
-          'HOST': 'localhost',
-          'PORT': '5432',
-       }
+        'default': dj_database_url.config()
     }
-
+# 'default': {
+#           'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#           'NAME': os.getenv('DATABASE_NAME', ''),
+#           'USER': os.getenv('DATABASE_USER', ''),
+#           'PASSWORD': os.getenv('DATABASE_USER_PASSWORD', ''),
+#           'HOST': 'localhost',
+#           'PORT': '5432',
+#        }
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
