@@ -25,7 +25,7 @@ SECRET_KEY = '%*6xd(4q!7f!$9e%ap@x(it_xr7e)zlgf%l)v1_5r*^6a_7sp9'
 # Automatically determine environment by detecting if DATABASE_URL variable.
 # DATABASE_URL is provided by Heroku if a database add-on is added
 # (e.g. Heroku Postgres).
-PRODUCTION = os.getenv('SECRET_KEY') is not None
+PRODUCTION = os.getenv('DATABASE_URL') is not None
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = not PRODUCTION
