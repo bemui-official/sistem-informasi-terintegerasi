@@ -61,16 +61,17 @@ def logout(request):
 # Dashboard
 # --------------------
 def dashboard(request):
-	if (request.session['uid']):
-		user_session = fauth.get_account_info(request.session['uid'])
-		if (user_session):
-			user = user_read(user_session['users'][0]['localId'])
-			print(user['id'])
-			data = read_requests(user['id'])
-			return render(request, 'dashboard.html', {
-				'data': data,
-			})
-		else:
-			return redirect("/user/logout")
-	# except:
-	#     return redirect("/user/signin")
+	try:
+		if (request.session['uid']):
+			user_session = fauth.get_account_info(request.session['uid'])
+			if (user_session):
+				user = user_read(user_session['users'][0]['localId'])
+				print(user['id'])
+				data = read_requests(user['id'])
+				return render(request, 'dashboard.html', {
+					'data': data,
+				})
+			else:
+				return redirect("/user/logout")
+	except:
+	    return redirect("/user/signin")
