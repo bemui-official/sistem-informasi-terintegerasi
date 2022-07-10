@@ -1,5 +1,6 @@
 import json
 
+from django.http import Http404
 from django.shortcuts import render, redirect
 from backend.CRUD.crud_sk import sk_create, sk_read, sk_update, sk_update_3
 from backend.CRUD.crud_user import user_read
@@ -50,19 +51,22 @@ def detail(request, id):
                 data_detail = sk_read(id)
                 user = user_read(user_session['users'][0]['localId'])
                 if (data_detail != []):
-                    # Get Dokumen Files
-                    try:
-                        url = getPhoto.getPhoto(data_detail["token_dokumen"][0])
-                        dokumen = url
-                    except:
-                        dokumen = ""
-                    return render(request, 'sk_details.html', {
-                        'data': data_detail,
-                        'user': user,
-                        'admin': suratkeluar_admin,
-                        'id': id,
-                        'dokumen': dokumen
-                    })
+                    if (user["id"] == data_detail["idBirdep"] or user['birdeptim'] in suratkeluar_admin2["admin"]):
+                        # Get Dokumen Files
+                        try:
+                            url = getPhoto.getPhoto(data_detail["token_dokumen"][0])
+                            dokumen = url
+                        except:
+                            dokumen = ""
+                        return render(request, 'sk_details.html', {
+                            'data': data_detail,
+                            'user': user,
+                            'admin': suratkeluar_admin,
+                            'id': id,
+                            'dokumen': dokumen
+                        })
+                    else:
+                        raise Http404
             else:
                 return redirect("/user/logout")
         else:
@@ -74,23 +78,53 @@ def detail(request, id):
 # Form Tahap 0,1,2 Surat Keluar
 # --------------------
 def diterima_1(request):
-    print('masuk')
-    id_request = request.POST.get("id_request")
-    sk_update(request, id_request, 1)
-    return redirect('sk:detail', id=id_request)
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                user = user_read(user_session['users'][0]['localId'])
+                if (user['birdeptim'] in suratkeluar_admin2["tahap1"]):
+                    print('masuk')
+                    id_request = request.POST.get("id_request")
+                    sk_update(request, id_request, 1)
+                    return redirect('sk:detail', id=id_request)
+            else:
+                redirect('user:logout')
+    except:
+        redirect('user:signin')
 
 
 def diterima_2(request):
-    print('masuk')
-    id_request = request.POST.get("id_request")
-    sk_update(request, id_request, 2)
-    return redirect('sk:detail', id=id_request)
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                user = user_read(user_session['users'][0]['localId'])
+                if (user['birdeptim'] in suratkeluar_admin2["tahap2"]):
+                    print('masuk')
+                    id_request = request.POST.get("id_request")
+                    sk_update(request, id_request, 2)
+                    return redirect('sk:detail', id=id_request)
+            else:
+                redirect('user:logout')
+    except:
+        redirect('user:signin')
 
 
 def dibatalkan(request):
-    id_request = request.POST.get("id_request")
-    sk_update(request, id_request, -1)
-    return redirect('sk:detail', id=id_request)
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                user = user_read(user_session['users'][0]['localId'])
+                if (user['birdeptim'] in suratkeluar_admin2["tahap1"]):
+                    id_request = request.POST.get("id_request")
+                    sk_update(request, id_request, -1)
+                    return redirect('sk:detail', id=id_request)
+            else:
+                redirect('user:logout')
+    except:
+        redirect('user:signin')
 
 
 # ---------------------

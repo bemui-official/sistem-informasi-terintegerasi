@@ -21,7 +21,8 @@
 }
 
 input[type=email],
-input[type=password]
+input[type=password],
+input[type=text]
 {
     width: 100%;
       padding: 12px 20px;

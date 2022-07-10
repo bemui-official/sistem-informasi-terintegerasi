@@ -25,5 +25,6 @@ urlpatterns = [
     path('penyetoran/', include(('penyetoran.urls', 'ks'), namespace='ks')),
     path('advanced/', include(('advanced.urls', 'ka'), namespace='ka')),
     path('backend/', include('backend.urls'))
-
 ]
+
+handler404 = "sit_bemui.views.page_not_found_view"

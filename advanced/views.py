@@ -1,4 +1,6 @@
 import json
+
+from django.http import Http404
 from django.shortcuts import render, redirect
 from backend.CRUD.crud_ka import ka_create, ka_read, ka_update_0, ka_update_1, ka_update_2
 from backend.CRUD.crud_user import user_read
@@ -51,28 +53,31 @@ def detail(request, id):
                 data_detail = ka_read(id)
                 user = user_read(user_session['users'][0]['localId'])
                 if (data_detail != []):
-                    # Get Voucher Files
-                    try:
-                        url = getPhoto.getPhoto(data_detail["token_voucher"][0])
-                        voucher = url
-                    except:
-                        voucher = ""
-                    # Get Bukti Transfer
-                    try:
-                        url = getPhoto.getPhoto(data_detail["bukti_transfer"][0])
-                        transfer = url
-                    except:
-                        transfer = ""
-                    print(data_detail)
-                    print(advanced_admin)
-                    return render(request, 'advanced/ka_details.html', {
-                        'data': data_detail,
-                        'user': user,
-                        'admin': advanced_admin,
-                        'id': id,
-                        'voucher': voucher,
-                        'transfer': transfer
-                    })
+                    if (user["id"] == data_detail["idBirdep"] or user['birdeptim'] in advanced_admin2["admin"]):
+                        # Get Voucher Files
+                        try:
+                            url = getPhoto.getPhoto(data_detail["token_voucher"][0])
+                            voucher = url
+                        except:
+                            voucher = ""
+                        # Get Bukti Transfer
+                        try:
+                            url = getPhoto.getPhoto(data_detail["bukti_transfer"][0])
+                            transfer = url
+                        except:
+                            transfer = ""
+                        print(data_detail)
+                        print(advanced_admin)
+                        return render(request, 'advanced/ka_details.html', {
+                            'data': data_detail,
+                            'user': user,
+                            'admin': advanced_admin,
+                            'id': id,
+                            'voucher': voucher,
+                            'transfer': transfer
+                        })
+                    else:
+                        raise Http404
                 else:
                     return redirect("/user/logout")
     except:
@@ -83,16 +88,36 @@ def detail(request, id):
 # Form Tahap 0 Advanced
 # --------------------
 def diterima(request):
-    print('masuk')
-    id_request = request.POST.get("id_request")
-    ka_update_0(request, id_request, 1)
-    return redirect('ka:detail', id=id_request)
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                user = user_read(user_session['users'][0]['localId'])
+                if (user['birdeptim'] in advanced_admin2["tahap1"]):
+                    print('masuk')
+                    id_request = request.POST.get("id_request")
+                    ka_update_0(request, id_request, 1)
+                    return redirect('ka:detail', id=id_request)
+            else:
+                redirect('user:logout')
+    except:
+        redirect('user:signin')
 
 
 def dibatalkan(request):
-    id_request = request.POST.get("id_request")
-    ka_update_0(request, id_request, -1)
-    return redirect('ka:detail', id=id_request)
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                user = user_read(user_session['users'][0]['localId'])
+                if (user['birdeptim'] in advanced_admin2["tahap1"]):
+                    id_request = request.POST.get("id_request")
+                    ka_update_0(request, id_request, -1)
+                    return redirect('ka:detail', id=id_request)
+            else:
+                redirect('user:logout')
+    except:
+        redirect('user:signin')
 
 
 # ---------------------

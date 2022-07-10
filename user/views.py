@@ -5,6 +5,11 @@ from django.contrib import auth
 from backend.misc import firebase_init
 from backend.constants.birdeptim import pi, birdeptim, kode_fungsionaris
 
+from backend.CRUD.crud_kr import kr_read_requests
+from backend.CRUD.crud_ka import ka_read_requests
+from backend.CRUD.crud_ks import ks_read_requests
+from backend.CRUD.crud_sk import sk_read_requests
+
 fauth = firebase_init
 
 
@@ -60,16 +65,36 @@ def logout(request):
 # ---------------------
 # Dashboard
 # --------------------
-def dashboard(request):
+def dashboard(request, category, sort):
 	try:
 		if (request.session['uid']):
 			user_session = fauth.get_account_info(request.session['uid'])
 			if (user_session):
 				user = user_read(user_session['users'][0]['localId'])
 				print(user['id'])
-				data = read_requests(user['id'])
+				data = []
+				judul = "Home Dashboard"
+				if category == 'reimbursement':
+					data = kr_read_requests(user['id'])
+					judul = "Keuangan - Reimbursement"
+				elif category == "advanced":
+					data = ka_read_requests(user['id'])
+					judul = "Keuangan - Cash Advanced"
+				elif category == "setor":
+					data = ks_read_requests(user['id'])
+					judul = "Keuangan - Penyetoran"
+				elif category == "surat":
+					data = sk_read_requests(user["id"])
+					judul = "Surat Menyurat - Surat"
+
+				hostname = request.build_absolute_uri("/")
+				print(request.get_full_path)
 				return render(request, 'dashboard.html', {
-					'data': data,
+					'datas': data,
+					'user': user,
+					'judul': judul,
+					'hostname': hostname,
+					'category': category
 				})
 			else:
 				return redirect("/user/logout")

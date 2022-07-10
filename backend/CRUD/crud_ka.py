@@ -1,9 +1,12 @@
 import firebase_admin
 from firebase_admin import credentials, firestore, storage
 from .crud_user import user_read
-
 from backend.misc import firebase_init
+from backend.constants.tahapan import tahap_advanced
+
 import datetime
+import pytz
+
 
 # --------------------------
 # Initialize Firebase Admin
@@ -44,8 +47,9 @@ def ka_create(request, judul, namaKegiatan, deskripsi, bank, norek, anrek, vouch
             'isTransfered': False,
             'total_nominal': nominal,
             'tahapan': 0,
+            'nama_tahapan': tahap_advanced[0],
             'bukti_transaksi': [],
-            'waktu_pengajuan': datetime.datetime.now()
+            'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta'))
         }
         db.collection('ka').document(idPermintaan).set(data)
 
@@ -71,7 +75,8 @@ def ka_delete():
 def ka_update_0(request, id, num):
     try:
         db.collection('ka').document(id).update({
-            "tahapan": num
+            "tahapan": num,
+            "nama_tahapan": tahap_advanced[num]
         })
         return ""
     except:
@@ -82,7 +87,8 @@ def ka_update_1(request, id, diterima, voucher):
         db.collection('ka').document(id).update({
             "nominal_diterima": diterima,
             "token_voucher": voucher,
-            "tahapan": 2
+            "tahapan": 2,
+            "nama_tahapan": tahap_advanced[2]
         })
         return ""
     except:
@@ -91,7 +97,8 @@ def ka_update_1(request, id, diterima, voucher):
 def ka_update_2(request, id, bukti):
     db.collection('ka').document(id).update({
         "bukti_transfer": bukti,
-        "tahapan": 3
+        "tahapan": 3,
+        "nama_tahapan": tahap_advanced[3]
     })
     return ""
 

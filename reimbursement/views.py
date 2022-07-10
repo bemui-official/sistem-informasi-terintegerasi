@@ -1,4 +1,6 @@
 import json
+
+from django.http import Http404
 from django.shortcuts import render, redirect
 from backend.CRUD.crud_kr import kr_create, kr_read, kr_update_0, kr_update_1, kr_update_2
 from backend.CRUD.crud_user import user_read
@@ -58,42 +60,43 @@ def postFormKr(request):
 def detail(request, id):
     try:
         if (request.session['uid']):
-            print("abc")
             user_session = fauth.get_account_info(request.session['uid'])
             if (user_session):
-                print("def")
                 data_detail = kr_read(id)
                 user = user_read(user_session['users'][0]['localId'])
                 if (data_detail != []):
-                    # Get Photos Bukti Pembayaran
-                    data_photo = []
-                    for photo in data_detail["bukti_pembayaran"]:
-                        url = getPhoto.getPhoto(photo)
-                        data_photo.append(url)
-                    # Get Voucher Files
-                    try:
-                        url = getPhoto.getPhoto(data_detail["token_voucher"][0])
-                        voucher = url
-                    except:
-                        voucher = ""
-                    # Get Bukti Transfer
-                    try:
-                        url = getPhoto.getPhoto(data_detail["bukti_transfer"][0])
-                        transfer = url
-                    except:
-                        transfer = ""
-                    print(data_detail)
-                    print(reimbursement_admin)
-                    print(data_photo)
-                    return render(request, 'reimbursement/kr_details.html', {
-                        'data': data_detail,
-                        'user': user,
-                        'admin': reimbursement_admin,
-                        'id': id,
-                        'photos': data_photo,
-                        'voucher': voucher,
-                        'transfer': transfer
-                    })
+                    if (user["id"] == data_detail["idBirdep"] or user['birdeptim'] in reimbursement_admin2["admin"]):
+                        # Get Photos Bukti Pembayaran
+                        data_photo = []
+                        for photo in data_detail["bukti_pembayaran"]:
+                            url = getPhoto.getPhoto(photo)
+                            data_photo.append(url)
+                        # Get Voucher Files
+                        try:
+                            url = getPhoto.getPhoto(data_detail["token_voucher"][0])
+                            voucher = url
+                        except:
+                            voucher = ""
+                        # Get Bukti Transfer
+                        try:
+                            url = getPhoto.getPhoto(data_detail["bukti_transfer"][0])
+                            transfer = url
+                        except:
+                            transfer = ""
+                        print(data_detail)
+                        print(reimbursement_admin)
+                        print(data_photo)
+                        return render(request, 'reimbursement/kr_details.html', {
+                            'data': data_detail,
+                            'user': user,
+                            'admin': reimbursement_admin,
+                            'id': id,
+                            'photos': data_photo,
+                            'voucher': voucher,
+                            'transfer': transfer
+                        })
+                    else:
+                        raise Http404
                 else:
                     return redirect("/user/logout")
     except:
@@ -104,16 +107,36 @@ def detail(request, id):
 # Form Tahap 0 Reimbursement
 # --------------------
 def diterima(request):
-    print('masuk')
-    id_request = request.POST.get("id_request")
-    kr_update_0(request, id_request, 1)
-    return redirect('kr:detail', id=id_request)
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                user = user_read(user_session['users'][0]['localId'])
+                if (user['birdeptim'] in reimbursement_admin2["tahap1"]):
+                    print('masuk')
+                    id_request = request.POST.get("id_request")
+                    kr_update_0(request, id_request, 1)
+                    return redirect('kr:detail', id=id_request)
+            else:
+                redirect('user:logout')
+    except:
+        redirect('user:signin')
 
 
 def dibatalkan(request):
-    id_request = request.POST.get("id_request")
-    kr_update_0(request, id_request, -1)
-    return redirect('kr:detail', id=id_request)
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                user = user_read(user_session['users'][0]['localId'])
+                if (user['birdeptim'] in reimbursement_admin2["tahap1"]):
+                    id_request = request.POST.get("id_request")
+                    kr_update_0(request, id_request, -1)
+                    return redirect('kr:detail', id=id_request)
+            else:
+                redirect('user:logout')
+    except:
+        redirect('user:signin')
 
 
 # ---------------------

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Halaman Tidak Ditemukan</title>
+<link rel="stylesheet" href="{% static 'base/css/style.css' %}">
+{% endblock meta %}
+
+{% block content %}
+	<div class="content page-not-found-content">
+		<i class="fas fa-search"></i>
+		<h1>Halaman ini tidak ditemukan.</h1>
+	</div>
+{% endblock content %}

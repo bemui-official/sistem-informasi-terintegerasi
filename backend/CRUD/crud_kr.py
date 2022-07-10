@@ -1,9 +1,12 @@
 import firebase_admin
 from firebase_admin import credentials, firestore, storage
 from .crud_user import user_read
+from ..constants.tahapan import tahap_reimbursement
 
 from backend.misc import firebase_init
 import datetime
+import pytz
+
 
 # --------------------------
 # Initialize Firebase Admin
@@ -44,9 +47,10 @@ def kr_create(request, judul, namaKegiatan, deskripsi, bank, norek, anrek, vouch
             'isTransfered': False,
             'total_nominal': nominal,
             'tahapan': 0,
+            'nama_tahapan': tahap_reimbursement[0],
             'bukti_transaksi': [],
             'bukti_pembayaran': buktiPembayaran,
-            'waktu_pengajuan': datetime.datetime.now()
+            'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta'))
         }
         db.collection('kr').document(idPermintaan).set(data)
 
@@ -72,7 +76,8 @@ def kr_delete():
 def kr_update_0(request, id, num):
     try:
         db.collection('kr').document(id).update({
-            "tahapan": num
+            "tahapan": num,
+            "nama_tahapan": tahap_reimbursement[num]
         })
         return ""
     except:
@@ -83,7 +88,8 @@ def kr_update_1(request, id, diterima, voucher):
         db.collection('kr').document(id).update({
             "nominal_diterima": diterima,
             "token_voucher": voucher,
-            "tahapan": 2
+            "tahapan": 2,
+            "nama_tahapan": tahap_reimbursement[2]
         })
         return ""
     except:
@@ -92,7 +98,8 @@ def kr_update_1(request, id, diterima, voucher):
 def kr_update_2(request, id, bukti):
     db.collection('kr').document(id).update({
         "bukti_transfer": bukti,
-        "tahapan": 3
+        "tahapan": 3,
+        "nama_tahapan": tahap_reimbursement[3],
     })
     return ""
 

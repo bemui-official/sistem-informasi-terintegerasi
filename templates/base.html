@@ -36,10 +36,10 @@
                 {% endif %}
                 {% if request.session.uid %}
                 <li class="nav-only-desktop">
-                    <a href="{% url 'user:dashboard' %}" class="button fit-content" style="height: fit-content; margin: 0; padding: 0.6em 1em;">Dashboard</a>
+                    <a href="{% url 'user:dashboard' 'home' 'home' %}" class="button fit-content" style="height: fit-content; margin: 0; padding: 0.6em 1em;">Dashboard</a>
                 </li>
                 <div class="nav-dropdown-buttons nav-only-mobile">
-                    <a href="{% url 'user:dashboard' %}" class="nav-only-mobile button btn-dashboard">
+                    <a href="{% url 'user:dashboard' 'home' 'home' %}" class="nav-only-mobile button btn-dashboard">
                         Dashboard
                     </a>
                 </div>
