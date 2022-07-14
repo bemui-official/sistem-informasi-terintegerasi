@@ -111,7 +111,7 @@ def diterima2(request):
             user_session = fauth.get_account_info(request.session['uid'])
             if (user_session):
                 user = user_read(user_session['users'][0]['localId'])
-                if (user['birdeptim'] in penyetoran_admin2["tahap2"]):
+                if (user['birdeptim'] in penyetoran_admin2["tahap3"]):
                     print('masuk')
                     id_request = request.POST.get("id_request")
                     ks_update_0(request, id_request, 4)

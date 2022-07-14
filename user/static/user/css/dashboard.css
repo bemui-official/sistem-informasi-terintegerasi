@@ -156,6 +156,11 @@
     display: block;
 }
 
+/*etc*/
+
+.logout {
+    padding: 1em;
+}
 
 /*Visibility*/
 

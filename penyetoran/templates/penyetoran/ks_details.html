@@ -3,7 +3,7 @@
 
 {% block meta %}
     <title>Detail Request</title>
-    <link rel="stylesheet" href="{% static 'advanced/css/style-details.css' %}">
+    <link rel="stylesheet" href="{% static 'penyetoran/css/style-details.css' %}">
 {% endblock meta %}
 
 {% block content %}
@@ -13,7 +13,7 @@
 			<h2>{{data.judul}}</h2> <br>
 			<h2>({{data.idPermintaan}})</h2>
 		</div>
-		<svg class="BarOuter" viewBox="0 0 2728 478" fill="#EBEBEB" xmlns="http://www.w3.org/2000/svg" style="--progress-bar: {{ data.tahapan }};">
+		<svg class="BarOuter" viewBox="0 0 2728 478" fill="#EBEBEB" xmlns="http://www.w3.org/2000/svg" style="--progress-bar: {% if data.tahapan != 4 %} {{data.tahapan}} {% else %} 5 {% endif %}">
 				<g id="BarOut">
 					<g id="OuterLayer">
 						<rect id="Rectangle 1" x="77" y="216" width="2583" height="66" rx="33" stroke="#144B84" stroke-width="5"/>

@@ -1,14 +1,15 @@
+from django.http import Http404
 from django.shortcuts import render, redirect
-from backend.CRUD.crud_user import user_create, user_read
+from backend.CRUD.crud_user import user_create, user_read, user_update_admin
 from backend.CRUD.crud_dashboard import read_requests
 from django.contrib import auth
 from backend.misc import firebase_init
 from backend.constants.birdeptim import pi, birdeptim, kode_fungsionaris
 
-from backend.CRUD.crud_kr import kr_read_requests
-from backend.CRUD.crud_ka import ka_read_requests
-from backend.CRUD.crud_ks import ks_read_requests
-from backend.CRUD.crud_sk import sk_read_requests
+from backend.CRUD.crud_kr import kr_read_requests, kr_read_all
+from backend.CRUD.crud_ka import ka_read_requests, ka_read_all
+from backend.CRUD.crud_ks import ks_read_requests, ks_read_all
+from backend.CRUD.crud_sk import sk_read_requests, sk_read_all
 
 fauth = firebase_init
 
@@ -80,7 +81,7 @@ def dashboard(request, category, sort):
 				elif category == "advanced":
 					data = ka_read_requests(user['id'])
 					judul = "Keuangan - Cash Advanced"
-				elif category == "setor":
+				elif category == "penyetoran":
 					data = ks_read_requests(user['id'])
 					judul = "Keuangan - Penyetoran"
 				elif category == "surat":
@@ -100,3 +101,61 @@ def dashboard(request, category, sort):
 				return redirect("/user/logout")
 	except:
 	    return redirect("/user/signin")
+
+def dashboard_pengurus(request, category, sort):
+	try:
+		if (request.session['uid']):
+			user_session = fauth.get_account_info(request.session['uid'])
+			if (user_session):
+				user = user_read(user_session['users'][0]['localId'])
+				print(user['id'])
+				data = []
+				judul = "Home Dashboard"
+				if category == 'reimbursement' and 'keuangan' in user['admin']:
+					data = kr_read_all()
+					judul = "Keuangan - Reimbursement"
+				elif category == "advanced" and 'keuangan' in user['admin']:
+					data = ka_read_all()
+					judul = "Keuangan - Cash Advanced"
+				elif category == "penyetoran" and 'keuangan' in user['admin']:
+					data = ks_read_all()
+					judul = "Keuangan - Penyetoran"
+				elif category == "surat" and 'surat' in user['admin']:
+					data = sk_read_all()
+					judul = "Surat Menyurat - Surat"
+
+				hostname = request.build_absolute_uri("/")
+				print(request.get_full_path)
+				return render(request, 'dashboard_pengurus.html', {
+					'datas': data,
+					'user': user,
+					'judul': judul,
+					'hostname': hostname,
+					'category': category
+				})
+			else:
+				return redirect("/user/logout")
+	except:
+	    return redirect("/user/signin")
+
+def give_permission(request):
+	try:
+		if (request.session['uid']):
+			user_session = fauth.get_account_info(request.session['uid'])
+			if (user_session):
+				user = user_read(user_session['users'][0]['localId'])
+				if(user['super_admin']):
+					return render(request, 'give_permission.html')
+				else:
+					raise Http404
+			else:
+				return redirect("/user/logout")
+	except:
+	    return redirect("/user/signin")
+
+def post_give_permission(request):
+	id = request.POST.get("id")
+	kode = request.POST.get("kode")
+
+	user_update_admin(id, kode)
+	return redirect('/')

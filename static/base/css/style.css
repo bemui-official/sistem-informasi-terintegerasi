@@ -1378,6 +1378,14 @@ label.profile-picture-container {
     width: 100%;
 }
 
+.footer-middle a:link,
+.footer-middle a:visited,
+.footer-middle a:hover,
+.footer-middle a:active{
+    text-decoration: none;
+    color: white;
+}
+
 
 @media only screen and (min-width: 800px) {
 

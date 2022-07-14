@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <title>Give Permission</title>
+    <link rel="stylesheet" href="{% static 'user/css/style.css' %}"/>
+{% endblock meta %}
+
+{% block content %}
+<div class="content-root">
+    <div class="form-root">
+        <h1 id="judul-form">Give Permission</h1>
+        <section>
+            <form action="post_give_permission" method="post" id="form">
+            {% csrf_token %}
+                <label for="id" >Id Penerima</label>
+                <input type="id" name="id" id="id" placeholder="Masukkan id penerima..."> <br/>
+
+                <label for="kode" >Kode kepengurusan</label>
+                <input type="kode" name="kode" id="kode" placeholder="Masukkan kode kepengurusan..."><br/>
+
+                <button type="submit" class="button" value="SignIn" id="submitbutton">Berikan</button>
+            </form>
+        </section>
+    </div>
+    <object class="object only-desktop" data="{% static 'user/svg/Computer-login-amico.svg' %}" type="image/svg+xml"></object>
+</div>
+{% endblock content %}
