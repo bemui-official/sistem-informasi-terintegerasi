@@ -54,7 +54,8 @@ def postSignIn(request):
 	print(user)
 	session_id = user['idToken']
 	request.session['uid'] = str(session_id)
-	request.session['dashboard'] = "https://www.google.com"
+	if email == 'admin_sit@admin.com':
+		request.session['admin'] = True
 	print(request.session['uid'])
 	return redirect('/')
 

@@ -24,6 +24,10 @@
                 <li><a href="{% url 'home:publikasi' %}">Publikasi</a></li>
                 <li><a href="{% url 'home:surat' %}">Surat</a></li>
                 <li><a href="{% url 'home:survei' %}">Survei</a></li>
+                {% if request.session.admin %}
+                    <li><a href="{% url 'user:give_permission' %}">Give Permission</a></li>
+                    <li><a href="{% url 'user:signup' %}">SignUp</a></li>
+                {% endif %}
                 {% if not request.session.uid %}
                 <li class="nav-only-desktop">
                     <a href="{% url 'user:signin' %}" class="button fit-content" style="height: fit-content; margin: 0; padding: 0.6em 1em;">Masuk</a>

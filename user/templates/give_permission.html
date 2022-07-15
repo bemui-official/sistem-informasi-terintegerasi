@@ -14,10 +14,10 @@
             <form action="post_give_permission" method="post" id="form">
             {% csrf_token %}
                 <label for="id" >Id Penerima</label>
-                <input type="id" name="id" id="id" placeholder="Masukkan id penerima..."> <br/>
+                <input type="text" name="id" id="id" placeholder="Masukkan id penerima..."> <br/>
 
                 <label for="kode" >Kode kepengurusan</label>
-                <input type="kode" name="kode" id="kode" placeholder="Masukkan kode kepengurusan..."><br/>
+                <input type="text" name="kode" id="kode" placeholder="Masukkan kode kepengurusan..."><br/>
 
                 <button type="submit" class="button" value="SignIn" id="submitbutton">Berikan</button>
             </form>
