@@ -10,7 +10,7 @@
 {% block content %}
 	<div class="content dashboard-content">
 		<div class="dashboard-nav">
-			<h1>Dashboard</h1>
+			<a class="dashboard-home" href="{% url 'user:dashboard_pengurus' 'home' 'home' %}"><h1>Dashboard</h1></a>
 			<div class="dashboard-nav-akun">
 				<h4>{{user.email}}</h4>
 				<p>{{user.nama}}</p>
@@ -29,9 +29,9 @@
 				</div>
 				<div class="dashboard-nav-list-item">
 					<br>
-					<a href="{% url 'user:dashboard' 'reimbursement' 'home' %}" class="nav-button"><p {% if 'reimbursement' in request.get_full_path %}id="category-focus"{% endif %}> Reimbursement</p></a>
-					<a href="{% url 'user:dashboard' 'advanced' 'home' %}" class="nav-button"><p {% if 'advanced' in request.get_full_path %}id="category-focus"{% endif %}> Cash Advanced</p></a>
-					<a href="{% url 'user:dashboard' 'penyetoran' 'home' %}" class="nav-button" ><p {% if 'penyetoran' in request.get_full_path %}id="category-focus"{% endif %}> Penyetoran</p></a>
+					<a href="{% url 'user:dashboard_pengurus' 'reimbursement' 'semua' %}" class="nav-button"><p {% if 'reimbursement' in request.get_full_path %}id="category-focus"{% endif %}> Reimbursement</p></a>
+					<a href="{% url 'user:dashboard_pengurus' 'advanced' 'semua' %}" class="nav-button"><p {% if 'advanced' in request.get_full_path %}id="category-focus"{% endif %}> Cash Advanced</p></a>
+					<a href="{% url 'user:dashboard_pengurus' 'penyetoran' 'semua' %}" class="nav-button" ><p {% if 'penyetoran' in request.get_full_path %}id="category-focus"{% endif %}> Penyetoran</p></a>
 				</div>
 				<hr>
             {% elif 'surat' in user.admin %}
@@ -41,9 +41,9 @@
 				</div>
 				<div class="dashboard-nav-list-item">
 					<br>
-					<a href="{% url 'user:dashboard' 'surat' 'home' %}" class="nav-button"><p {% if 'surat' in request.get_full_path %}id="category-focus"{% endif %} >Surat</p></a>
-					<a href="{% url 'user:dashboard' 'dirmawa' 'home' %}" class="nav-button"><p {% if 'dirmawa' in request.get_full_path %}id="category-focus"{% endif %} >Dirmawa</p></a>
-					<a href="{% url 'user:dashboard' 'sertifikat' 'home' %}" class="nav-button"><p {% if 'sertifikat' in request.get_full_path %}id="category-focus"{% endif %} >Sertifikat</p></a>
+					<a href="{% url 'user:dashboard_pengurus' 'surat' 'semua' %}" class="nav-button"><p {% if 'surat' in request.get_full_path %}id="category-focus"{% endif %} >Surat</p></a>
+					<a href="{% url 'user:dashboard_pengurus' 'dirmawa' 'semua' %}" class="nav-button"><p {% if 'dirmawa' in request.get_full_path %}id="category-focus"{% endif %} >Dirmawa</p></a>
+					<a href="{% url 'user:dashboard_pengurus' 'sertifikat' 'semua' %}" class="nav-button"><p {% if 'sertifikat' in request.get_full_path %}id="category-focus"{% endif %} >Sertifikat</p></a>
 				</div>
 				<hr>
             {% elif 'publikasi' in user.admin %}
@@ -53,7 +53,7 @@
 				</div>
 				<div class="dashboard-nav-list-item">
 					<br>
-					<a href="{% url 'user:dashboard' 'publikasi' 'home' %}" class="nav-button"><p {% if 'publikasi' in request.get_full_path %}id="category-focus"{% endif %} >Publikasi</p></a>
+					<a href="{% url 'user:dashboard_pengurus' 'publikasi' 'semua' %}" class="nav-button"><p {% if 'publikasi' in request.get_full_path %}id="category-focus"{% endif %} >Publikasi</p></a>
 				</div>
 				<hr>
             {% elif 'survei' in user.admin %}
@@ -63,7 +63,7 @@
 				</div>
 				<div class="dashboard-nav-list-item">
 					<br>
-					<a href="{% url 'user:dashboard' 'survei' 'home' %}" class="nav-button"><p {% if 'survei' in request.get_full_path %}id="category-focus"{% endif %} >Survei</p></a>
+					<a href="{% url 'user:dashboard_pengurus' 'survei' 'semua' %}" class="nav-button"><p {% if 'survei' in request.get_full_path %}id="category-focus"{% endif %} >Survei</p></a>
 				</div>
             {% endif %}
 			</div>
@@ -72,33 +72,43 @@
 		<div class="dashboard-body">
 			<div class="dashboard-content">
 				<div class="dashboard-content-card">
-                <h1>{{ judul }}</h1>
-                <p>{{ datas }}</p>
-                <h2>List Permintaan</h2>
-                <div class="dashboard-background">
-					{% for data in datas %}
-                        <a onclick="openInNewTab('{{ hostname }}{{ category }}/detail/{{ data.idPermintaan }}');" class="request">
-                            <div class="request-div">
-                                <div class="request-div-header">
-                                    <h2>{{ data.judul }}</h2>
-                                    <div class="request-time-post-desktop">
-                                        {{ data.waktu_pengajuan }}<br>
+                    <h1>{{ judul }}</h1>
+                    {% if category == "home" %}
+                    {% else %}
+                    <h2>List Permintaan</h2>
+                    <div class="category-selector category-selector-dashboard">
+                        <ul>
+                            <li><a href="{% url 'user:dashboard_pengurus' category 'semua' %}" {% if 'semua' in request.get_full_path %}id="sort-focus"{% endif %}>Semua</a></li>
+                        {% for key, val in tahapan.items %}
+                            <li><a href="{% url 'user:dashboard_pengurus' category key %}" {% if key|stringformat:"i" in request.get_full_path %}id="sort-focus"{% endif %}>{{ val }}</a></li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="dashboard-background">
+                        {% for data in datas %}
+                            <a onclick="openInNewTab('{{ hostname }}{{ category }}/detail/{{ data.idPermintaan }}');" class="request">
+                                <div class="request-div">
+                                    <div class="request-div-header">
+                                        <h2>{{ data.judul }}</h2>
+                                        <div class="request-time-post-desktop">
+                                            {{ data.waktu_pengajuan }}<br>
+                                        </div>
+                                    </div>
+                                    <div class="request-div-body">
+                                        <div>
+                                            <p class="request-div-body-status">Status: <strong>{{ data.nama_tahapan }}</strong></p>
+                                            <p>Dipesan Oleh:</p>
+                                            <p><strong>{{ data.nama_birdep }}</strong></p>
+                                        </div>
+                                        <div class="request-time-post-mobile">
+                                            {{ data.waktu_pengajuan }}<br>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="request-div-body">
-                                    <div>
-                                        <p class="request-div-body-status">Status: <strong>{{ data.nama_tahapan }}</strong></p>
-                                        <p>Dipesan Oleh:</p>
-                                        <p><strong>{{ data.nama_birdep }}</strong></p>
-                                    </div>
-                                    <div class="request-time-post-mobile">
-                                        {{ data.waktu_pengajuan }}<br>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    {% endfor %}
-				</div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
                 </div>
 			</div>
 		</div>

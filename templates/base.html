@@ -15,7 +15,7 @@
 
 <body>
 	<header {% if '/' == request.path %}class="header-transparent"{% else %}class="header-white"{% endif %}>
-        <a href="{% url 'home:home' %}" class="logo"><img src="{% static 'base/img/logo-biro-jodoh.png' %}" style="width:8.75rem; height:3.5rem;"></a>
+        <a href="{% url 'home:home' %}" class="logo"><img src="{% static 'base/img/logo-sit.png' %}" style="width:8.75rem; height:3.5rem;"></a>
         <input type="checkbox" class="nav-toggle" id="nav-toggle">
 
         <nav>
@@ -63,7 +63,7 @@
     <footer>
         <div class="footer-upper">
             <div class="footer1">
-                <a href="{% url 'home:home' %}"><img src="{% static 'base/img/logo-biro-jodoh.png' %}" style="width:12.5rem; height:5rem;"></a>
+                <a href="{% url 'home:home' %}"><img src="{% static 'base/img/logo-sit-footer.png' %}" style="width:12.5rem; height:5rem;"></a>
             </div>
 
             <div class="footer2">

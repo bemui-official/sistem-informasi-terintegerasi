@@ -105,10 +105,13 @@ def sk_getCounter():
 # ---------------------
 # Read list of requests
 # --------------------
-def sk_read_requests(idBirdep):
+def sk_read_requests(idBirdep, tahap):
     try:
         data_dict = []
-        datas = db.collection('sk').where('idBirdep', '==', idBirdep).get()
+        if tahap == 'semua':
+            datas = db.collection('sk').where('idBirdep', '==', idBirdep).get()
+        else:
+            datas = db.collection('sk').where('idBirdep', '==', idBirdep).where('tahapan', '==', int(tahap)).get()
         for data in datas:
             data_dict.append(data.to_dict())
         return data_dict
@@ -116,10 +119,13 @@ def sk_read_requests(idBirdep):
         data_dict = []
     return data_dict
 
-def sk_read_all():
+def sk_read_all(tahap):
     try:
         data_dict = []
-        datas = db.collection('sk').get()
+        if tahap == 'semua':
+            datas = db.collection('sk').get()
+        else:
+            datas = db.collection('sk').where('tahapan', '==', int(tahap)).get()
         for data in datas:
             data_dict.append(data.to_dict())
         return data_dict

@@ -167,6 +167,24 @@
 .dashboard-data-akun-mobile {
     display: block;
 }
+
+#sort-focus {
+    color: var(--accent);
+}
+
+#sort-focus::after {
+    transform: scale(1);
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    transition-duration: 0.2s;
+}
+
+.dashboard-home:hover {
+    color: var(--primary-yellow);
+}
 @media only screen and (min-width: 800px) {
         .dashboard-data-akun-mobile {
             display: none;

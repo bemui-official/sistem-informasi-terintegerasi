@@ -121,10 +121,13 @@ def ks_getCounter():
 # ---------------------
 # Read list of requests
 # --------------------
-def ks_read_requests(idBirdep):
+def ks_read_requests(idBirdep, tahap):
     try:
         data_dict = []
-        datas = db.collection('ks').where('idBirdep', '==', idBirdep).get()
+        if tahap == 'semua':
+            datas = db.collection('ks').where('idBirdep', '==', idBirdep).get()
+        else:
+            datas = db.collection('ks').where('idBirdep', '==', idBirdep).where('tahapan', '==', int(tahap)).get()
         for data in datas:
             data_dict.append(data.to_dict())
         return data_dict
@@ -132,10 +135,13 @@ def ks_read_requests(idBirdep):
         data_dict = []
     return data_dict
 
-def ks_read_all():
+def ks_read_all(tahap):
     try:
         data_dict = []
-        datas = db.collection('ks').get()
+        if tahap == 'semua':
+            datas = db.collection('ks').get()
+        else:
+            datas = db.collection('ks').where('tahapan', '==', int(tahap)).get()
         for data in datas:
             data_dict.append(data.to_dict())
         return data_dict

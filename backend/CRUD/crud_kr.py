@@ -123,10 +123,13 @@ def kr_getCounter():
 # ---------------------
 # Read list of requests
 # --------------------
-def kr_read_requests(idBirdep):
+def kr_read_requests(idBirdep, tahap):
     try:
         data_dict = []
-        datas = db.collection('kr').where('idBirdep', '==', idBirdep).get()
+        if tahap == 'semua':
+            datas = db.collection('kr').where('idBirdep', '==', idBirdep).get()
+        else:
+            datas = db.collection('kr').where('idBirdep', '==', idBirdep).where('tahapan', '==', int(tahap)).get()
         for data in datas:
             data_dict.append(data.to_dict())
         return data_dict
@@ -134,10 +137,13 @@ def kr_read_requests(idBirdep):
         data_dict = []
     return data_dict
 
-def kr_read_all():
+def kr_read_all(tahap):
     try:
         data_dict = []
-        datas = db.collection('kr').get()
+        if tahap == 'semua':
+            datas = db.collection('kr').get()
+        else:
+            datas = db.collection('kr').where('tahapan', '==', int(tahap)).get()
         for data in datas:
             data_dict.append(data.to_dict())
         return data_dict
