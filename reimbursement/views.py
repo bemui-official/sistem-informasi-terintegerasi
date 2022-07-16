@@ -4,6 +4,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 from backend.CRUD.crud_kr import kr_create, kr_read, kr_update_0, kr_update_1, kr_update_2
 from backend.CRUD.crud_user import user_read
+from backend.constants.links import links_keuangan
 from backend.misc import firebase_init, getPhoto
 from backend.constants.admins import reimbursement_admin, reimbursement_admin2
 
@@ -18,7 +19,9 @@ def formKr(request):
     try:
         if (request.session['uid']):
             if (fauth.get_account_info(request.session['uid'])):
-                return render(request, 'reimbursement/form_kr.html')
+                return render(request, 'reimbursement/form_kr.html', {
+                    'template': links_keuangan['Reimbursement']
+                })
             else:
                 return redirect("/user/logout")
     except:

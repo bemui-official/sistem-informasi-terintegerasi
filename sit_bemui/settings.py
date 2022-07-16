@@ -57,7 +57,8 @@ INSTALLED_APPS = [
     'survei',
     'youtube',
     'user',
-    'home'
+    'home',
+    'surat_besar'
 ]
 
 MIDDLEWARE = [

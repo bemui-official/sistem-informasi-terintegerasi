@@ -4,6 +4,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 from backend.CRUD.crud_ka import ka_create, ka_read, ka_update_0, ka_update_1, ka_update_2
 from backend.CRUD.crud_user import user_read
+from backend.constants.links import links_keuangan
 from backend.misc import firebase_init, getPhoto
 from backend.constants.admins import advanced_admin, advanced_admin2
 
@@ -18,7 +19,9 @@ def formKa(request):
     try:
         if (request.session['uid']):
             if (fauth.get_account_info(request.session['uid'])):
-                return render(request, 'advanced/form_ka.html')
+                return render(request, 'advanced/form_ka.html', {
+                    'template': links_keuangan['Advanced']
+                })
             else:
                 return redirect("/user/logout")
     except:

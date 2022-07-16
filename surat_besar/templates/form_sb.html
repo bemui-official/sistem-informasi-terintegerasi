@@ -2,16 +2,16 @@
 {% load static %}
 
 {% block meta %}
-    <title>Form Surat Keluar</title>
-    <link rel="stylesheet" href="{% static 'surat_keluar/css/style.css' %}"/>
+    <title>Form Surat Besar</title>
+    <link rel="stylesheet" href="{% static 'surat_besar/css/style.css' %}"/>
 {% endblock meta %}
 
 {% block content %}
     <div class="content-root">
         <div class="form-root">
-            <h1 id="judul-form">Form Pengajuan Surat Menyurat</h1>
+            <h1 id="judul-form">Form Pengajuan Surat Besar</h1>
             <section>
-                <form action="postformsk" method="post" id="form">
+                <form action="postformsb" method="post" id="form">
                     {% csrf_token %}
                     <label for="judul" >Judul</label>
                     <input type="text" id="judul" name="judul" placeholder="Judul Permintaan..."> <br/>
@@ -35,14 +35,14 @@
                     <label for="link-docs">Link Docs Surat</label>
                     <input type="url" name="linkdocs" id="link-docs" placeholder="Masukkan link surat..."><br/>
 
-                    <button class="button" type="submit" value="PostFormSk">Ajukan</button>
+                    <button class="button" type="submit" value="PostFormSb">Ajukan</button>
                 </form>
             </section>
         </div>
         <object class="object only-desktop" data="{% static 'surat_keluar/svg/Envelope-pana.svg' %}" type="image/svg+xml"></object>
     </div>
 
-    <script type="application/javascript" src="{% static 'surat_keluar/js/dropdown-surat.js' %}"></script>
+    <script type="application/javascript" src="{% static 'surat_besar/js/dropdown-surat.js' %}"></script>
     <script>
         $('select option:first-child').attr("selected", "selected");
     </script>

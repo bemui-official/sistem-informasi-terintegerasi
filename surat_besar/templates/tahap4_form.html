@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <title>Form Surat Besar</title>
+    <link rel="stylesheet" href="{% static 'surat_besar/css/style.css' %}"/>
+    <link href="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.css" rel="stylesheet"/>
+{% endblock meta %}
+
+{% block content %}
+<div class="content-root">
+    <div class="form-root">
+        <h1 id="judul-form">Form Memasukkan Berkas</h1>
+        <section>
+            <form action="../../postform3" method="post" id="form">
+                {% csrf_token %}
+                <label class="control-label">Upload Dokumen Ditandatangani</label>
+                <div id="drag-drop-area"></div>
+                <input name="uploadFiles" type="hidden">
+                <input name="id_request" type="hidden" value={{ id }}>
+            </form>
+
+            <button type="button" id="submitbutton" class="button">Submit</button>
+
+            <!-- Script upload ke Voucher-->
+            <script src="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.js"></script>
+            <script>
+                var uppy = new Uppy.Core({
+                    restrictions: {
+                        maxNumberOfFiles: 1,
+                        allowedFileTypes: [".pdf"],
+                  },
+                })
+
+                uppy.on('file-added', (file) => {
+                    uppy.setFileMeta(file.id, {
+                        id_firebase: "SURAT_BESAR/DOKUMEN/" + uuidv4(),
+                    })
+                })
+                uppy.use(Uppy.XHRUpload, {
+                    endpoint: '{% url "upload_photo" %}',
+                    headers: {'X-CSRFToken':"{{csrf_token}}"},
+                    formData: true,
+                    fieldName: 'file'
+                })
+                uppy.use(Uppy.Dashboard, {
+                    inline: true,
+                    target: '#drag-drop-area',
+                    proudlyDisplayPoweredByUppy:false,
+                    showProgressDetails:true,
+                    doneButtonHandler: null,
+                    hideUploadButton: true,
+                })
+                uppy.on('complete', (result) => {
+                    console.log('Upload complete! We’ve uploaded these files:', result.successful)
+                })
+                uppy.use(Uppy.Form, {
+                    target: "#form",
+                    resultName: 'uploadFiles',
+                    getMetaFromForm: false,
+                    addResultToForm: true,
+                    submitOnSuccess: true,
+                    triggerUploadOnSubmit: false,
+                })
+            </script>
+            <script src="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
+            <script type="application/javascript" src="{% static 'surat_besar/js/scripts.js' %}"></script>
+        </section>
+    </div>
+</div>
+    <script src="{% static 'base/js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'base/js/bootstrap.min.js' %}"></script>
+    <script src="https://releases.transloadit.com/uppy/v2.9.4/uppy.min.js"></script>
+{% endblock content %}

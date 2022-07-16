@@ -24,6 +24,7 @@ urlpatterns = [
     path('reimbursement/', include(('reimbursement.urls', 'kr'), namespace='kr')),
     path('penyetoran/', include(('penyetoran.urls', 'ks'), namespace='ks')),
     path('advanced/', include(('advanced.urls', 'ka'), namespace='ka')),
+    path('surat_besar/', include(('surat_besar.urls', 'sb'), namespace='sb')),
     path('backend/', include('backend.urls'))
 ]
 

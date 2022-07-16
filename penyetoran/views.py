@@ -4,6 +4,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 from backend.CRUD.crud_ks import ks_create, ks_read, ks_update_0, ks_update_1, ks_update_2
 from backend.CRUD.crud_user import user_read
+from backend.constants.links import links_keuangan
 from backend.misc import firebase_init, getPhoto
 from backend.constants.admins import penyetoran_admin, penyetoran_admin2
 
@@ -18,7 +19,9 @@ def formKs(request):
     try:
         if (request.session['uid']):
             if (fauth.get_account_info(request.session['uid'])):
-                return render(request, 'penyetoran/form_ks.html')
+                return render(request, 'penyetoran/form_ks.html', {
+                    'template': links_keuangan['Penyetoran']
+                })
             else:
                 return redirect("/user/logout")
     except:
