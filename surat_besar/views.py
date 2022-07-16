@@ -19,7 +19,7 @@ def formSb(request):
     try:
         if (request.session['uid']):
             if (fauth.get_account_info(request.session['uid'])):
-                return render(request, 'form_sb.html', {
+                return render(request, 'surat_besar/form_sb.html', {
                     'links_surat': links_surat_besar
                 })
             else:
@@ -61,7 +61,7 @@ def detail(request, id):
                             dokumen = url
                         except:
                             dokumen = ""
-                        return render(request, 'sb_details.html', {
+                        return render(request, 'surat_besar/sb_details.html', {
                             'data': data_detail,
                             'user': user,
                             'admin': suratbesar_admin,
@@ -158,7 +158,7 @@ def form4(request, id):
                 data_detail = sb_read(id)
                 if (user['birdeptim'] in suratbesar_admin2["tahap4"]):
                     if (data_detail["tahapan"] == 2):
-                        return render(request, 'tahap4_form.html', {"id": id})
+                        return render(request, 'surat_besar/tahap4_form.html', {"id": id})
                     else:
                         return redirect("/surat_besar/detail/" + id)
                 else:

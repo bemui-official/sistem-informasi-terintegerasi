@@ -23,7 +23,7 @@
                 <li><a href="{% url 'home:keuangan' %}">Keuangan</a></li>
                 <li><a href="{% url 'home:publikasi' %}">Publikasi</a></li>
                 <li><a href="{% url 'home:surat' %}">Surat</a></li>
-                <li><a href="{% url 'home:survei' %}">Survei</a></li>
+{#                <li><a href="{% url 'home:survei' %}">Survei</a></li>#}
                 {% if request.session.admin %}
                     <li><a href="{% url 'user:give_permission' %}">Give Permission</a></li>
                     <li><a href="{% url 'user:signup' %}">SignUp</a></li>
