@@ -58,7 +58,8 @@ INSTALLED_APPS = [
     'youtube',
     'user',
     'home',
-    'surat_besar'
+    'surat_besar',
+    'linebotsit'
 ]
 
 MIDDLEWARE = [
@@ -167,3 +168,7 @@ STATICFILES_DIRS = [
 # Enable compression and caching features of whitenoise.
 # You can remove this if it causes problems on your setup.
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Line Bot Credentials
+LINE_CHANNEL_ACCESS_TOKEN = 'kaPsqQV6XHaJWRR4L4I2o1Z0pGSLIEPbN5FR0YOjKrJk3pBQHLdEGZ0nzfraWJM7G63NxupKU/HLtTftejXJF9MW+y8SwKj2APq8ofKL2lmr2UGAvDGL/XSPcEncdbbGiNcKnm8UmyIWR/0Vf02irgdB04t89/1O/w1cDnyilFU='
+LINE_CHANNEL_SECRET = '19a194fbe7b4f253c7398d36bc91efd6'

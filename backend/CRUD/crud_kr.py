@@ -150,3 +150,14 @@ def kr_read_all(tahap):
     except:
         data_dict = []
     return data_dict
+
+def kr_read_all_line():
+    try:
+        data_dict = []
+        datas = db.collection('kr').orderBy('waktu_pengajuan', 'asc').limit(10).get()
+        for data in datas:
+            data_dict.append(data.to_dict())
+        return data_dict
+    except:
+        data_dict = []
+    return data_dict
