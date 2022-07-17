@@ -16,11 +16,11 @@ line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(settings.LINE_CHANNEL_SECRET)
 
 # constant
-LINK_TO_REQUEST_REIMBURSEMENT = "http://127.0.0.1:8000/reimbursement/detail/"
-LINK_TO_REQUEST_ADVANCED = "http://127.0.0.1:8000/advanced/detail/"
-LINK_TO_REQUEST_PENYETORAN = "http://127.0.0.1:8000/penyetoran/detail/"
-LINK_TO_REQUEST_SURATKELUAR = "http://127.0.0.1:8000/surat_keluar/detail/"
-LINK_TO_REQUEST_SURATBESAR = "http://127.0.0.1:8000/surat_besar/detail/"
+LINK_TO_REQUEST_REIMBURSEMENT = "https://sitbemui.herokuapp.com/reimbursement/detail/"
+LINK_TO_REQUEST_ADVANCED = "https://sitbemui.herokuapp.com/advanced/detail/"
+LINK_TO_REQUEST_PENYETORAN = "https://sitbemui.herokuapp.com/penyetoran/detail/"
+LINK_TO_REQUEST_SURATKELUAR = "https://sitbemui.herokuapp.com/surat_keluar/detail/"
+LINK_TO_REQUEST_SURATBESAR = "https://sitbemui.herokuapp.com/surat_besar/detail/"
 
 
 
