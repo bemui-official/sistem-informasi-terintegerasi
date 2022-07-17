@@ -136,7 +136,7 @@ def sk_read_all(tahap):
 def sk_read_all_line():
     try:
         data_dict = []
-        datas = db.collection('sk').orderBy('waktu_pengajuan', 'asc').limit(10).get()
+        datas = db.collection('sk').order_by('waktu_pengajuan', 'asc').limit(10).get()
         for data in datas:
             data_dict.append(data.to_dict())
         return data_dict
