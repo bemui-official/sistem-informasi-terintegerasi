@@ -88,7 +88,7 @@ def handle_message(event):
 
             response = f"[LIST PERMINTAAN "+ users_msg.upper() +"] \n\n10 permintaan dengan waktu permintaan terdahulu:"
 
-            if len(data) != 0:
+            if data:
                 for key, val in data:
                     response += f"\n\n{val['judul']}\n> kode ID: {key}\n> Tgl: {val['waktu_pengajuan']}\n> Birdep: {val['nama_birdep']}"
             else:
@@ -107,49 +107,52 @@ def handle_message(event):
         else:
             kode = users_msg[:2]
             users_msg = users_msg.split()
-            password = users_msg[1]
-            users_msg = users_msg[0]
 
-            isValid = False
+            if len(users_msg) != 2:
+                password = users_msg[1]
+                users_msg = users_msg[0]
 
-            response = ""
+                isValid = False
 
-            if kode == "kr" and password == "KeuanganSIT":
-                isValid = True
-                data = kr_read(users_msg)
-                link_surat = data['link_voucher']
-                link_web = LINK_TO_REQUEST_REIMBURSEMENT
-            elif kode == "ka" and password == "KeuanganSIT":
-                isValid = True
-                data = ka_read(users_msg)
-                link_surat = data['link_voucher']
-                link_web = LINK_TO_REQUEST_ADVANCED
-            elif kode == "ks" and password == "KeuanganSIT":
-                isValid = True
-                data = ks_read(users_msg)
-                link_surat = data['link_voucher']
-                link_web = LINK_TO_REQUEST_PENYETORAN
-            elif kode == "sk" and password == "SITPenyuratan":
-                isValid = True
-                data = sk_read(users_msg)
-                link_surat = data['link_docs']
-                link_web = LINK_TO_REQUEST_SURATKELUAR
-            elif kode == "sb" and password == "SITPenyuratan":
-                isValid = True
-                data = sb_read(users_msg)
-                link_surat = data['link_docs']
-                link_web = LINK_TO_REQUEST_SURATBESAR
+                response = ""
+                if kode == "kr" and password == "KeuanganSIT":
+                    isValid = True
+                    data = kr_read(users_msg)
+                    link_surat = data['link_voucher']
+                    link_web = LINK_TO_REQUEST_REIMBURSEMENT
+                elif kode == "ka" and password == "KeuanganSIT":
+                    isValid = True
+                    data = ka_read(users_msg)
+                    link_surat = data['link_voucher']
+                    link_web = LINK_TO_REQUEST_ADVANCED
+                elif kode == "ks" and password == "KeuanganSIT":
+                    isValid = True
+                    data = ks_read(users_msg)
+                    link_surat = data['link_voucher']
+                    link_web = LINK_TO_REQUEST_PENYETORAN
+                elif kode == "sk" and password == "SITPenyuratan":
+                    isValid = True
+                    data = sk_read(users_msg)
+                    link_surat = data['link_docs']
+                    link_web = LINK_TO_REQUEST_SURATKELUAR
+                elif kode == "sb" and password == "SITPenyuratan":
+                    isValid = True
+                    data = sb_read(users_msg)
+                    link_surat = data['link_docs']
+                    link_web = LINK_TO_REQUEST_SURATBESAR
+                else:
+                    response = "Kode tidak valid atau password salah"
+
+                if isValid:
+                    response = (f"{users_msg} \n({data['judul']})\n\n"
+                                + f"> Status : {data['nama_tahapan']}\n"
+                                + f"> Birdeptim : {data['nama_birdep']}\n"
+                                + f"> Tgl Permintaan : \n{data['waktu_pengajuan']}\n"
+                                + f"> Link Surat : \n{link_surat}\n\n"
+                                + f"Lihat pada website : " + link_web + users_msg
+                                )
             else:
                 response = "Kode tidak valid atau password salah"
-
-            if isValid:
-                response = (f"{users_msg} \n({data['judul']})\n\n"
-                            + f"> Status : {data['nama_tahapan']}\n"
-                            + f"> Birdeptim : {data['nama_birdep']}\n"
-                            + f"> Tgl Permintaan : \n{data['waktu_pengajuan']}\n"
-                            + f"> Link Surat : \n{link_surat}\n\n"
-                            + f"Lihat pada website : " + link_web + users_msg
-                            )
 
         line_bot_api.reply_message(
             event.reply_token,
