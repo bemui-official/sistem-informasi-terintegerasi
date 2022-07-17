@@ -76,22 +76,22 @@ def handle_message(event):
             print(users_msg)
             users_msg = users_msg[5:].strip()
             if users_msg == "reimbursement":
-                data = kr_read_all_line()
+                datas = kr_read_all_line()
             elif users_msg == "advanced":
-                data = ka_read_all_line()
+                datas = ka_read_all_line()
             elif users_msg == "penyetoran":
-                data = ks_read_all_line()
+                datas = ks_read_all_line()
             elif users_msg == "surat-keluar":
-                data = sk_read_all_line()
+                datas = sk_read_all_line()
             elif users_msg == "surat-besar":
-                data = sb_read_all_line()
+                datas = sb_read_all_line()
 
-            print(data)
+            print(datas)
             response = f"[LIST PERMINTAAN "+ users_msg.upper() +"] \n\n10 permintaan dengan waktu permintaan terdahulu:"
 
-            if data:
-                for key, val in data:
-                    response += f"\n\n{val['judul']}\n> kode ID: {key}\n> Tgl: {val['waktu_pengajuan']}\n> Birdep: {val['nama_birdep']}"
+            if datas:
+                for data in datas:
+                    response += f"\n\n{data['judul']}\n> kode ID: {data['idPermintaan']}\n> Tgl: {data['waktu_pengajuan']}\n> Birdep: {data['nama_birdep']}"
             else:
                 response += f"\n\nBelum ada permintaan lagi."
         elif users_msg == 'getidline':
