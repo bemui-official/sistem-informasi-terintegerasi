@@ -86,6 +86,7 @@ def handle_message(event):
             elif users_msg == "surat-besar":
                 data = sb_read_all_line()
 
+            print(data)
             response = f"[LIST PERMINTAAN "+ users_msg.upper() +"] \n\n10 permintaan dengan waktu permintaan terdahulu:"
 
             if data:
