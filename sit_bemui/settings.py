@@ -39,7 +39,7 @@ if not PRODUCTION:
 # Application definition
 
 INSTALLED_APPS = [
-    'linebotsit.apps.LinebotsipConfig',
+    'linebotsit.apps.LinebotsitConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
