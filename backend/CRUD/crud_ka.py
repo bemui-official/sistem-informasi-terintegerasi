@@ -153,7 +153,7 @@ def ka_read_all(tahap):
 def ka_read_all_line():
     try:
         data_dict = []
-        datas = db.collection('ka').orderBy('waktu_pengajuan').limit(10).get()
+        datas = db.collection('ka').order_by('waktu_pengajuan').limit(10).get()
         for data in datas:
             data_dict.append(data.to_dict())
         return data_dict
