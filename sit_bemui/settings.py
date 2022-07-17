@@ -39,6 +39,7 @@ if not PRODUCTION:
 # Application definition
 
 INSTALLED_APPS = [
+    'linebotsit.apps.LinebotsipConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -59,7 +60,6 @@ INSTALLED_APPS = [
     'user',
     'home',
     'surat_besar',
-    'linebotsit'
 ]
 
 MIDDLEWARE = [
