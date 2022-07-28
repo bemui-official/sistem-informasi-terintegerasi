@@ -18,7 +18,7 @@ fauth = firebase_init
 def formKr(request):
     try:
         if (request.session['uid']):
-            if (fauth.get_account_info(request.session['uid'])['users']):
+            if (fauth.get_account_info(request.session['uid'])):
                 return render(request, 'reimbursement/form_kr.html', {
                     'template': links_keuangan['Reimbursement']
                 })

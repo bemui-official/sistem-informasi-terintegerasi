@@ -18,7 +18,7 @@ fauth = firebase_init
 def formSk(request):
     try:
         if (request.session['uid']):
-            if (fauth.get_account_info(request.session['uid'])['users']):
+            if (fauth.get_account_info(request.session['uid'])):
                 return render(request, 'form_sk.html', {
                     'links_surat': links_surat
                 })

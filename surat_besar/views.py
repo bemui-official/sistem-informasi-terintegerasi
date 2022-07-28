@@ -18,7 +18,7 @@ fauth = firebase_init
 def formSb(request):
     try:
         if (request.session['uid']):
-            if (fauth.get_account_info(request.session['uid'])['users']):
+            if (fauth.get_account_info(request.session['uid'])):
                 return render(request, 'surat_besar/form_sb.html', {
                     'links_surat': links_surat_besar
                 })
