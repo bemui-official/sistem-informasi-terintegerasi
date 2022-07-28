@@ -70,46 +70,46 @@ def logout(request):
 # Dashboard
 # --------------------
 def dashboard(request, category, sort):
-	# try:
-	if (request.session['uid']):
-		user_session = fauth.get_account_info(request.session['uid'])
-		if (user_session):
-			user = user_read(user_session['users'][0]['localId'])
-			print(user['id'])
-			data = []
-			tahapan = []
-			judul = "Home Dashboard"
-			if category == 'reimbursement':
-				data = kr_read_requests(user['id'], sort)
-				judul = "Keuangan - Reimbursement"
-				tahapan = tahap_reimbursement
-			elif category == "advanced":
-				data = ka_read_requests(user['id'], sort)
-				judul = "Keuangan - Cash Advanced"
-				tahapan = tahap_advanced
-			elif category == "penyetoran":
-				data = ks_read_requests(user['id'], sort)
-				judul = "Keuangan - Penyetoran"
-				tahapan = tahap_penyetoran
-			elif category == "surat":
-				data = sk_read_requests(user["id"], sort)
-				judul = "Surat Menyurat - Surat"
-				tahapan = tahap_surat
+	try:
+		if (request.session['uid']):
+			user_session = fauth.get_account_info(request.session['uid'])
+			if (user_session):
+				user = user_read(user_session['users'][0]['localId'])
+				print(user['id'])
+				data = []
+				tahapan = []
+				judul = "Home Dashboard"
+				if category == 'reimbursement':
+					data = kr_read_requests(user['id'], sort)
+					judul = "Keuangan - Reimbursement"
+					tahapan = tahap_reimbursement
+				elif category == "advanced":
+					data = ka_read_requests(user['id'], sort)
+					judul = "Keuangan - Cash Advanced"
+					tahapan = tahap_advanced
+				elif category == "penyetoran":
+					data = ks_read_requests(user['id'], sort)
+					judul = "Keuangan - Penyetoran"
+					tahapan = tahap_penyetoran
+				elif category == "surat":
+					data = sk_read_requests(user["id"], sort)
+					judul = "Surat Menyurat - Surat"
+					tahapan = tahap_surat
 
-			hostname = request.build_absolute_uri("/")
-			print(request.get_full_path)
-			return render(request, 'dashboard.html', {
-				'datas': data,
-				'user': user,
-				'judul': judul,
-				'hostname': hostname,
-				'category': category,
-				'tahapan': tahapan,
-			})
-		else:
-			return redirect("/user/logout")
-	# except:
-	#     return redirect("/user/signin")
+				hostname = request.build_absolute_uri("/")
+				print(request.get_full_path)
+				return render(request, 'dashboard.html', {
+					'datas': data,
+					'user': user,
+					'judul': judul,
+					'hostname': hostname,
+					'category': category,
+					'tahapan': tahapan,
+				})
+			else:
+				return redirect("/user/logout")
+	except:
+	    return redirect("/user/signin")
 
 def dashboard_pengurus(request, category, sort):
 	try:
