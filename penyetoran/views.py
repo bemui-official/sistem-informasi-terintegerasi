@@ -18,7 +18,7 @@ fauth = firebase_init
 def formKs(request):
     try:
         if (request.session['uid']):
-            if (fauth.get_account_info(request.session['uid'])):
+            if (fauth.get_account_info(request.session['uid'])['users']):
                 return render(request, 'penyetoran/form_ks.html', {
                     'template': links_keuangan['Penyetoran']
                 })

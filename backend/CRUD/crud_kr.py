@@ -2,6 +2,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore, storage
 from .crud_user import user_read
 from ..constants.tahapan import tahap_reimbursement
+from ..misc.calendar import create_event
 
 from backend.misc import firebase_init
 import datetime
@@ -11,6 +12,7 @@ import pytz
 # --------------------------
 # Initialize Firebase Admin
 # --------------------------
+
 if not firebase_admin._apps:
     cred = credentials.Certificate("testing-key.json")
     firebase_admin.initialize_app(cred, {
@@ -26,37 +28,37 @@ ds = storage.bucket()
 # CRUD Functions
 # --------------------------
 def kr_create(request, judul, namaKegiatan, deskripsi, bank, norek, anrek, voucher, nominal, buktiPembayaran):
-    try:
-        print(request.session['uid'])
-        user_data = fauth.get_account_info(request.session['uid'])
-        idBirdep = user_data['users'][0]['localId']
-        user_data2 = user_read(idBirdep)
-        nama_birdep = user_data2['nama']
-        idPermintaan = "kr-" + idBirdep + "-" + str(kr_getCounter())
-        data = {
-            'idPermintaan': idPermintaan,
-            'idBirdep': idBirdep,
-            'nama_birdep': nama_birdep,
-            'judul': judul,
-            'nama_kegiatan': namaKegiatan,
-            'deskripsi': deskripsi,
-            'bank': bank,
-            'nomor_rekening': norek,
-            'AN_rekening': anrek,
-            'link_voucher': voucher,
-            'isTransfered': False,
-            'total_nominal': nominal,
-            'tahapan': 0,
-            'nama_tahapan': tahap_reimbursement[0],
-            'bukti_transaksi': [],
-            'bukti_pembayaran': buktiPembayaran,
-            'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta'))
-        }
-        db.collection('kr').document(idPermintaan).set(data)
-
-        return idPermintaan
-    except:
-        return "terjadi error"
+    print(request.session['uid'])
+    user_data = fauth.get_account_info(request.session['uid'])
+    idBirdep = user_data['users'][0]['localId']
+    user_data2 = user_read(idBirdep)
+    nama_birdep = user_data2['nama']
+    idPermintaan = "kr-" + idBirdep + "-" + str(kr_getCounter())
+    data = {
+        'idPermintaan': idPermintaan,
+        'idBirdep': idBirdep,
+        'nama_birdep': nama_birdep,
+        'judul': judul,
+        'nama_kegiatan': namaKegiatan,
+        'deskripsi': deskripsi,
+        'bank': bank,
+        'nomor_rekening': norek,
+        'AN_rekening': anrek,
+        'link_voucher': voucher,
+        'isTransfered': False,
+        'total_nominal': nominal,
+        'tahapan': 0,
+        'nama_tahapan': tahap_reimbursement[0],
+        'bukti_transaksi': [],
+        'bukti_pembayaran': buktiPembayaran,
+        'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta'))
+    }
+    db.collection('kr').document(idPermintaan).set(data)
+    print(2)
+    # create_event(voucher, judul, "keuangan")
+    return idPermintaan
+    # except:
+    #     return "terjadi error"
 
 def kr_read(id):
     try:

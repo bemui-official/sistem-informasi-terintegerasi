@@ -18,7 +18,7 @@ fauth = firebase_init
 def formKa(request):
     try:
         if (request.session['uid']):
-            if (fauth.get_account_info(request.session['uid'])):
+            if (fauth.get_account_info(request.session['uid'])['users']):
                 return render(request, 'advanced/form_ka.html', {
                     'template': links_keuangan['Advanced']
                 })

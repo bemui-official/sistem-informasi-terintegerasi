@@ -15,6 +15,8 @@ from pathlib import Path
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from backend.misc.google import create_service
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
@@ -170,5 +172,26 @@ STATICFILES_DIRS = [
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Line Bot Credentials
-LINE_CHANNEL_ACCESS_TOKEN = 'kaPsqQV6XHaJWRR4L4I2o1Z0pGSLIEPbN5FR0YOjKrJk3pBQHLdEGZ0nzfraWJM7G63NxupKU/HLtTftejXJF9MW+y8SwKj2APq8ofKL2lmr2UGAvDGL/XSPcEncdbbGiNcKnm8UmyIWR/0Vf02irgdB04t89/1O/w1cDnyilFU='
-LINE_CHANNEL_SECRET = '19a194fbe7b4f253c7398d36bc91efd6'
+if os.getenv('LINE_CHANNEL_ACCESS_TOKEN') is not None:
+    LINE_CHANNEL_ACCESS_TOKEN = os.getenv('LINE_CHANNEL_ACCESS_TOKEN')
+    LINE_CHANNEL_SECRET = os.getenv('LINE_CHANNEL_SECRET')
+else:
+    LINE_CHANNEL_ACCESS_TOKEN = ''
+    LINE_CHANNEL_SECRET = ''
+
+
+# Google Calendar Credentials
+# GCAL_SECRET_FILE = "sit-calendar.json"
+# GCAL_API_NAME = "calendar"
+# GCAL_API_VERSION = "v3"
+# GCAL_SCOPES = ["https://www.googleapis.com/auth/calendar"]
+#
+# GCAL_CALENDAR_ID_KEUANGAN = "dfbmrf4gtb018jkkrecle5vsc4@group.calendar.google.com"
+# GCAL_CALENDAR_ID_SURAT = "6or3tlgb451t28adjuin6pdg5s@group.calendar.google.com"
+#
+# GCAL_SERVICE = create_service(
+#         GCAL_SECRET_FILE,
+#         GCAL_API_NAME,
+#         GCAL_API_VERSION,
+#         GCAL_SCOPES
+#     )
