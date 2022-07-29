@@ -121,7 +121,7 @@ def dashboard_pengurus(request, category, sort):
 				data = []
 				tahapan = []
 				judul = "Home Dashboard"
-				if user.admin:
+				if user["admin"]:
 					if category == 'reimbursement' and 'keuangan' in user['admin']:
 						data = kr_read_all(sort)
 						judul = "Keuangan - Reimbursement"
