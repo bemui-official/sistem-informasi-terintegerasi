@@ -18,13 +18,13 @@
 				<g id="OuterLayer">
 					<rect id="Rectangle 1" x="77" y="216" width="2583" height="66" rx="33" stroke="#144B84" stroke-width="5"/>
 					<circle id="Ellipse7" cx="480.5" cy="249.5" r="116.5" fill="#EBEBEB" stroke="#144B84" stroke-width="5"/>
-					<text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="350" y="450">Checking</tspan></text>
+					<text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="300" y="450">{{ tahap.0 }}</tspan></text>
 					<circle id="Ellipse8" cx="1100.5" cy="249.5" r="116.5" fill="#EBEBEB" stroke="#144B84" stroke-width="5"/>
-					<text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="850" y="450">Creating Voucher</tspan></text>
+					<text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="850" y="450">{{ tahap.1 }}</tspan></text>
 					<circle id="Ellipse9" cx="1700.5" cy="249.5" r="116.5" fill="#EBEBEB" stroke="#144B84" stroke-width="5"/>
-					<text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="1590" y="450">Transfer</tspan></text>
+					<text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="1500" y="450">{{ tahap.2 }}</tspan></text>
 					<circle id="Ellipse10" cx="2300.5" cy="249.5" r="116.5" fill="#EBEBEB" stroke="#144B84" stroke-width="5"/>
-					<text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="2190" y="450">Finished</tspan></text>
+					<text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="2190" y="450">{{ tahap.3 }}</tspan></text>
 				</g>
 				<g id="Bar">
 					<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="72" y="128" width="2993" height="243">
@@ -95,21 +95,16 @@
 			<button class="button" type="submit">Selesai QC</button>
 		</form>
 
-		{% elif user.birdeptim in admin.tahap2 and data.tahapan == 1 %}
-		<form action="../dibatalkan" method="post">
-			{% csrf_token %}
-			<input name="id_request" type="hidden" value={{ id }}>
-			<button class="button-sec" type="submit">Tolak</button>
-		</form>
-		<form action="../diterima2" method="post">
+        {% elif user.birdeptim in admin.tahap2 and data.tahapan == 1 %}
+		<a href="{% url 'sk:form2' id=id %}" class="button">Masukkan berkas</a>
+
+		{% elif user.birdeptim in admin.tahap3 and data.tahapan == 2 %}
+		<form action="../diterima3" method="post">
 			{% csrf_token %}
 			<input name="id_request" type="hidden" value={{ id }}>
 			<button class="button" type="submit">Terima</button>
 		</form>
-
-		{% elif user.birdeptim in admin.tahap3 and data.tahapan == 2 %}
-		<a href="{% url 'sk:form3' id=id %}" class="button">Masukkan berkas</a>
-		{% endif %}
+        {% endif %}
 	</div>
 </div>
 {% endblock content %}

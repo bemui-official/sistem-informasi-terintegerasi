@@ -5,13 +5,17 @@ const links_surat_besar = {
     'LPJ Kegiatan': 'https://docs.google.com/document/d/1tYO70rx6fRXoqQY9lyDhUUKmZdRMNQY6/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
     'LPJ Keuangan': 'https://docs.google.com/spreadsheets/d/1HCLoLWgNLO9Gri4_Ww8_AXU4iIa0Ng2h/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
     'Pra Proposal': 'https://docs.google.com/document/d/1PWnrKaFrEKYI_Ya2YbQgP_MPnl12EnNK/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
-    'Proposal': 'https://docs.google.com/document/d/16GpZcNSW0F6u_1F8EblTp-23o_26pi2J/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true'
+    'Proposal': 'https://docs.google.com/document/d/16GpZcNSW0F6u_1F8EblTp-23o_26pi2J/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
+    'lainnya': ''
 }
 
 
 function showLink(s) {
     var tag = document.getElementById('link_a');
-    if (s.value != "none"){
+    if(s.value == "lainnya"){
+        tag.style.display = "none"
+    }
+    else if (s.value != "none"){
         var tag = document.getElementById('link_a');
         var tag2 = document.getElementById('link');
         tag2.textContent = "Link Surat " + s.value

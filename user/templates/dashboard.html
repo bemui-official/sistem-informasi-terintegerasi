@@ -39,8 +39,8 @@
 				</div>
 				<div class="dashboard-nav-list-item">
 					<br>
-					<a href="{% url 'user:dashboard' 'surat' 'semua' %}" class="nav-button"><p {% if 'surat' in request.get_full_path %}id="category-focus"{% endif %} >Surat</p></a>
-					<a href="{% url 'user:dashboard' 'dirmawa' 'semua' %}" class="nav-button"><p {% if 'dirmawa' in request.get_full_path %}id="category-focus"{% endif %} >Dirmawa</p></a>
+					<a href="{% url 'user:dashboard' 'surat_keluar' 'semua' %}" class="nav-button"><p {% if 'surat_keluar' in request.get_full_path %}id="category-focus"{% endif %} >Surat Keluar</p></a>
+					<a href="{% url 'user:dashboard' 'surat_besar' 'semua' %}" class="nav-button"><p {% if 'surat_besar' in request.get_full_path %}id="category-focus"{% endif %} >Surat Besar</p></a>
 					<a href="{% url 'user:dashboard' 'sertifikat' 'semua' %}" class="nav-button"><p {% if 'sertifikat' in request.get_full_path %}id="category-focus"{% endif %} >Sertifikat</p></a>
 				</div>
 				<hr>

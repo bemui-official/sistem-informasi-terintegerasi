@@ -2,7 +2,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore, storage
 from backend.CRUD.crud_user import user_read
 from backend.misc import firebase_init
-from backend.constants.tahapan import tahap_surat
+from backend.constants.tahapan import tahap_surat_keluar
 
 import datetime
 import pytz
@@ -44,7 +44,7 @@ def sk_create(request, judul, namaKegiatan, deskripsi, jenisSurat, link):
             'jenis_surat': jenisSurat,
             'link_docs': link,
             'tahapan': 0,
-            'nama_tahapan': tahap_surat[0],
+            'nama_tahapan': tahap_surat_keluar[0],
             'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta'))
         }
         db.collection('sk').document(idPermintaan).set(data)
@@ -69,18 +69,18 @@ def sk_update(request, id, num):
     try:
         db.collection('sk').document(id).update({
             "tahapan": num,
-            "nama_tahapan": tahap_surat[num]
+            "nama_tahapan": tahap_surat_keluar[num]
         })
         return ""
     except:
         return "terjadi error"
 
-def sk_update_3(request, id, num, dokumen):
+def sk_update_2(request, id, num, dokumen):
     try:
         db.collection('sk').document(id).update({
             "tahapan": num,
             "token_dokumen": dokumen,
-            "nama_tahapan": tahap_surat[num]
+            "nama_tahapan": tahap_surat_keluar[num]
         })
         return ""
     except:

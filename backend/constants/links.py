@@ -1,7 +1,8 @@
 links_keuangan = {
     'Reimbursement': 'https://docs.google.com/document/d/1MxwqQu9XoXFtqqbrW0N30_56ioqjencN/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
     'Advanced': 'https://docs.google.com/document/d/1MxwqQu9XoXFtqqbrW0N30_56ioqjencN/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
-    'Penyetoran': 'https://docs.google.com/document/d/1vQqcpURSI_A4LR12iQ11BnnXSWKod-9c/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true'
+    'Penyetoran': 'https://docs.google.com/document/d/1vQqcpURSI_A4LR12iQ11BnnXSWKod-9c/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
+    'lainnya': ''
 }
 
 links_surat = {
@@ -31,7 +32,8 @@ links_surat = {
     'Permohonan Rekomendasi Sponsorship': 'https://docs.google.com/document/d/1bV-P7pdofDJtc0hveup1VAeuNUp0vfPp/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
     'Rekomendasi': 'https://docs.google.com/document/d/1ia_a-etUO2L66PLRrXmPXoInGuksUKJs/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
     'Tugas': 'https://docs.google.com/document/d/1p8aKR5IUvAdL8BOT20u6Fng6Odvoj0R8/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
-    'Undangan': 'https://docs.google.com/document/d/1CVhfqpqPqxKWK-lcTo2tWhWc6jEmQHx3/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true'
+    'Undangan': 'https://docs.google.com/document/d/1CVhfqpqPqxKWK-lcTo2tWhWc6jEmQHx3/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
+    'lainnya': ''
 }
 
 links_surat_besar = {
@@ -41,5 +43,6 @@ links_surat_besar = {
     'LPJ Kegiatan': 'https://docs.google.com/document/d/1tYO70rx6fRXoqQY9lyDhUUKmZdRMNQY6/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
     'LPJ Keuangan': 'https://docs.google.com/spreadsheets/d/1HCLoLWgNLO9Gri4_Ww8_AXU4iIa0Ng2h/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
     'Pra Proposal': 'https://docs.google.com/document/d/1PWnrKaFrEKYI_Ya2YbQgP_MPnl12EnNK/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
-    'Proposal': 'https://docs.google.com/document/d/16GpZcNSW0F6u_1F8EblTp-23o_26pi2J/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true'
+    'Proposal': 'https://docs.google.com/document/d/16GpZcNSW0F6u_1F8EblTp-23o_26pi2J/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
+    'lainnya': ''
 }

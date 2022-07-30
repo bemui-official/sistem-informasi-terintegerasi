@@ -1,10 +1,12 @@
 from django.http import Http404
 from django.shortcuts import render, redirect
+
+from backend.CRUD.crud_sb import sb_read_all, sb_read_requests
 from backend.CRUD.crud_user import user_create, user_read, user_update_admin
 from backend.CRUD.crud_dashboard import read_requests
 from django.contrib import auth
 
-from backend.constants.tahapan import tahap_reimbursement, tahap_advanced, tahap_penyetoran, tahap_surat
+from backend.constants.tahapan import tahap_reimbursement, tahap_advanced, tahap_penyetoran, tahap_surat_keluar, tahap_surat_besar
 from backend.misc import firebase_init
 from backend.constants.birdeptim import pi, birdeptim, kode_fungsionaris
 
@@ -91,10 +93,14 @@ def dashboard(request, category, sort):
 					data = ks_read_requests(user['id'], sort)
 					judul = "Keuangan - Penyetoran"
 					tahapan = tahap_penyetoran
-				elif category == "surat":
+				elif category == "surat_keluar":
 					data = sk_read_requests(user["id"], sort)
 					judul = "Surat Menyurat - Surat"
-					tahapan = tahap_surat
+					tahapan = tahap_surat_keluar
+				elif category == "surat_besar":
+					data = sb_read_requests(user["id"], sort)
+					judul = "Surat Besar - Surat"
+					tahapan = tahap_surat_besar
 
 				hostname = request.build_absolute_uri("/")
 				print(request.get_full_path)
@@ -134,10 +140,14 @@ def dashboard_pengurus(request, category, sort):
 						data = ks_read_all(sort)
 						judul = "Keuangan - Penyetoran"
 						tahapan = tahap_penyetoran
-					elif category == "surat" and 'surat' in user['admin']:
+					elif category == "surat_keluar" and 'surat' in user['admin']:
 						data = sk_read_all(sort)
 						judul = "Surat Menyurat - Surat"
-						tahapan = tahap_surat
+						tahapan = tahap_surat_keluar
+					elif category == "surat_besar" and 'surat' in user['admin']:
+						data = sb_read_all(sort)
+						judul = "Surat Besar - Surat"
+						tahapan = tahap_surat_besar
 					hostname = request.build_absolute_uri("/")
 					print(request.get_full_path)
 					return render(request, 'dashboard_pengurus.html', {

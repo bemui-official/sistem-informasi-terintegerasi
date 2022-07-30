@@ -8,8 +8,7 @@ urlpatterns = [
     path('postformsk', views.postFormSk, name='postformsk'),
     path('detail/<str:id>', views.detail, name='detail'),
     path('diterima1', views.diterima_1, name='diterima1'),
-    path('diterima2', views.diterima_2, name='diterima2'),
-    path('dibatalkan', views.dibatalkan, name='dibatalkan'),
-    path('detail/3/<str:id>', views.form3, name='form3'),
-    path('postform3', views.postForm3, name='postform3'),
+    path('diterima3', views.diterima_3, name='diterima2'),
+    path('detail/2/<str:id>', views.form2, name='form2'),
+    path('postform2', views.postForm2, name='postform2'),
 ]

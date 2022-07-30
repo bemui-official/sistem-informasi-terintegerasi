@@ -17,9 +17,16 @@ tahap_penyetoran = {
     3: 'Check Transfer',
     4: 'Finished'
 }
-tahap_surat = {
+tahap_surat_keluar = {
     0: 'Quality Control',
-    1: 'Persetujuan Kabem',
-    2: 'Penandatanganan Surat',
+    1: 'Penandatanganan',
+    2: 'Approval Kabem',
     3: 'Finished'
+}
+tahap_surat_besar = {
+    0: 'QC SPI',
+    1: 'QC Kestari',
+    2: 'Penandatanganan',
+    3: 'Approval Kabem',
+    4: 'Finished'
 }

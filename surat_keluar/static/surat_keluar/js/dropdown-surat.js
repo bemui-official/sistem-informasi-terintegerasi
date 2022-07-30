@@ -25,13 +25,17 @@ const links_surat = {
     'Permohonan Rekomendasi Sponsorship': 'https://docs.google.com/document/d/1bV-P7pdofDJtc0hveup1VAeuNUp0vfPp/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
     'Rekomendasi': 'https://docs.google.com/document/d/1ia_a-etUO2L66PLRrXmPXoInGuksUKJs/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
     'Tugas': 'https://docs.google.com/document/d/1p8aKR5IUvAdL8BOT20u6Fng6Odvoj0R8/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
-    'Undangan': 'https://docs.google.com/document/d/1CVhfqpqPqxKWK-lcTo2tWhWc6jEmQHx3/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true'
+    'Undangan': 'https://docs.google.com/document/d/1CVhfqpqPqxKWK-lcTo2tWhWc6jEmQHx3/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
+    'lainnya': ''
 }
 
 
 function showLink(s) {
     var tag = document.getElementById('link_a');
-    if (s.value != "none"){
+    if(s.value == "lainnya"){
+        tag.style.display = "none"
+    }
+    else if (s.value != "none"){
         var tag = document.getElementById('link_a');
         var tag2 = document.getElementById('link');
         tag2.textContent = "Link Surat " + s.value
