@@ -60,6 +60,8 @@ def postSignIn(request):
 	request.session['uid'] = str(session_id)
 	if email == 'admin_sit@admin.com':
 		request.session['admin'] = True
+	else:
+		request.session['admin'] = False
 	print(request.session['uid'])
 	return redirect('/')
 
