@@ -39,6 +39,16 @@ input[type=text]
     width: 100%;
 }
 
+.attention{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1em;
+    margin-top: 2em;
+    text-align: center;
+    font-size: 0.75em;
+}
+
 @media only screen and (min-width: 800px) {
     .form-root{
         grid-column: 2/3;
@@ -104,5 +114,13 @@ input[type=text]
     #submitbutton {
         float: right;
         width: 100%;
+    }
+
+    .attention{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2em;
+        text-align: center;
     }
 }

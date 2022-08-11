@@ -126,7 +126,7 @@ def ka_read_requests(idBirdep, tahap):
     try:
         data_dict = []
         if tahap == 'semua':
-            datas = db.collection('ka').where('idBirdep', '==', idBirdep).where('tahapan', '!=', 3).get()
+            datas = db.collection('ka').where('idBirdep', '==', idBirdep).get()
         else:
             datas = db.collection('ka').where('idBirdep', '==', idBirdep).where('tahapan', '==', int(tahap)).get()
         for data in datas:

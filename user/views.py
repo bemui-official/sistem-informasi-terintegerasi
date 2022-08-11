@@ -29,41 +29,47 @@ def signUp(request):
 	})
 
 def postSignUp(request):
-	idBirdep = request.POST.get("username")
-	email = request.POST.get("email")
-	password = request.POST.get("password1")
-	password2 = request.POST.get("password2")
-	asal = request.POST.get("asal")
-	nama = request.POST.get("nama")
-	panggilan = request.POST.get("panggilan")
-	birdeptim = request.POST.get("birdeptim")
-	permintaan = []
-	if (password == password2):
-		message = user_create(idBirdep, email, password, asal, nama, 0, panggilan, permintaan, birdeptim)
-	if message == "":
-		return redirect("user:signin")
-	else:
+	try:
+		idBirdep = request.POST.get("username")
+		email = request.POST.get("email")
+		password = request.POST.get("password1")
+		password2 = request.POST.get("password2")
+		asal = request.POST.get("asal")
+		nama = request.POST.get("nama")
+		panggilan = request.POST.get("panggilan")
+		birdeptim = request.POST.get("birdeptim")
+		permintaan = []
+		if (password == password2):
+			message = user_create(idBirdep, email, password, asal, nama, 0, panggilan, permintaan, birdeptim)
+		if message == "":
+			return redirect("user:signin")
+		else:
+			return redirect("user:signup")
+	except:
 		return redirect("user:signup")
 
 def signIn(request):
 	return render(request, 'signIn.html')
 
 def postSignIn(request):
-	email = request.POST.get("email")
-	password = request.POST.get("password")
 	try:
-		user = fauth.sign_in_with_email_and_password(email, password)
+		email = request.POST.get("email")
+		password = request.POST.get("password")
+		try:
+			user = fauth.sign_in_with_email_and_password(email, password)
+		except:
+			return redirect(signIn)
+		print(user)
+		session_id = user['idToken']
+		request.session['uid'] = str(session_id)
+		if email == 'admin_sit@admin.com':
+			request.session['admin'] = True
+		else:
+			request.session['admin'] = False
+		print(request.session['uid'])
+		return redirect('/')
 	except:
-		return redirect(signIn)
-	print(user)
-	session_id = user['idToken']
-	request.session['uid'] = str(session_id)
-	if email == 'admin_sit@admin.com':
-		request.session['admin'] = True
-	else:
-		request.session['admin'] = False
-	print(request.session['uid'])
-	return redirect('/')
+		return redirect("user:signin")
 
 def logout(request):
 	auth.logout(request)

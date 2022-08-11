@@ -20,13 +20,13 @@ tahap_penyetoran = {
 tahap_surat_keluar = {
     0: 'Quality Control',
     1: 'Penandatanganan',
-    2: 'Approval Kabem',
+    2: 'Approval',
     3: 'Finished'
 }
 tahap_surat_besar = {
     0: 'QC SPI',
     1: 'QC Kestari',
     2: 'Penandatanganan',
-    3: 'Approval Kabem',
+    3: 'Approval',
     4: 'Finished'
 }

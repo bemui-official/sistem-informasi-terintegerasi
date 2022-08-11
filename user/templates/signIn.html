@@ -7,6 +7,16 @@
 {% endblock meta %}
 
 {% block content %}
+<div class="attention only-desktop">
+    <h1 style="color: red">
+        {{ message }}
+    </h1>
+</div>
+<div class="attention only-mobile">
+    <h1 style="color: red">
+        {{ message }}
+    </h1>
+</div>
 <div class="content-root">
     <div class="form-root">
         <h1 id="judul-form">Sign In</h1>
