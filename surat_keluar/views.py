@@ -49,7 +49,7 @@ def postFormSk(request):
     if message != "terjadi error":
         return redirect("/surat_keluar/detail/" + message)
     else:
-        return redirect("sk:formsk")
+        return redirect("user:logout")
 
 
 # ---------------------

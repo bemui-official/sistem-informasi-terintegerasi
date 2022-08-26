@@ -43,7 +43,7 @@ def postFormKs(request):
         return redirect("/penyetoran/detail/" + message)
     else:
         message = "Gagal Upload"
-        return redirect('ks:formks')
+        return redirect("user:logout")
 
 # ---------------------
 # Detail Penyetoran

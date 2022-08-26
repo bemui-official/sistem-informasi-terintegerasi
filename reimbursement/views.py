@@ -54,7 +54,7 @@ def postFormKr(request):
             return redirect('kr:formkr')
     else:
         message = "Gagal Upload"
-        return redirect('kr:formkr')
+        return redirect("user:logout")
 
 
 # ---------------------

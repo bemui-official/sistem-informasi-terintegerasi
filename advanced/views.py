@@ -43,7 +43,7 @@ def postFormKa(request):
         return redirect("/advanced/detail/" + message)
     else:
         message = "Gagal Upload"
-        return redirect('ka:formka')
+        return redirect("user:logout")
 
 # ---------------------
 # Detail Advanced
