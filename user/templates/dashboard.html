@@ -84,26 +84,26 @@
                             {% if data.tahapan == 3 and 'semua' in request.get_full_path and category != "penyetoran" and category != "surat_besar" %}
                             {% elif data.tahapan == 4 and 'semua' in request.get_full_path and category != "reimbursement" and category != "advanced" and category != "surat_keluar"%}
                             {% else %}
-                                <a onclick="openInNewTab('{{ hostname }}{{ category }}/detail/{{ data.idPermintaan }}');" class="request">
-                                <div class="request-div">
-                                    <div class="request-div-header">
-                                        <h2>{{ data.judul }}</h2>
-                                        <div class="request-time-post-desktop">
-                                            {{ data.waktu_pengajuan }}<br>
+                                <a onclick="openInNewTab('{{ hostname }}{{ category }}/detail/{{ data.idPermintaan }}');" class="request" {% if data.isInsidental %} style="background: #8b0000" {% endif %}>
+                                    <div class="request-div">
+                                        <div class="request-div-header">
+                                            <h2>{{ data.judul }}</h2>
+                                            <div class="request-time-post-desktop">
+                                                {{ data.waktu_pengajuan }}<br>
+                                            </div>
+                                        </div>
+                                        <div class="request-div-body">
+                                            <div>
+                                                <p class="request-div-body-status">Status: <strong>{{ data.nama_tahapan }}</strong></p>
+                                                <p>Dipesan Oleh:</p>
+                                                <p><strong>{{ data.nama_birdep }}</strong></p>
+                                            </div>
+                                            <div class="request-time-post-mobile">
+                                                {{ data.waktu_pengajuan }}<br>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="request-div-body">
-                                        <div>
-                                            <p class="request-div-body-status">Status: <strong>{{ data.nama_tahapan }}</strong></p>
-                                            <p>Dipesan Oleh:</p>
-                                            <p><strong>{{ data.nama_birdep }}</strong></p>
-                                        </div>
-                                        <div class="request-time-post-mobile">
-                                            {{ data.waktu_pengajuan }}<br>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
+                                </a>
                             {% endif %}
                         {% endfor %}
                     </div>

@@ -24,7 +24,7 @@
                 <circle id="Ellipse9" cx="1340.5" cy="249.5" r="116.5" fill="#EBEBEB" stroke="#144B84" stroke-width="5"/>
                 <text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="1050" y="450">{{ tahap.2 }}</tspan></text>
                 <circle id="Ellipse10" cx="1790.5" cy="249.5" r="116.5" fill="#EBEBEB" stroke="#144B84" stroke-width="5"/>
-                <text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="1600" y="450">{{ tahap.3 }}</tspan></text>
+                <text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="1660" y="450">{{ tahap.3 }}</tspan></text>
                 <circle id="Ellipse11" cx="2240.5" cy="249.5" r="116.5" fill="#EBEBEB" stroke="#144B84" stroke-width="5"/>
                 <text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="2120" y="450">{{ tahap.4 }}</tspan></text>
             </g>
@@ -66,12 +66,19 @@
 				<p>{{data.deskripsi}}</p>
 				<h3>Link Docs</h3>
 				<a href="{{data.link_docs}}">Docs Surat</a>
+			</div>
+			<div class="column">
+                {% if data.isInsidental %}
+                    <h3 style="color: red">Surat Insidental</h3><br>
+                    <h3>Bukti Insidental</h3>
+                    <p>{{ data.buktiInsidental }}</p>
+                {% else %}
+                    <h3>Tidak Insidental</h3>
+                {% endif %}
                 {% if data.drive_surat %}
                     <h3>Drive Surat</h3>
                     <a href="{{data.drive_surat}}">Drive Surat</a>
                 {% endif %}
-			</div>
-			<div class="column">
 			</div>
 		</div>
 	</div>

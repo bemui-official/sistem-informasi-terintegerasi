@@ -27,3 +27,12 @@ function showLink(s) {
         tag.style.display = "none"
     }
 }
+
+function showInsidental(s) {
+    var tag = document.getElementById('bukti_insidental');
+    if (s.value == "True") {
+        tag.style.display = "block"
+    } else {
+        tag.style.display = "none"
+    }
+}

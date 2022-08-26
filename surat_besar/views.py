@@ -35,13 +35,21 @@ def postFormSb(request):
     deskripsi = request.POST.get("deskripsi")
     jenis_surat = request.POST.get("jenis")
     link = request.POST.get("linkdocs")
+    insidental = request.POST.get("insidental")
 
-    message = sb_create(request, judul, nama_kegiatan, deskripsi, jenis_surat, link)
+    if (insidental == "True"):
+        insidental = True
+        bukti = request.POST.get("bukti")
+    else:
+        insidental = False
+        bukti = ""
+
+    message = sb_create(request, judul, nama_kegiatan, deskripsi, jenis_surat, link, insidental, bukti)
     print(message)
     if message != "terjadi error":
         return redirect("/surat_besar/detail/" + message)
     else:
-        return redirect("sb:formsb")
+        return redirect("user:logout")
 
 
 # ---------------------

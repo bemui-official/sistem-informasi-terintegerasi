@@ -25,7 +25,7 @@ ds = storage.bucket()
 # --------------------------
 # CRUD Functions
 # --------------------------
-def sb_create(request, judul, namaKegiatan, deskripsi, jenisSurat, link):
+def sb_create(request, judul, namaKegiatan, deskripsi, jenisSurat, link, insidental, bukti):
     try:
         print(request.session['uid'])
         user_data = fauth.get_account_info(request.session['uid'])
@@ -45,7 +45,9 @@ def sb_create(request, judul, namaKegiatan, deskripsi, jenisSurat, link):
             'link_docs': link,
             'tahapan': 0,
             'nama_tahapan': tahap_surat_besar[0],
-            'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta'))
+            'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta')),
+            'isInsidental': insidental,
+            'buktiInsidental': bukti
         }
         db.collection('sb').document(idPermintaan).set(data)
 

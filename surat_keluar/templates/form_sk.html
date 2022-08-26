@@ -22,6 +22,15 @@
                     <label for="deskripsi">Deskripsi Singkat Kegiatan</label>
                     <input type="text" id="deskripsi" name="deskripsi" placeholder="Deksripsi Singkat..."><br/>
 
+                    <label for="insidental">Insidental</label><br>
+                    <input type="radio" id="insidental" name="insidental" onchange="showInsidental(this)" value="True">Iya<br/>
+                    <input type="radio" id="insidental" name="insidental" onchange="showInsidental(this)" value="False" checked>Tidak<br/><br/>
+
+                    <div id="bukti_insidental" style="display: none">
+                        <label for="bukti">Bukti Insidental</label>
+                        <input type="text" id="bukti" name="bukti" placeholder="Bukti Insidental..."><br/>
+                    </div>
+
                     <label for="jenis">Jenis Surat</label>
                     <select id="jenis" name="jenis" onchange="showLink(this)">
                         <option value="none">-- Pilih jenis Surat --</option>

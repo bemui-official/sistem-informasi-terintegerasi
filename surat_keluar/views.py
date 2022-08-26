@@ -35,8 +35,16 @@ def postFormSk(request):
     deskripsi = request.POST.get("deskripsi")
     jenis_surat = request.POST.get("jenis")
     link = request.POST.get("linkdocs")
+    insidental = request.POST.get("insidental")
 
-    message = sk_create(request, judul, nama_kegiatan, deskripsi, jenis_surat, link)
+    if (insidental == "True"):
+        insidental = True
+        bukti = request.POST.get("bukti")
+    else:
+        insidental = False
+        bukti = ""
+
+    message = sk_create(request, judul, nama_kegiatan, deskripsi, jenis_surat, link, insidental, bukti)
     print(message)
     if message != "terjadi error":
         return redirect("/surat_keluar/detail/" + message)

@@ -62,12 +62,19 @@
 				<p>{{data.deskripsi}}</p>
 				<h3>Link Docs</h3>
 				<p><a href="{{data.link_docs}}" target="_blank">Docs Surat</a></p>
-                {% if data.drive_surat %}
-                    <h3>Drive Surat</h3>
-                    <p><a href="{{data.drive_surat}}" target="_blank">Drive Surat</a></p>
-                {% endif %}
 			</div>
 			<div class="column">
+                {% if data.isInsidental %}
+                    <h3 style="color: red">Surat Insidental</h3><br>
+                    <h3>Bukti Insidental</h3>
+                    <p>{{ data.buktiInsidental }}</p>
+                {% else %}
+                    <h3>Tidak Insidental</h3>
+                {% endif %}
+                {% if data.drive_surat %}
+                    <h3>Drive Surat</h3>
+                    <a href="{{data.drive_surat}}">Drive Surat</a>
+                {% endif %}
 			</div>
 		</div>
 	</div>
