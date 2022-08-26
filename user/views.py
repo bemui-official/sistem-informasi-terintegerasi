@@ -107,7 +107,7 @@ def dashboard(request, category, sort):
 					tahapan = tahap_surat_keluar
 				elif category == "surat_besar":
 					data = sb_read_requests(user["id"], sort)
-					judul = "Surat Besar - Surat"
+					judul = "Dokumen - Surat"
 					tahapan = tahap_surat_besar
 
 				hostname = request.build_absolute_uri("/")
@@ -154,7 +154,7 @@ def dashboard_pengurus(request, category, sort):
 						tahapan = tahap_surat_keluar
 					elif category == "surat_besar" and 'surat' in user['admin']:
 						data = sb_read_all(sort)
-						judul = "Surat Besar - Surat"
+						judul = "Dokumen - Surat"
 						tahapan = tahap_surat_besar
 					hostname = request.build_absolute_uri("/")
 					print(request.get_full_path)

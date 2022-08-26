@@ -39,7 +39,6 @@ links_surat = {
 links_surat_besar = {
     'SPK Nonprofit': 'https://docs.google.com/document/d/1Mh3sHy5L0Le_PDH78-pftdodIU1tmdAI/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
     'SPK Profit': 'https://docs.google.com/document/d/1Q5DZQszGysgdA8TLs43Zhyv6iaJwBPAm/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
-    'MoU Lembaga Eksternal': 'https://docs.google.com/document/d/156FgHoFvcy0BHvY0q4kfbxVqa5QsgWik/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
     'LPJ Kegiatan': 'https://docs.google.com/document/d/1tYO70rx6fRXoqQY9lyDhUUKmZdRMNQY6/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
     'LPJ Keuangan': 'https://docs.google.com/spreadsheets/d/1HCLoLWgNLO9Gri4_Ww8_AXU4iIa0Ng2h/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
     'Pra Proposal': 'https://docs.google.com/document/d/1PWnrKaFrEKYI_Ya2YbQgP_MPnl12EnNK/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
