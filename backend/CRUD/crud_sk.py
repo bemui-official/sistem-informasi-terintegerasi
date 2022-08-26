@@ -86,6 +86,17 @@ def sk_update_2(request, id, num, dokumen):
     except:
         return "terjadi error"
 
+def sk_update_2_drive(request, id, num, drive_surat):
+    try:
+        db.collection('sk').document(id).update({
+            "tahapan": num,
+            "drive_surat": drive_surat,
+            "nama_tahapan": tahap_surat_keluar[num]
+        })
+        return ""
+    except:
+        return "terjadi error"
+
 
 # ---------------------
 # Update data counter

@@ -86,6 +86,17 @@ def sb_update_4(request, id, num, dokumen):
     except:
         return "terjadi error"
 
+def sb_update_4_drive(request, id, num, drive_surat):
+    try:
+        db.collection('sb').document(id).update({
+            "tahapan": num,
+            "drive_surat": drive_surat,
+            "nama_tahapan": tahap_surat_besar[num]
+        })
+        return ""
+    except:
+        return "terjadi error"
+
 
 # ---------------------
 # Update data counter

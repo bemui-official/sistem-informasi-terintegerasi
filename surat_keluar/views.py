@@ -2,7 +2,7 @@ import json
 
 from django.http import Http404
 from django.shortcuts import render, redirect
-from backend.CRUD.crud_sk import sk_create, sk_read, sk_update, sk_update_2
+from backend.CRUD.crud_sk import sk_create, sk_read, sk_update, sk_update_2, sk_update_2_drive
 from backend.CRUD.crud_user import user_read
 from backend.constants.links import links_surat
 from backend.constants.tahapan import tahap_surat_keluar
@@ -115,6 +115,23 @@ def diterima_3(request):
     except:
         redirect('user:signin')
 
+def ditolak_3(request):
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                user = user_read(user_session['users'][0]['localId'])
+                if (user['birdeptim'] in suratkeluar_admin2["tahap3"]):
+                    print('masuk')
+                    id_request = request.POST.get("id_request")
+                    sk_update(request, id_request, 0)
+                    return redirect('sk:detail', id=id_request)
+            else:
+                redirect('user:logout')
+    except:
+        redirect('user:signin')
+
+
 
 # ---------------------
 # Form Tahap 2 Surat Keluar
@@ -144,6 +161,7 @@ def form2(request, id):
 def postForm2(request):
     dokumen = request.POST.get("uploadFiles")
     id_request = request.POST.get("id_request")
+    drive_surat = request.POST.get("drive_surat")
     dokumen = json.loads(dokumen)
     print(dokumen)
 
@@ -161,7 +179,16 @@ def postForm2(request):
                 message = "Gagal Upload"
                 return redirect("/surat_keluar/detail/" + id_request)
         else:
-            message = "Gagal Upload"
-            return redirect("/surat_keluar/detail/" + id_request)
+            if drive_surat != "":
+                message = sk_update_2_drive(request, id_request, 2, drive_surat)
+                print(message)
+                if message != "terjadi error":
+                    return redirect("/surat_keluar/detail/" + id_request)
+                else:
+                    message = "Gagal Upload"
+                    return redirect("/surat_keluar/detail/" + id_request)
+            else:
+                message = "Gagal Upload"
+                return redirect("/surat_keluar/detail/" + id_request)
     except:
         return redirect("/")

@@ -14,10 +14,16 @@
         <section>
             <form action="../../postform3" method="post" id="form">
                 {% csrf_token %}
-                <label class="control-label">Upload Dokumen Ditandatangani</label>
+
+                <label class="control-label" style="font-weight: bold">Upload Dokumen Ditandatangani <p style="color: red; font-weight: normal ">Kosongkan jika menggunakan drive</p> </label>
                 <div id="drag-drop-area"></div>
                 <input name="uploadFiles" type="hidden">
                 <input name="id_request" type="hidden" value={{ id }}>
+
+                <br>
+
+                <label for="drive_surat" style="font-weight: bold">Drive Surat <p style="color: red; font-weight: normal ">Kosongkan jika menggunakan file dokumen</p></label>
+                <input type="url" id="drive_surat" name="drive_surat" placeholder="Drive Surat..."> <br/>
             </form>
 
             <button type="button" id="submitbutton" class="button">Submit</button>

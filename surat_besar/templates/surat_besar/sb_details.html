@@ -65,7 +65,11 @@
 				<h3>Deskripsi Kegiatan</h3>
 				<p>{{data.deskripsi}}</p>
 				<h3>Link Docs</h3>
-				<a href="{{data.link_docs}}">{{data.link_docs}}</a>
+				<a href="{{data.link_docs}}">Docs Surat</a>
+                {% if data.drive_surat %}
+                    <h3>Drive Surat</h3>
+                    <a href="{{data.drive_surat}}">Drive Surat</a>
+                {% endif %}
 			</div>
 			<div class="column">
 			</div>
@@ -81,7 +85,11 @@
 		<h3>Deskripsi Kegiatan</h3>
 		<p>{{data.deskripsi}}</p>
 		<h3>Link Docs</h3>
-		<a href="{{data.link_docs}}">{{data.link_docs}}</a>
+		<a href="{{data.link_docs}}">Docs Surat</a>
+        {% if data.drive_surat %}
+            <h3>Drive Surat</h3>
+            <a href="{{data.drive_surat}}">Drive Surat</a>
+        {% endif %}
 	</div>
 
 	{% if dokumen != "" %}
@@ -116,6 +124,11 @@
 			<button class="button" type="submit">Terima</button>
 		</form>
 
+        <form action="../ditolak4" method="post">
+			{% csrf_token %}
+			<input name="id_request" type="hidden" value={{ id }}>
+			<button class="button" type="submit">Tolak/Revisi</button>
+		</form>
 
 		{% endif %}
 	</div>
