@@ -122,7 +122,7 @@ def sb_read_requests(idBirdep, tahap):
     try:
         data_dict = []
         if tahap == 'semua':
-            datas = db.collection('sb').where('idBirdep', '==', idBirdep).get()
+            datas = db.collection('sb').where('idBirdep', '==', idBirdep).limit(10).get()
         else:
             datas = db.collection('sb').where('idBirdep', '==', idBirdep).where('tahapan', '==', int(tahap)).get()
         for data in datas:
