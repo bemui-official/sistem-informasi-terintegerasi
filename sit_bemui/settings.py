@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'bootstrap5',
     'advanced',
     'backend',
@@ -72,6 +73,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware'
 ]
 
 ROOT_URLCONF = 'sit_bemui.urls'
@@ -165,6 +168,8 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Enable compression and caching features of whitenoise.
 # You can remove this if it causes problems on your setup.
