@@ -15,6 +15,6 @@ def surat(request):
 
 def publikasi(request):
     return render(request, 'publikasi.html')
-
+1
 def survei(request):
     return render(request, 'survei.html')
