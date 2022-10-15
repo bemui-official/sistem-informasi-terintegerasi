@@ -46,6 +46,8 @@ def sb_create(request, judul, namaKegiatan, deskripsi, jenisSurat, link, insiden
             'tahapan': 0,
             'nama_tahapan': tahap_surat_besar[0],
             'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta')),
+            'waktu_pengajuan_str': datetime.datetime.strftime(datetime.datetime.now(pytz.timezone('Asia/Jakarta')),
+                                                              "%d %b %Y, %H:%M"),
             'isInsidental': insidental,
             'buktiInsidental': bukti
         }

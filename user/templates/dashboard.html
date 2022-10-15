@@ -15,8 +15,6 @@
 				<h4>{{user.email}}</h4>
 				<p>{{user.nama}}</p>
 				<br>
-				<p>Total Pesanan: {{user.total_pesanan}}</p>
-				<br>
                 <a class="button logout" href="{% url 'user:dashboard_pengurus' 'home' 'home' %}" {% if not user.admin %} style="display: none" {% endif %} >Dashboard Pengurus</a>
                 <a class="button-sec logout" href="{% url 'user:logout' %}">Logout</a>
 			</div>
@@ -67,8 +65,80 @@
 		<div class="dashboard-body">
 			<div class="dashboard-content">
 				<div class="dashboard-content-card">
-                    <h1>{{ judul }}</h1>
+                    <h1>{{ judul }} Pemohon</h1>
                     {% if category == "home" %}
+                        <ul class="cards">
+                            <li>
+                                <a href="{% url 'user:dashboard' 'reimbursement' 'semua' %}" class="card">
+                                  <img src="{% static 'user/photos/Finance_leaders-pana.png' %}" class="card__image" alt="" />
+                                  <div class="card__overlay">
+                                    <div class="card__header">
+                                        <svg class="card__thumb" enable-background="new 0 0 48 48" id="Layer_1" version="1.1" viewBox="0 0 48 48" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path clip-rule="evenodd" d="M47,40L47,40c0,2.762-2.238,5-5,5l0,0H6l0,0c-2.762,0-5-2.238-5-5V11  c0-2.209,1.791-4,4-4l0,0h20.171l8.099-2.934c0.513-0.187,1.081,0.078,1.268,0.589L35.391,7H39c2.209,0,4,1.791,4,4v2l0,0  c2.209,0,4,1.791,4,4V40z M5,9L5,9c-1.104,0-2,0.896-2,2s0.896,2,2,2h3.445l0,0h0.189c0.013-0.005,0.021-0.016,0.034-0.021L19.65,9  H5z M34.078,9.181l-1.062-2.924l-0.001,0v0L30.964,7h0.003l-5.514,2h-0.01l-11.039,4h21.062L34.078,9.181z M41,11  c0-1.104-0.896-2-2-2h-2.883l1.454,4H41l0,0V11z M43,15H5l0,0c-0.732,0-1.41-0.211-2-0.555V40c0,1.657,1.344,3,3,3h36  c1.657,0,3-1.343,3-3v-7h-4c-2.209,0-4-1.791-4-4s1.791-4,4-4h4v-8C45,15.896,44.104,15,43,15z M45,31v-4h-4c-1.104,0-2,0.896-2,2  s0.896,2,2,2H45z M41,28h2v2h-2V28z" fill-rule="evenodd"/></svg>
+                                        <div class="card__header-text">
+                                            <h3 class="card__title">REIMBURSEMENT</h3>
+                                        </div>
+                                    </div>
+                                    <p class="card__description">Masuk ke dashboard Reimbursement</p>
+                                  </div>
+                                </a>
+                              </li>
+                            <li>
+                                <a href="{% url 'user:dashboard' 'advanced' 'semua' %}" class="card">
+                                  <img src="{% static 'user/photos/Credit_assesment-bro.png' %}" class="card__image" alt="" />
+                                  <div class="card__overlay">
+                                    <div class="card__header">
+                                        <svg class="card__thumb" enable-background="new 0 0 48 48" id="Layer_1" version="1.1" viewBox="0 0 48 48" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path clip-rule="evenodd" d="M47,40L47,40c0,2.762-2.238,5-5,5l0,0H6l0,0c-2.762,0-5-2.238-5-5V11  c0-2.209,1.791-4,4-4l0,0h20.171l8.099-2.934c0.513-0.187,1.081,0.078,1.268,0.589L35.391,7H39c2.209,0,4,1.791,4,4v2l0,0  c2.209,0,4,1.791,4,4V40z M5,9L5,9c-1.104,0-2,0.896-2,2s0.896,2,2,2h3.445l0,0h0.189c0.013-0.005,0.021-0.016,0.034-0.021L19.65,9  H5z M34.078,9.181l-1.062-2.924l-0.001,0v0L30.964,7h0.003l-5.514,2h-0.01l-11.039,4h21.062L34.078,9.181z M41,11  c0-1.104-0.896-2-2-2h-2.883l1.454,4H41l0,0V11z M43,15H5l0,0c-0.732,0-1.41-0.211-2-0.555V40c0,1.657,1.344,3,3,3h36  c1.657,0,3-1.343,3-3v-7h-4c-2.209,0-4-1.791-4-4s1.791-4,4-4h4v-8C45,15.896,44.104,15,43,15z M45,31v-4h-4c-1.104,0-2,0.896-2,2  s0.896,2,2,2H45z M41,28h2v2h-2V28z" fill-rule="evenodd"/></svg>
+                                        <div class="card__header-text">
+                                        <h3 class="card__title">Cash Advanced</h3>
+                                      </div>
+                                    </div>
+                                    <p class="card__description">Masuk ke dashboard Cash Advanced</p>
+                                  </div>
+                                </a>
+                              </li>
+                            <li>
+                                <a href="{% url 'user:dashboard' 'penyetoran' 'semua' %}" class="card">
+                                  <img src="{% static 'user/photos/Business_vision-bro.png' %}" class="card__image" alt="" />
+                                  <div class="card__overlay">
+                                    <div class="card__header">
+                                        <svg class="card__thumb" enable-background="new 0 0 48 48" id="Layer_1" version="1.1" viewBox="0 0 48 48" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path clip-rule="evenodd" d="M47,40L47,40c0,2.762-2.238,5-5,5l0,0H6l0,0c-2.762,0-5-2.238-5-5V11  c0-2.209,1.791-4,4-4l0,0h20.171l8.099-2.934c0.513-0.187,1.081,0.078,1.268,0.589L35.391,7H39c2.209,0,4,1.791,4,4v2l0,0  c2.209,0,4,1.791,4,4V40z M5,9L5,9c-1.104,0-2,0.896-2,2s0.896,2,2,2h3.445l0,0h0.189c0.013-0.005,0.021-0.016,0.034-0.021L19.65,9  H5z M34.078,9.181l-1.062-2.924l-0.001,0v0L30.964,7h0.003l-5.514,2h-0.01l-11.039,4h21.062L34.078,9.181z M41,11  c0-1.104-0.896-2-2-2h-2.883l1.454,4H41l0,0V11z M43,15H5l0,0c-0.732,0-1.41-0.211-2-0.555V40c0,1.657,1.344,3,3,3h36  c1.657,0,3-1.343,3-3v-7h-4c-2.209,0-4-1.791-4-4s1.791-4,4-4h4v-8C45,15.896,44.104,15,43,15z M45,31v-4h-4c-1.104,0-2,0.896-2,2  s0.896,2,2,2H45z M41,28h2v2h-2V28z" fill-rule="evenodd"/></svg>
+                                        <div class="card__header-text">
+                                        <h3 class="card__title">Penyetoran</h3>
+                                      </div>
+                                    </div>
+                                    <p class="card__description">Masuk ke dashboard Penyetoran</p>
+                                  </div>
+                                </a>
+                              </li>
+                            <li>
+                                <a href="{% url 'user:dashboard' 'surat_keluar' 'semua' %}" class="card">
+                                  <img src="{% static 'user/photos/Building_permit-bro.png' %}" class="card__image" alt="" />
+                                  <div class="card__overlay">
+                                    <div class="card__header">
+					                    <svg class="card__thumb" data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M116.73,31.83a3,3,0,0,0-4.2-.61L64.14,67.34a1,1,0,0,1-1.2,0L15.5,31.06a3,3,0,1,0-3.64,4.77L49.16,64.36,12.27,92.16A3,3,0,1,0,15.88,97L54.11,68.14l5.18,4a7,7,0,0,0,8.43.06l5.44-4.06L111.84,97a3,3,0,1,0,3.59-4.81L78.17,64.35,116.12,36A3,3,0,0,0,116.73,31.83Z"/><path d="M113,19H15A15,15,0,0,0,0,34V94a15,15,0,0,0,15,15h98a15,15,0,0,0,15-15V34A15,15,0,0,0,113,19Zm9,75a9,9,0,0,1-9,9H15a9,9,0,0,1-9-9V34a9,9,0,0,1,9-9h98a9,9,0,0,1,9,9Z"/></svg>
+                                        <div class="card__header-text">
+                                        <h3 class="card__title">Dokumen</h3>
+                                      </div>
+                                    </div>
+                                    <p class="card__description">Masuk ke dashboard Dokumen</p>
+                                  </div>
+                                </a>
+                              </li>
+                            <li>
+                                <a href="{% url 'user:dashboard' 'surat_besar' 'semua' %}" class="card">
+                                  <img src="{% static 'user/photos/Fill_out-bro.png' %}" class="card__image" alt="" />
+                                  <div class="card__overlay">
+                                    <div class="card__header">
+					                    <svg class="card__thumb" data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M116.73,31.83a3,3,0,0,0-4.2-.61L64.14,67.34a1,1,0,0,1-1.2,0L15.5,31.06a3,3,0,1,0-3.64,4.77L49.16,64.36,12.27,92.16A3,3,0,1,0,15.88,97L54.11,68.14l5.18,4a7,7,0,0,0,8.43.06l5.44-4.06L111.84,97a3,3,0,1,0,3.59-4.81L78.17,64.35,116.12,36A3,3,0,0,0,116.73,31.83Z"/><path d="M113,19H15A15,15,0,0,0,0,34V94a15,15,0,0,0,15,15h98a15,15,0,0,0,15-15V34A15,15,0,0,0,113,19Zm9,75a9,9,0,0,1-9,9H15a9,9,0,0,1-9-9V34a9,9,0,0,1,9-9h98a9,9,0,0,1,9,9Z"/></svg>
+                                        <div class="card__header-text">
+                                        <h3 class="card__title">Surat Keluar</h3>
+                                      </div>
+                                    </div>
+                                    <p class="card__description">Masuk ke dashboard Surat Keluar</p>
+                                  </div>
+                                </a>
+                              </li>
+                        </ul>
                     {% else %}
                     <h2>Permintaan Anda</h2>
                     <div class="category-selector category-selector-dashboard">
@@ -89,7 +159,12 @@
                                         <div class="request-div-header">
                                             <h2>{{ data.judul }}</h2>
                                             <div class="request-time-post-desktop">
-                                                {{ data.waktu_pengajuan }}<br>
+                                                {% if data.waktu_pengajuan_str %}
+                                                    {{ data.waktu_pengajuan_str }}
+                                                {% else %}
+                                                    {{ data.waktu_pengajuan }}
+                                                {% endif %}
+                                                <br>
                                             </div>
                                         </div>
                                         <div class="request-div-body">
@@ -99,7 +174,12 @@
                                                 <p><strong>{{ data.nama_birdep }}</strong></p>
                                             </div>
                                             <div class="request-time-post-mobile">
-                                                {{ data.waktu_pengajuan }}<br>
+                                                {% if data.waktu_pengajuan_str %}
+                                                    {{ data.waktu_pengajuan_str }}
+                                                {% else %}
+                                                    {{ data.waktu_pengajuan }}
+                                                {% endif %}
+                                                <br>
                                             </div>
                                         </div>
                                     </div>

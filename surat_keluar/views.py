@@ -56,46 +56,36 @@ def postFormSk(request):
 # Detail Surat Keluar
 # --------------------
 def detail(request, id):
-    # try:
-    print(1)
-    if (request.session['uid']):
-        print(1)
-        user_session = fauth.get_account_info(request.session['uid'])
-        print(1)
-        if (user_session):
-            print(1)
-            data_detail = sk_read(id)
-            print(1)
-            user = user_read(user_session['users'][0]['localId'])
-            print(1)
-            if (data_detail != []):
-                print(1)
-                if (user["id"] == data_detail["idBirdep"] or user['birdeptim'] in suratkeluar_admin2["admin"]):
-                    # Get Dokumen Files
-                    print(1)
-                    try:
-                        print(1)
-                        url = getPhoto.getPhoto(data_detail["token_dokumen"][0])
-                        dokumen = url
-                    except:
-                        print(1)
-                        dokumen = ""
-                    return render(request, 'sk_details.html', {
-                        'data': data_detail,
-                        'user': user,
-                        'admin': suratkeluar_admin,
-                        'id': id,
-                        'dokumen': dokumen,
-                        'tahap': tahap_surat_keluar
-                    })
-                else:
-                    raise Http404
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                data_detail = sk_read(id)
+                user = user_read(user_session['users'][0]['localId'])
+                if (data_detail != []):
+                    if (user["id"] == data_detail["idBirdep"] or user['birdeptim'] in suratkeluar_admin2["admin"]):
+                        # Get Dokumen Files
+                        try:
+                            url = getPhoto.getPhoto(data_detail["token_dokumen"][0])
+                            dokumen = url
+                        except:
+                            dokumen = ""
+                        return render(request, 'sk_details.html', {
+                            'data': data_detail,
+                            'user': user,
+                            'admin': suratkeluar_admin,
+                            'id': id,
+                            'dokumen': dokumen,
+                            'tahap': tahap_surat_keluar
+                        })
+                    else:
+                        raise Http404
+            else:
+                return redirect("/user/logout")
         else:
-            return redirect("/user/logout")
-    else:
+            return redirect("/user/signin")
+    except:
         return redirect("/user/signin")
-    # except:
-    #     return redirect("/user/signin")
 
 # ---------------------
 # Form Tahap 0,1,2 Surat Keluar

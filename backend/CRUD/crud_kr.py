@@ -50,7 +50,9 @@ def kr_create(request, judul, namaKegiatan, deskripsi, bank, norek, anrek, vouch
             'nama_tahapan': tahap_reimbursement[0],
             'bukti_transaksi': [],
             'bukti_pembayaran': buktiPembayaran,
-            'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta'))
+            'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta')),
+            'waktu_pengajuan_str': datetime.datetime.strftime(datetime.datetime.now(pytz.timezone('Asia/Jakarta')),
+                                                              "%d %b %Y, %H:%M")
         }
         db.collection('kr').document(idPermintaan).set(data)
 

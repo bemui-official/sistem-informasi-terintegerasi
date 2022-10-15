@@ -49,7 +49,9 @@ def ks_create(request, judul, namaKegiatan, deskripsi, bank, norek, anrek, vouch
             'tahapan': 0,
             'nama_tahapan': tahap_penyetoran[0],
             'bukti_transaksi': [],
-            'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta'))
+            'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta')),
+            'waktu_pengajuan_str': datetime.datetime.strftime(datetime.datetime.now(pytz.timezone('Asia/Jakarta')),
+                                                              "%d %b %Y, %H:%M")
         }
         db.collection('ks').document(idPermintaan).set(data)
 
