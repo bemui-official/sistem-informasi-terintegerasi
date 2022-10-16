@@ -66,8 +66,12 @@ def sk_read(id):
         data = []
     return data
 
-def sk_delete():
-    return
+def sk_delete(id):
+    try:
+        data = db.collection('sk').document(id).delete()
+        return data
+    except:
+        return
 
 def sk_update(request, id, num):
     try:

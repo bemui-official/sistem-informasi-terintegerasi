@@ -2,7 +2,7 @@ import json
 
 from django.http import Http404
 from django.shortcuts import render, redirect
-from backend.CRUD.crud_sb import sb_create, sb_read, sb_update, sb_update_4, sb_update_4_drive
+from backend.CRUD.crud_sb import sb_create, sb_read, sb_update, sb_update_4, sb_update_4_drive, sb_delete
 from backend.CRUD.crud_user import user_read
 from backend.constants.links import links_surat_besar
 from backend.constants.tahapan import tahap_surat_besar
@@ -169,6 +169,27 @@ def dibatalkan(request):
                 redirect('user:logout')
     except:
         redirect('user:signin')
+
+# ---------------------
+# Delete Surat Besar
+# --------------------
+def delete(request):
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                user = user_read(user_session['users'][0]['localId'])
+                if (user['birdeptim'] in suratbesar_admin2["admin"]):
+                    print('masuk')
+                    id_request = request.POST.get("id_request")
+                    print(id_request)
+                    data = sb_delete(id_request)
+                    print(data)
+                    return redirect('../user/dashboard_pengurus/surat_besar/semua')
+            else:
+                return redirect('user:logout')
+    except:
+        return redirect('user:signin')
 
 
 # ---------------------

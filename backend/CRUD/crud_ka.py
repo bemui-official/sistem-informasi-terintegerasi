@@ -66,8 +66,12 @@ def ka_read(id):
         data = []
     return data
 
-def ka_delete():
-    return
+def ka_delete(id):
+    try:
+        data = db.collection('ka').document(id).delete()
+        return data
+    except:
+        return
 
 # ---------------------
 # Update data per-tahap
@@ -161,3 +165,4 @@ def ka_read_all_line():
     except:
         data_dict = []
     return data_dict
+

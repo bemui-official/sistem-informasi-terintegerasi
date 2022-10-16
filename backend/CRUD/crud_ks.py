@@ -67,8 +67,12 @@ def ks_read(id):
         data = []
     return data
 
-def ks_delete():
-    return
+def ks_delete(id):
+    try:
+        data = db.collection('ks').document(id).delete()
+        return data
+    except:
+        return
 
 # ---------------------
 # Update data per-tahap

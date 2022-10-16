@@ -68,8 +68,12 @@ def kr_read(id):
         data = []
     return data
 
-def kr_delete():
-    return
+def kr_delete(id):
+    try:
+        data = db.collection('kr').document(id).delete()
+        return data
+    except:
+        return
 
 # ---------------------
 # Update data per-tahap

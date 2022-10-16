@@ -14,4 +14,5 @@ urlpatterns = [
     path('dibatalkan', views.dibatalkan, name='dibatalkan'),
     path('detail/3/<str:id>', views.form3, name='form3'),
     path('postform3', views.postForm3, name='postform3'),
+    path('delete', views.delete, name='delete')
 ]

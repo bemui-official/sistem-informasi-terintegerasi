@@ -66,8 +66,12 @@ def sb_read(id):
         data = []
     return data
 
-def sb_delete():
-    return
+def sb_delete(id):
+    try:
+        data = db.collection('sb').document(id).delete()
+        return data
+    except:
+        return
 
 def sb_update(request, id, num):
     try:
