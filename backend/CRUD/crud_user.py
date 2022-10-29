@@ -1,15 +1,24 @@
 import firebase_admin
 from firebase_admin import credentials, firestore, storage, auth
-from uuid import uuid4
 
-cred = credentials.Certificate("testing-key.json")
-firebase_admin.initialize_app(cred, {
-    'storageBucket' : 'sit-bemui.appspot.com'
-})
+# --------------------------
+# Initialize Firebase Admin
+# --------------------------
+if not firebase_admin._apps:
+    cred = credentials.Certificate("testing-key.json")
+    firebase_admin.initialize_app(cred, {
+        'storageBucket' : 'sit-bemui.appspot.com'
+    })
+
 db = firestore.client()
 ds = storage.bucket()
 
-def user_create(idBirdep, email, password, asal, nama, total_pesanan, panggilan, permintaan) :
+
+# --------------------------
+# CRUD Functions
+# --------------------------
+def user_create(idBirdep, email, password, asal, nama, total_pesanan, panggilan, permintaan, birdeptim) :
+    idBirdep = idBirdep+"-"+asal
     try:
         user = auth.create_user(
             uid=idBirdep, email=email, email_verified=False, password=password)
@@ -27,14 +36,15 @@ def user_create(idBirdep, email, password, asal, nama, total_pesanan, panggilan,
         'asal': asal,
         'total_pesanan': total_pesanan,
         'panggilan': panggilan,
-        'permintaan' : permintaan
+        'permintaan' : permintaan,
+        'birdeptim': birdeptim
     }
     db.collection('users').document(idBirdep).set(data)
     return "";
 
 def user_read(idBirdep):
-    data = db.collection('users').document(idBirdep).get()
-    print('Successfully fetched user data: {0}'.format(data))
+    data = db.collection('users').document(idBirdep).get().to_dict()
+    print(data)
     return data
 
 def user_update_email(idBirdep, email):

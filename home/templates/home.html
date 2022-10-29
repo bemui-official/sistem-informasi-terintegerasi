@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <meta charset="UTF-8">
+    <title>Home</title>
+<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+  <script type="application/javascript" src="{% static 'main/js/script.js' %}"></script>
+{% endblock meta %}
+
+{% block content %}
+	<div class="content-home">
+		<div class="home-top">
+			<div class="home-top-color-filter">
+				<div>
+					<h1>Get your task done<br>By using SIT</h1>
+					<p>Permudah segala urusanmu dengan Sistem Informasi Terintegrasi</p>
+					{% if not request.user.is_authenticated %}
+						<a href="" class="button fit-content">Mulai Sekarang</a>
+					{% endif %}
+				</div>
+				<object data="{% static 'main/svg/Scrum-board-pana.svg' %}" type="image/svg+xml"></object>
+			</div>
+		</div>
+		<div class="home-middle">
+			<div class="home-middle-top">
+				<object data="{% static 'main/svg/Mind-map-pana.svg' %}" type="image/svg+xml"></object>
+				<div class="only-desktop">
+					<h2>Apa Itu Sistem Informasi Terintegrasi?</h2>
+					<p>Sistem Informasi Terintegrasi adalah suatu program kerja Biro Multimedia BEM UI dalam bentuk website untuk mempercepat dan mempermudah alur permintaan yang ada di internal BEM UI.</p>
+				</div>
+				<div class="only-mobile">
+					<h2>Apa Itu Sistem Informasi Terintegrasi?</h2>
+					<p>Sistem Informasi Terintegrasi adalah suatu program kerja Biro Multimedia BEM UI dalam bentuk website untuk mempercepat dan mempermudah alur permintaan yang ada di internal BEM UI.</p>
+				</div>
+			</div>
+			<div class="home-middle-middle">
+				<div>
+					<h2>Kami menawarkan kemudahan</h2>
+					<p>Misi kami adalah untuk meningkatkan efisiensi, efektifitas, dan memberikan kemudahan bagi para fungsionaris BEM UI dan jajaran dibawahnya dalam melakukan permintaan.</p>
+					<ul>
+						<li><p>Seluruh informasi terintegrasi dalam satu tempat<p></li>
+						<li><p>Memudahkan tracking progress permintaan<p></li>
+						<li><p>Meminimalisir miskomunikasi dalam proses alur permintaan<p></li>
+					</ul>
+				</div>
+				<object data="{% static 'main/svg/Features-Overview-pana.svg' %}" type="image/svg+xml"></object>
+			</div>
+			<div>
+				<h1 class="home-features">Fitur Fitur</h1>
+				<div class="home-middle-bottom">
+					 <div class="home-card-container">
+						<div class="home-card-top-blank"></div>
+						<object data="{% static 'main/svg/Piggy-bank-pana.svg' %}" type="image/svg+xml"></object>
+						<div class="home-card">
+							<div>
+								<h2>Keuangan</h2>
+								<p>Butuh melakukan permintaan reimburse, advanced, dan penyetoran?</p>
+							</div>
+							<a href="" class="button fit-content">Telusuri</a>
+						</div>
+					 </div>
+					 <div class="home-card-container">
+						<div class="home-card-top-blank"></div>
+						<object data="{% static 'main/svg/Content-pana.svg' %}" type="image/svg+xml"></object>
+						<div class="home-card">
+							<div>
+								<h2>Publikasi</h2>
+								<p>Butuh melakukan permintaan publikasi di kanal media BEM UI?</p>
+							</div>
+							<a href="" class="button fit-content">Telusuri</a>
+						</div>
+					 </div>
+					<div class="home-card-container">
+						<div class="home-card-top-blank"></div>
+						<object data="{% static 'main/svg/Mail-sent-pana.svg' %}" type="image/svg+xml"></object>
+						<div class="home-card">
+							<div>
+								<h2>Surat Menyurat</h2>
+								<p>Ingin meminta persetujuan dan tanda tangan dari BEM UI?</p>
+							</div>
+							<a href="" class="button fit-content">Telusuri</a>
+						</div>
+					 </div>
+					 <div class="home-card-container">
+						<div class="home-card-top-blank"></div>
+						<object data="{% static 'main/svg/Customer-Survey-amico.svg' %}" type="image/svg+xml"></object>
+						<div class="home-card">
+							<div>
+								<h2>Survei</h2>
+								<p>Membutuhkan survei untuk kepentingan penelitian dan pengembangan?</p>
+							</div>
+							<a href="" class="button fit-content">Telusuri</a>
+						</div>
+					 </div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock content %}

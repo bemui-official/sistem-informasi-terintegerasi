@@ -1,31 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
     <title>Sign Up</title>
-</head>
-<body>
+{% endblock meta %}
+
+{% block content %}
 <form action="postsignup" method="post">
     {% csrf_token %}
     Username:
     <input type="username" name="username"> <br/>
+
     Email:
     <input type="email" name="email"><br/>
+
     Password:
     <input type="password" name="password1"><br/>
+
     Confirm Password:
     <input type="password" name="password2"><br/>
+
     Asal:
-    <select id="asal" name="asal">
-      <option value="bem_ui">BEM UI</option>
-      <option value="paguyuban">Paguyuban</option>
-      <option value="kepanitiaan">Kepanitiaan</option>
+    <select id="asal" name="asal" onchange="showBirdep(this)">
+        <option value="bem_ui">BEM UI</option>
+        <option value="paguyuban">Paguyuban</option>
+        <option value="kepanitiaan">Kepanitiaan</option>
     </select><br/>
+
+    <div id="birdeptim">
+        Birdeptim
+        <select name="birdeptim" type="hidden">
+        <option value=100>Ketua BEM</option>
+        <option value=101>Wakil Ketua BEM"</option>
+        <option value=102>Kepala SPI</option>
+        <option value=103>Finance Controller</option>
+        <option value=104>Vice Finance Controller</option>
+        <option value=105>Treasurer</option>
+        <option value=106>Koorbid Internal</option>
+        <option value=107>Koorbid Kemahasiswaan</option>
+        <option value=108>Koorbid Sosial Politik</option>
+        <option value=109>Koorbid Sosial Lingkungan</option>
+        <option value=110>Koorbid Minat dan Bakat</option>
+        <option value=111>Kepala KKI</option>
+        <option value=200>Wakil Kepala Tim SPI</option>
+        <option value=201>Biro Multimedia</option>
+        <option value=202>Biro Desain Komunikasi dan Visual</option>
+        <option value=203>Biro Hubungan Masyarakat</option>
+        <option value=204>Biro Kesekretariatan</option>
+        <option value=205>Biro Pengembangan Sumber Daya Manusia</option>
+        <option value=206>Biro Penelitian dan Pengembangan</option>
+        <option value=207>Departemen Advokasi dan Kesejahteraan Mahasiswa</option>
+        <option value=208>Departemen Pemberdayaan dan Inovasi Mahasiswa</option>
+        <option value=209>Departemen Kajian Strategis</option>
+        <option value=210>Departemen Aksi dan Propaganda</option>
+        <option value=211>Departemen Sosial Masyarakat</option>
+        <option value=212>Departemen Lingkungan Hidup</option>
+        <option value=213>Departemen Seni dan Budaya</option>
+        <option value=214>Departemen Olahraga</option>
+        <option value=215>Departemen Pendidikan dan Keilmuan</option>
+        <option value=216>Biro Keuangan</option>
+    </select>
+    </div>
+
     Nama:
     <input type="name" name="nama"><br/>
+
     Panggilan:
     <input type="name" name="panggilan"><br/>
     <input type="submit" value="SignUp">
 </form>
-</body>
-</html>
+    <script>
+        function showBirdep(s) {
+          var tag = document.getElementById("birdeptim");
+          if (s.value == 'bem_ui') {
+              tag.style.visibility = "visible";
+          }
+          else tag.style.visibility = 'hidden';
+        }
+    </script>
+
+{% endblock content %}
+

@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
     <title>Title</title>
-</head>
-<body>
+{% endblock meta %}
+
+{% block content %}
 <form action="postsignin" method="post">
 {% csrf_token %}
     Email:
@@ -13,5 +14,4 @@
     <input type="password" name="password"><br/>
     <input type="submit" value="SignIn">
 </form>
-</body>
-</html>
+{% endblock content %}
