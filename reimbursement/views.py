@@ -2,7 +2,7 @@ import json
 
 from django.http import Http404
 from django.shortcuts import render, redirect
-from backend.CRUD.crud_kr import kr_create, kr_read, kr_update_0, kr_update_1, kr_update_2
+from backend.CRUD.crud_kr import kr_create, kr_read, kr_update_0, kr_update_1, kr_update_2, kr_delete
 from backend.CRUD.crud_user import user_read
 from backend.constants.links import links_keuangan
 from backend.misc import firebase_init, getPhoto
@@ -54,7 +54,7 @@ def postFormKr(request):
             return redirect('kr:formkr')
     else:
         message = "Gagal Upload"
-        return redirect('kr:formkr')
+        return redirect("user:logout")
 
 
 # ---------------------
@@ -242,3 +242,25 @@ def postForm2(request):
             return redirect("/reimbursement/detail/" + id_request)
     except:
         return redirect("/")
+
+
+# ---------------------
+# Delete Request
+# --------------------
+def delete(request):
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                user = user_read(user_session['users'][0]['localId'])
+                if (user['birdeptim'] in reimbursement_admin2["admin"]):
+                    print('masuk')
+                    id_request = request.POST.get("id_request")
+                    print(id_request)
+                    data = kr_delete(id_request)
+                    print(data)
+                    return redirect('../user/dashboard_pengurus/reimbursement/semua')
+            else:
+                return redirect('user:logout')
+    except:
+        return redirect('user:signin')

@@ -11,4 +11,5 @@ urlpatterns = [
     path('postform1', views.postForm1, name='postform1'),
     path('detail/2/<str:id>', views.form2, name='form2'),
     path('postform2', views.postForm2, name='postform2'),
+    path('delete', views.delete, name='delete')
 ]

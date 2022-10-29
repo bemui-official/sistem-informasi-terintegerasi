@@ -46,6 +46,8 @@ def sk_create(request, judul, namaKegiatan, deskripsi, jenisSurat, link, insiden
             'tahapan': 0,
             'nama_tahapan': tahap_surat_keluar[0],
             'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta')),
+            'waktu_pengajuan_str': datetime.datetime.strftime(datetime.datetime.now(pytz.timezone('Asia/Jakarta')),
+                                                              "%d %b %Y, %H:%M"),
             'isInsidental': insidental,
             'buktiInsidental': bukti
         }
@@ -64,8 +66,12 @@ def sk_read(id):
         data = []
     return data
 
-def sk_delete():
-    return
+def sk_delete(id):
+    try:
+        data = db.collection('sk').document(id).delete()
+        return data
+    except:
+        return
 
 def sk_update(request, id, num):
     try:

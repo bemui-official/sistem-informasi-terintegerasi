@@ -49,7 +49,8 @@ def ka_create(request, judul, namaKegiatan, deskripsi, bank, norek, anrek, vouch
             'tahapan': 0,
             'nama_tahapan': tahap_advanced[0],
             'bukti_transaksi': [],
-            'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta'))
+            'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta')),
+            'waktu_pengajuan_str': datetime.datetime.strftime(datetime.datetime.now(pytz.timezone('Asia/Jakarta')), "%d %b %Y, %H:%M")
         }
         db.collection('ka').document(idPermintaan).set(data)
 
@@ -65,8 +66,12 @@ def ka_read(id):
         data = []
     return data
 
-def ka_delete():
-    return
+def ka_delete(id):
+    try:
+        data = db.collection('ka').document(id).delete()
+        return data
+    except:
+        return
 
 # ---------------------
 # Update data per-tahap
@@ -160,3 +165,4 @@ def ka_read_all_line():
     except:
         data_dict = []
     return data_dict
+

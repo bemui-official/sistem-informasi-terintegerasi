@@ -2,7 +2,7 @@ import json
 
 from django.http import Http404
 from django.shortcuts import render, redirect
-from backend.CRUD.crud_sk import sk_create, sk_read, sk_update, sk_update_2, sk_update_2_drive
+from backend.CRUD.crud_sk import sk_create, sk_read, sk_update, sk_update_2, sk_update_2_drive, sk_delete
 from backend.CRUD.crud_user import user_read
 from backend.constants.links import links_surat
 from backend.constants.tahapan import tahap_surat_keluar
@@ -49,7 +49,7 @@ def postFormSk(request):
     if message != "terjadi error":
         return redirect("/surat_keluar/detail/" + message)
     else:
-        return redirect("sk:formsk")
+        return redirect("user:logout")
 
 
 # ---------------------
@@ -123,6 +123,7 @@ def diterima_3(request):
     except:
         redirect('user:signin')
 
+
 def ditolak_3(request):
     try:
         if (request.session['uid']):
@@ -140,6 +141,23 @@ def ditolak_3(request):
         redirect('user:signin')
 
 
+def delete(request):
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                user = user_read(user_session['users'][0]['localId'])
+                if (user['birdeptim'] in suratkeluar_admin2["admin"]):
+                    print('masuk')
+                    id_request = request.POST.get("id_request")
+                    print(id_request)
+                    data = sk_delete(id_request)
+                    print(data)
+                    return redirect('../user/dashboard_pengurus/surat_keluar/semua')
+            else:
+                return redirect('user:logout')
+    except:
+        return redirect('user:signin')
 
 # ---------------------
 # Form Tahap 2 Surat Keluar

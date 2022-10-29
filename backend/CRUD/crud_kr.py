@@ -50,7 +50,9 @@ def kr_create(request, judul, namaKegiatan, deskripsi, bank, norek, anrek, vouch
             'nama_tahapan': tahap_reimbursement[0],
             'bukti_transaksi': [],
             'bukti_pembayaran': buktiPembayaran,
-            'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta'))
+            'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta')),
+            'waktu_pengajuan_str': datetime.datetime.strftime(datetime.datetime.now(pytz.timezone('Asia/Jakarta')),
+                                                              "%d %b %Y, %H:%M")
         }
         db.collection('kr').document(idPermintaan).set(data)
 
@@ -66,8 +68,12 @@ def kr_read(id):
         data = []
     return data
 
-def kr_delete():
-    return
+def kr_delete(id):
+    try:
+        data = db.collection('kr').document(id).delete()
+        return data
+    except:
+        return
 
 # ---------------------
 # Update data per-tahap
@@ -127,7 +133,7 @@ def kr_read_requests(idBirdep, tahap):
     try:
         data_dict = []
         if tahap == 'semua':
-            datas = db.collection('kr').where('idBirdep', '==', idBirdep).get()
+            datas = db.collection('kr').where('idBirdep', '==', idBirdep).limit(10).get()
         else:
             datas = db.collection('kr').where('idBirdep', '==', idBirdep).where('tahapan', '==', int(tahap)).get()
         for data in datas:
@@ -141,7 +147,7 @@ def kr_read_all(tahap):
     try:
         data_dict = []
         if tahap == 'semua':
-            datas = db.collection('kr').where('tahapan', '!=', 3).get()
+            datas = db.collection('kr').limit(10).get()
         else:
             datas = db.collection('kr').where('tahapan', '==', int(tahap)).get()
         for data in datas:

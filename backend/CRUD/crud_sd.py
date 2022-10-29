@@ -38,7 +38,9 @@ def sd_create(request, judul, nama_proker, nama_kegiatan, deskripsi, jenis_surat
             'surat_permintaan': surat_permintaan,
             'isTransfered': False,
             'tahapan': 0,
-            'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta'))
+            'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta')),
+            'waktu_pengajuan_str': datetime.datetime.strftime(datetime.datetime.now(pytz.timezone('Asia/Jakarta')),
+                                                              "%d %b %Y, %H:%M")
 
         }
         db.collection('sd').document(idPermintaan).set(data)

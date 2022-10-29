@@ -110,6 +110,17 @@ def dashboard(request, category, sort):
 					judul = "Dokumen - Surat"
 					tahapan = tahap_surat_besar
 
+				def extract_time(json):
+					try:
+						# Also convert to int since update_time will be string.  When comparing
+						# strings, "10" is smaller than "2".
+						return json['waktu_pengajuan']
+					except KeyError:
+						return 0
+
+				# lines.sort() is more efficient than lines = lines.sorted()
+				data.sort(key=extract_time, reverse=False)
+
 				hostname = request.build_absolute_uri("/")
 				print(request.get_full_path)
 				return render(request, 'dashboard.html', {
@@ -123,7 +134,7 @@ def dashboard(request, category, sort):
 			else:
 				return redirect("/user/logout")
 	except:
-	    return redirect("/user/signin")
+		return redirect("/user/signin")
 
 def dashboard_pengurus(request, category, sort):
 	try:
@@ -158,6 +169,18 @@ def dashboard_pengurus(request, category, sort):
 						tahapan = tahap_surat_besar
 					hostname = request.build_absolute_uri("/")
 					print(request.get_full_path)
+
+					def extract_time(json):
+						try:
+							# Also convert to int since update_time will be string.  When comparing
+							# strings, "10" is smaller than "2".
+							return json['waktu_pengajuan']
+						except KeyError:
+							return 0
+
+					# lines.sort() is more efficient than lines = lines.sorted()
+					data.sort(key=extract_time, reverse=False)
+
 					return render(request, 'dashboard_pengurus.html', {
 						'datas': data,
 						'user': user,
@@ -171,7 +194,7 @@ def dashboard_pengurus(request, category, sort):
 			else:
 				return redirect("/user/logout")
 	except:
-	    return redirect("/user/signin")
+		return redirect("/user/signin")
 
 def give_permission(request):
 	try:

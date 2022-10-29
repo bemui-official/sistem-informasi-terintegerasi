@@ -2,7 +2,7 @@ import json
 
 from django.http import Http404
 from django.shortcuts import render, redirect
-from backend.CRUD.crud_ka import ka_create, ka_read, ka_update_0, ka_update_1, ka_update_2
+from backend.CRUD.crud_ka import ka_create, ka_read, ka_update_0, ka_update_1, ka_update_2, ka_delete
 from backend.CRUD.crud_user import user_read
 from backend.constants.links import links_keuangan
 from backend.misc import firebase_init, getPhoto
@@ -43,7 +43,7 @@ def postFormKa(request):
         return redirect("/advanced/detail/" + message)
     else:
         message = "Gagal Upload"
-        return redirect('ka:formka')
+        return redirect("user:logout")
 
 # ---------------------
 # Detail Advanced
@@ -223,3 +223,24 @@ def postForm2(request):
             return redirect("/advanced/detail/" + id_request)
     except:
         return redirect("/")
+
+# ---------------------
+# Delete Advanced
+# --------------------
+def delete(request):
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                user = user_read(user_session['users'][0]['localId'])
+                if (user['birdeptim'] in advanced_admin2["admin"]):
+                    print('masuk')
+                    id_request = request.POST.get("id_request")
+                    print(id_request)
+                    data = ka_delete(id_request)
+                    print(data)
+                    return redirect('../user/dashboard_pengurus/advanced/semua')
+            else:
+                return redirect('user:logout')
+    except:
+        return redirect('user:signin')

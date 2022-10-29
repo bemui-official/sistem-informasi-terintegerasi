@@ -2,7 +2,7 @@ import json
 
 from django.http import Http404
 from django.shortcuts import render, redirect
-from backend.CRUD.crud_ks import ks_create, ks_read, ks_update_0, ks_update_1, ks_update_2
+from backend.CRUD.crud_ks import ks_create, ks_read, ks_update_0, ks_update_1, ks_update_2, ks_delete
 from backend.CRUD.crud_user import user_read
 from backend.constants.links import links_keuangan
 from backend.misc import firebase_init, getPhoto
@@ -43,7 +43,7 @@ def postFormKs(request):
         return redirect("/penyetoran/detail/" + message)
     else:
         message = "Gagal Upload"
-        return redirect('ks:formks')
+        return redirect("user:logout")
 
 # ---------------------
 # Detail Penyetoran
@@ -236,3 +236,24 @@ def postForm2(request):
             return redirect("/penyetoran/detail/" + id_request)
     except:
         return redirect("/")
+
+# ---------------------
+# Delete Penyetoran
+# --------------------
+def delete(request):
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                user = user_read(user_session['users'][0]['localId'])
+                if (user['birdeptim'] in penyetoran_admin2["admin"]):
+                    print('masuk')
+                    id_request = request.POST.get("id_request")
+                    print(id_request)
+                    data = ks_delete(id_request)
+                    print(data)
+                    return redirect('../user/dashboard_pengurus/penyetoran/semua')
+            else:
+                return redirect('user:logout')
+    except:
+        return redirect('user:signin')

@@ -46,6 +46,8 @@ def sb_create(request, judul, namaKegiatan, deskripsi, jenisSurat, link, insiden
             'tahapan': 0,
             'nama_tahapan': tahap_surat_besar[0],
             'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta')),
+            'waktu_pengajuan_str': datetime.datetime.strftime(datetime.datetime.now(pytz.timezone('Asia/Jakarta')),
+                                                              "%d %b %Y, %H:%M"),
             'isInsidental': insidental,
             'buktiInsidental': bukti
         }
@@ -64,8 +66,12 @@ def sb_read(id):
         data = []
     return data
 
-def sb_delete():
-    return
+def sb_delete(id):
+    try:
+        data = db.collection('sb').document(id).delete()
+        return data
+    except:
+        return
 
 def sb_update(request, id, num):
     try:
@@ -122,7 +128,7 @@ def sb_read_requests(idBirdep, tahap):
     try:
         data_dict = []
         if tahap == 'semua':
-            datas = db.collection('sb').where('idBirdep', '==', idBirdep).get()
+            datas = db.collection('sb').where('idBirdep', '==', idBirdep).limit(10).get()
         else:
             datas = db.collection('sb').where('idBirdep', '==', idBirdep).where('tahapan', '==', int(tahap)).get()
         for data in datas:
