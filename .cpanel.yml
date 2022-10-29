@@ -1,0 +1,9 @@
+
+
+deployment:
+ 
+ tasks:
+ 
+ - export DEPLOYPATH=/home/sitbemui/sitbemui/
+ 
+ - /usr/bin/rsync -Paz * $DEPLOYPATH --delete

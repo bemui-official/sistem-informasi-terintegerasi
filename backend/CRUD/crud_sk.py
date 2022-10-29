@@ -2,7 +2,11 @@ import firebase_admin
 from firebase_admin import credentials, firestore, storage
 from backend.CRUD.crud_user import user_read
 from backend.misc import firebase_init
+from backend.constants.tahapan import tahap_surat_keluar
+
 import datetime
+import pytz
+
 
 # --------------------------
 # Initialize Firebase Admin
@@ -13,7 +17,7 @@ if not firebase_admin._apps:
         'storageBucket' : 'sit-bemui.appspot.com'
     })
 
-fauth = firebase_init.firebaseInit().auth()
+fauth = firebase_init
 db = firestore.client()
 ds = storage.bucket()
 
@@ -21,7 +25,7 @@ ds = storage.bucket()
 # --------------------------
 # CRUD Functions
 # --------------------------
-def sk_create(request, judul, namaKegiatan, deskripsi, jenisSurat, link):
+def sk_create(request, judul, namaKegiatan, deskripsi, jenisSurat, link, insidental, bukti):
     try:
         print(request.session['uid'])
         user_data = fauth.get_account_info(request.session['uid'])
@@ -40,9 +44,14 @@ def sk_create(request, judul, namaKegiatan, deskripsi, jenisSurat, link):
             'jenis_surat': jenisSurat,
             'link_docs': link,
             'tahapan': 0,
-            'waktu_pengajuan': datetime.datetime.now()
+            'nama_tahapan': tahap_surat_keluar[0],
+            'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta')),
+            'isInsidental': insidental,
+            'buktiInsidental': bukti
         }
         db.collection('sk').document(idPermintaan).set(data)
+
+        return idPermintaan
     except:
         return "terjadi error"
     return ""
@@ -61,21 +70,36 @@ def sk_delete():
 def sk_update(request, id, num):
     try:
         db.collection('sk').document(id).update({
-            "tahapan": num
+            "tahapan": num,
+            "nama_tahapan": tahap_surat_keluar[num]
         })
         return ""
     except:
         return "terjadi error"
 
-def sk_update_3(request, id, num, dokumen):
+def sk_update_2(request, id, num, dokumen):
     try:
         db.collection('sk').document(id).update({
             "tahapan": num,
-            "token_dokumen": dokumen
+            "token_dokumen": dokumen,
+            "nama_tahapan": tahap_surat_keluar[num]
         })
         return ""
     except:
         return "terjadi error"
+
+def sk_update_2_drive(request, id, num, drive_surat):
+    try:
+        db.collection('sk').document(id).update({
+            "tahapan": num,
+            "drive_surat": drive_surat,
+            "nama_tahapan": tahap_surat_keluar[num]
+        })
+        return ""
+    except:
+        return "terjadi error"
+
+
 # ---------------------
 # Update data counter
 # --------------------
@@ -89,3 +113,46 @@ def sk_getCounter():
     num = data['length']
     sk_updateCounter()
     return num
+
+
+# ---------------------
+# Read list of requests
+# --------------------
+def sk_read_requests(idBirdep, tahap):
+    try:
+        data_dict = []
+        if tahap == 'semua':
+            datas = db.collection('sk').where('idBirdep', '==', idBirdep).get()
+        else:
+            datas = db.collection('sk').where('idBirdep', '==', idBirdep).where('tahapan', '==', int(tahap)).get()
+        for data in datas:
+            data_dict.append(data.to_dict())
+        return data_dict
+    except:
+        data_dict = []
+    return data_dict
+
+def sk_read_all(tahap):
+    try:
+        data_dict = []
+        if tahap == 'semua':
+            datas = db.collection('sk').get()
+        else:
+            datas = db.collection('sk').where('tahapan', '==', int(tahap)).get()
+        for data in datas:
+            data_dict.append(data.to_dict())
+        return data_dict
+    except:
+        data_dict = []
+    return data_dict
+
+def sk_read_all_line():
+    try:
+        data_dict = []
+        datas = db.collection('sk').order_by('waktu_pengajuan').limit(10).get()
+        for data in datas:
+            data_dict.append(data.to_dict())
+        return data_dict
+    except:
+        data_dict = []
+    return data_dict

@@ -15,7 +15,7 @@
 
 <body>
 	<header {% if '/' == request.path %}class="header-transparent"{% else %}class="header-white"{% endif %}>
-        <a href="{% url 'home:home' %}" class="logo"><img src="{% static 'base/img/logo-biro-jodoh.png' %}" style="width:8.75rem; height:3.5rem;"></a>
+        <a href="{% url 'home:home' %}" class="logo"><img src="{% static 'base/img/logo-sit.png' %}" style="width:8.75rem; height:3.5rem;"></a>
         <input type="checkbox" class="nav-toggle" id="nav-toggle">
 
         <nav>
@@ -23,7 +23,12 @@
                 <li><a href="{% url 'home:keuangan' %}">Keuangan</a></li>
                 <li><a href="{% url 'home:publikasi' %}">Publikasi</a></li>
                 <li><a href="{% url 'home:surat' %}">Surat</a></li>
-                <li><a href="{% url 'home:surat' %}">Survei</a></li>
+{#                <li><a href="{% url 'home:survei' %}">Survei</a></li>#}
+                {% if request.session.admin %}
+                    <li><a href="{% url 'user:give_permission' %}">Give Permission</a></li>
+                    <li><a href="{% url 'user:signup' %}">SignUp</a></li>
+                {% endif %}
+                {% if not request.session.uid %}
                 <li class="nav-only-desktop">
                     <a href="{% url 'user:signin' %}" class="button fit-content" style="height: fit-content; margin: 0; padding: 0.6em 1em;">Masuk</a>
                 </li>
@@ -32,6 +37,17 @@
                         Masuk
                     </a>
                 </div>
+                {% endif %}
+                {% if request.session.uid %}
+                <li class="nav-only-desktop">
+                    <a href="{% url 'user:dashboard' 'home' 'home' %}" class="button fit-content" style="height: fit-content; margin: 0; padding: 0.6em 1em;">Dashboard</a>
+                </li>
+                <div class="nav-dropdown-buttons nav-only-mobile">
+                    <a href="{% url 'user:dashboard' 'home' 'home' %}" class="nav-only-mobile button btn-dashboard">
+                        Dashboard
+                    </a>
+                </div>
+                {% endif %}
             </ul>
         </nav>
 
@@ -47,34 +63,11 @@
     <footer>
         <div class="footer-upper">
             <div class="footer1">
-                <a href="{% url 'home:home' %}"><img src="{% static 'base/img/logo-biro-jodoh.png' %}" style="width:12.5rem; height:5rem;"></a>
+                <a href="{% url 'home:home' %}"><img src="{% static 'base/img/logo-sit-footer.png' %}" style="width:12.5rem; height:5rem;"></a>
             </div>
 
             <div class="footer2">
-                <strong>Kunjungi media sosial kami!</strong>
-                <ul>
-                    <li>
-                        <a target="_blank" href="https://chat.whatsapp.com/LESwRvruZO2IgUKISCoIRn">
-                            <svg width="32" height="32" viewBox="0 0 24 24">
-                                <use href="{% static 'base/svg/base-sprite-sheet.svg' %}#whatsapp-logo"></use>
-                            </svg>
-                        </a>
-                    </li>
-                    <li>
-                        <a target="_blank" href="https://www.instagram.com/ui.ruangedukasi/">
-                            <svg width="32" height="32" viewBox="0 0 24 24">
-                                <use href="{% static 'base/svg/base-sprite-sheet.svg' %}#instagram-logo"></use>
-                            </svg>
-                        </a>
-                    </li>
-                    <li>
-                        <a target="_blank" href="https://www.youtube.com/c/bemuiofficial">
-                            <svg width="32" height="32" viewBox="0 0 24 24">
-                                <use href="{% static 'base/svg/base-sprite-sheet.svg' %}#youtube-logo"></use>
-                            </svg>
-                        </a>
-                    </li>
-                </ul>
+                <a href="{% url 'home:team' %}"><img src="{% static 'base/img/MDT_LOGO.png' %}" style="width:12.5rem; height:5rem;"></a>
             </div>
 
             <div class="footer3 nav-only-mobile">
@@ -89,22 +82,22 @@
 
         <div class="footer-middle nav-only-desktop">
             <div class="footer1-middle footer-mid">
-                <strong>Keuangan</strong>
-                <p>Reimbursement</p>
-                <p>Advanced</p>
-                <p>Penyetoran</p>
+                <a href="{% url 'home:keuangan' %}"><strong>Keuangan</strong></a>
+                <a href="{% url 'home:keuangan' %}"><p>Reimbursement</p></a>
+                <a href="{% url 'home:keuangan' %}"><p>Advanced</p></a>
+                <a href="{% url 'home:keuangan' %}"><p>Penyetoran</p></a>
                 <br>
-                <strong>Publikasi</strong>
-                <p>Publikasi</p>
+                <a href="{% url 'home:publikasi' %}"><strong>Publikasi</strong></a>
+                <a href="{% url 'home:publikasi' %}"><p>Publikasi</p></a>
             </div>
             <div class="footer2-middle footer-mid">
-                <strong>Surat Menyurat</strong>
-                <p>Dirmawa</p>
-                <p>BEM UI</p>
-                <p>sertifikat</p>
+                <a href="{% url 'home:surat' %}"><strong>Surat Menyurat</strong></a>
+                <a href="{% url 'home:surat' %}"><p>LPJ, SPK, MoU</p></a>
+{#                <a href="{% url 'home:surat' %}"><p>BEM UI</p></a>#}
+{#                <a href="{% url 'home:surat' %}"><p>sertifikat</p></a>#}
                 <br>
-                <strong>Survei</strong>
-                <p>Survei</p>
+{#                <a href="{% url 'home:survei' %}"><strong>Survei</strong></a>#}
+{#                <a href="{% url 'home:survei' %}"><p>Survei</p></a>#}
             </div>
         </div>
 

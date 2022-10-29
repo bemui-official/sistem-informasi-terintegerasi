@@ -15,7 +15,7 @@ ds = storage.bucket()
 
 
 # --------------------------
-# CRUD Functions
+# CRUD Functions Authentication
 # --------------------------
 def user_create(idBirdep, email, password, asal, nama, total_pesanan, panggilan, permintaan, birdeptim) :
     idBirdep = idBirdep+"-"+asal
@@ -37,7 +37,8 @@ def user_create(idBirdep, email, password, asal, nama, total_pesanan, panggilan,
         'total_pesanan': total_pesanan,
         'panggilan': panggilan,
         'permintaan' : permintaan,
-        'birdeptim': birdeptim
+        'birdeptim': birdeptim,
+        'admin': []
     }
     db.collection('users').document(idBirdep).set(data)
     return "";
@@ -76,3 +77,8 @@ def user_update_data(idBirdep, email, asal, nama, total_pesanan, panggilan):
 def user_delete(idBirdep):
     auth.delete_user(idBirdep)
     print('Successfully deleted user')
+
+def user_update_admin(idBirdep, permission):
+    data = db.collection('users').document(idBirdep).get().to_dict()
+    data['admin'] = data['admin'].append(permission)
+    db.collection('users').document(idBirdep).set(data)

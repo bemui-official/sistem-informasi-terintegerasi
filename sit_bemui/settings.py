@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,17 +21,26 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '%*6xd(4q!7f!$9e%ap@x(it_xr7e)zlgf%l)v1_5r*^6a_7sp9'
+SECRET_KEY = os.getenv('SECRET_KEY', '%*6xd(4q!7f!$9e%ap@x(it_xr7e)zlgf%l)v1_5r*^6a_7sp9')
+
+# Automatically determine environment by detecting if DATABASE_URL variable.
+# DATABASE_URL is provided by Heroku if a database add-on is added
+# (e.g. Heroku Postgres).
+PRODUCTION = os.getenv('SECRET_KEY') is not None
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["sitbemui.com"]
 
+if not PRODUCTION:
+    DEBUG = True
+    ALLOWED_HOSTS += ['.localhost', '127.0.0.1', '[::1]']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'linebotsit.apps.LinebotsitConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,11 +59,13 @@ INSTALLED_APPS = [
     'survei',
     'youtube',
     'user',
-    'home'
+    'home',
+    'surat_besar',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -94,8 +106,19 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
-
+# Set database settings automatically using DATABASE_URL.
+if PRODUCTION:
+    DATABASES = {
+        'default': dj_database_url.config()
+    }
+# 'default': {
+#           'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#           'NAME': os.getenv('DATABASE_NAME', ''),
+#           'USER': os.getenv('DATABASE_USER', ''),
+#           'PASSWORD': os.getenv('DATABASE_USER_PASSWORD', ''),
+#           'HOST': 'localhost',
+#           'PORT': '5432',
+#        }
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -142,3 +165,11 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+
+# Enable compression and caching features of whitenoise.
+# You can remove this if it causes problems on your setup.
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Line Bot Credentials
+LINE_CHANNEL_ACCESS_TOKEN = 'kaPsqQV6XHaJWRR4L4I2o1Z0pGSLIEPbN5FR0YOjKrJk3pBQHLdEGZ0nzfraWJM7G63NxupKU/HLtTftejXJF9MW+y8SwKj2APq8ofKL2lmr2UGAvDGL/XSPcEncdbbGiNcKnm8UmyIWR/0Vf02irgdB04t89/1O/w1cDnyilFU='
+LINE_CHANNEL_SECRET = '19a194fbe7b4f253c7398d36bc91efd6'

@@ -1,8 +1,12 @@
 import firebase_admin
 from firebase_admin import credentials, firestore, storage
-from backend.CRUD.crud_user import user_read
+from .crud_user import user_read
+from ..constants.tahapan import tahap_reimbursement
+
 from backend.misc import firebase_init
 import datetime
+import pytz
+
 
 # --------------------------
 # Initialize Firebase Admin
@@ -13,7 +17,7 @@ if not firebase_admin._apps:
         'storageBucket' : 'sit-bemui.appspot.com'
     })
 
-fauth = firebase_init.firebaseInit().auth()
+fauth = firebase_init
 db = firestore.client()
 ds = storage.bucket()
 
@@ -21,7 +25,7 @@ ds = storage.bucket()
 # --------------------------
 # CRUD Functions
 # --------------------------
-def kr_create(request, judul, namaKegiatan, deskripsi, norek, anrek, voucher, nominal, buktiPembayaran):
+def kr_create(request, judul, namaKegiatan, deskripsi, bank, norek, anrek, voucher, nominal, buktiPembayaran):
     try:
         print(request.session['uid'])
         user_data = fauth.get_account_info(request.session['uid'])
@@ -36,15 +40,17 @@ def kr_create(request, judul, namaKegiatan, deskripsi, norek, anrek, voucher, no
             'judul': judul,
             'nama_kegiatan': namaKegiatan,
             'deskripsi': deskripsi,
+            'bank': bank,
             'nomor_rekening': norek,
             'AN_rekening': anrek,
             'link_voucher': voucher,
             'isTransfered': False,
             'total_nominal': nominal,
             'tahapan': 0,
+            'nama_tahapan': tahap_reimbursement[0],
             'bukti_transaksi': [],
             'bukti_pembayaran': buktiPembayaran,
-            'waktu_pengajuan': datetime.datetime.now()
+            'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta'))
         }
         db.collection('kr').document(idPermintaan).set(data)
 
@@ -70,7 +76,8 @@ def kr_delete():
 def kr_update_0(request, id, num):
     try:
         db.collection('kr').document(id).update({
-            "tahapan": num
+            "tahapan": num,
+            "nama_tahapan": tahap_reimbursement[num]
         })
         return ""
     except:
@@ -81,7 +88,8 @@ def kr_update_1(request, id, diterima, voucher):
         db.collection('kr').document(id).update({
             "nominal_diterima": diterima,
             "token_voucher": voucher,
-            "tahapan": 2
+            "tahapan": 2,
+            "nama_tahapan": tahap_reimbursement[2]
         })
         return ""
     except:
@@ -90,7 +98,8 @@ def kr_update_1(request, id, diterima, voucher):
 def kr_update_2(request, id, bukti):
     db.collection('kr').document(id).update({
         "bukti_transfer": bukti,
-        "tahapan": 3
+        "tahapan": 3,
+        "nama_tahapan": tahap_reimbursement[3],
     })
     return ""
 
@@ -109,3 +118,46 @@ def kr_getCounter():
     num = data['length']
     kr_updateCounter()
     return num
+
+
+# ---------------------
+# Read list of requests
+# --------------------
+def kr_read_requests(idBirdep, tahap):
+    try:
+        data_dict = []
+        if tahap == 'semua':
+            datas = db.collection('kr').where('idBirdep', '==', idBirdep).get()
+        else:
+            datas = db.collection('kr').where('idBirdep', '==', idBirdep).where('tahapan', '==', int(tahap)).get()
+        for data in datas:
+            data_dict.append(data.to_dict())
+        return data_dict
+    except:
+        data_dict = []
+    return data_dict
+
+def kr_read_all(tahap):
+    try:
+        data_dict = []
+        if tahap == 'semua':
+            datas = db.collection('kr').where('tahapan', '!=', 3).get()
+        else:
+            datas = db.collection('kr').where('tahapan', '==', int(tahap)).get()
+        for data in datas:
+            data_dict.append(data.to_dict())
+        return data_dict
+    except:
+        data_dict = []
+    return data_dict
+
+def kr_read_all_line():
+    try:
+        data_dict = []
+        datas = db.collection('kr').order_by('waktu_pengajuan').limit(10).get()
+        for data in datas:
+            data_dict.append(data.to_dict())
+        return data_dict
+    except:
+        data_dict = []
+    return data_dict

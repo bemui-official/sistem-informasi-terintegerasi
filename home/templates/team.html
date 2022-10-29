@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'main/css/team-style.css' %}">
+    <script type="application/javascript" src="{% static 'main/js/script.js' %}"></script>
+{% endblock meta %}
+
+{% block content %}
+    <div class="main">
+      <div class="item">
+          <img src="{% static 'base/img/MDT_SIT.png' %}" style="width: 35rem">
+      </div>
+      <div class="item right-section">
+        <h2 class="secondary-title">Who we are</h2>
+        <p class="description">We built systems, websites, and mobile applications to elevate and enhance productivity in Badan Eksekutif Mahasiswa UI</p>
+      </div>
+    </div>
+
+
+    <div class="team-members">
+
+      <div class="team member-1">
+        <img id="img-1" src="{% static 'main/img/Mika2.JPG' %}" alt="Mika Suryofakhri Rahwono">
+        <span class="position">Project Owner - Full Stack Developer</span>
+        <p class="name">Mika Suryofakhri Rahwono</p>
+        <p>Fakultas Ilmu Komputer - UI</p>
+      </div>
+
+    </div>
+{% endblock content %}

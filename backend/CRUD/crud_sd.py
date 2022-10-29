@@ -3,6 +3,8 @@ from firebase_admin import credentials, firestore, storage
 from backend.CRUD.crud_user import user_read
 from backend.misc import firebase_init
 import datetime
+import pytz
+
 
 if not firebase_admin._apps:
     cred = credentials.Certificate("testing-key.json")
@@ -10,7 +12,7 @@ if not firebase_admin._apps:
         'storageBucket' : 'sit-bemui.appspot.com'
     })
 
-fauth = firebase_init.firebaseInit().auth()
+fauth = firebase_init
 db = firestore.client()
 ds = storage.bucket()
 
@@ -36,7 +38,7 @@ def sd_create(request, judul, nama_proker, nama_kegiatan, deskripsi, jenis_surat
             'surat_permintaan': surat_permintaan,
             'isTransfered': False,
             'tahapan': 0,
-            'waktu_pengajuan': datetime.datetime.now()
+            'waktu_pengajuan': datetime.datetime.now(pytz.timezone('Asia/Jakarta'))
 
         }
         db.collection('sd').document(idPermintaan).set(data)

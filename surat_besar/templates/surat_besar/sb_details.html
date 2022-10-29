@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Detail Request</title>
+<link rel="stylesheet" href="{% static 'surat_besar/css/style-details.css' %}">
+{% endblock meta %}
+
+{% block content %}
+<div class="content-root">
+    <a href="{% url 'home:surat' %}" id="button-kembali">&lt Kembali</a>
+    <div class="details-judul">
+        <h2>{{data.judul}}</h2> <br>
+        <h2>({{data.idPermintaan}})</h2>
+    </div>
+    <svg class="BarOuter" viewBox="0 0 2728 478" fill="#EBEBEB" xmlns="http://www.w3.org/2000/svg" style="--progress-bar: {% if data.tahapan != 4 %} {{data.tahapan}} {% else %} 5 {% endif %}">
+        <g id="BarOut">
+            <g id="OuterLayer">
+                <rect id="Rectangle 1" x="77" y="216" width="2583" height="66" rx="33" stroke="#144B84" stroke-width="5"/>
+                <circle id="Ellipse7" cx="440.5" cy="249.5" r="116.5" fill="#EBEBEB" stroke="#144B84" stroke-width="5"/>
+                <text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="330" y="450">{{ tahap.0 }}</tspan></text>
+                <circle id="Ellipse8" cx="890.5" cy="249.5" r="116.5" fill="#EBEBEB" stroke="#144B84" stroke-width="5"/>
+                <text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="720" y="450">{{ tahap.1 }}</tspan></text>
+                <circle id="Ellipse9" cx="1340.5" cy="249.5" r="116.5" fill="#EBEBEB" stroke="#144B84" stroke-width="5"/>
+                <text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="1050" y="450">{{ tahap.2 }}</tspan></text>
+                <circle id="Ellipse10" cx="1790.5" cy="249.5" r="116.5" fill="#EBEBEB" stroke="#144B84" stroke-width="5"/>
+                <text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="1660" y="450">{{ tahap.3 }}</tspan></text>
+                <circle id="Ellipse11" cx="2240.5" cy="249.5" r="116.5" fill="#EBEBEB" stroke="#144B84" stroke-width="5"/>
+                <text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="2120" y="450">{{ tahap.4 }}</tspan></text>
+            </g>
+            <g id="Bar">
+                    <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="72" y="128" width="2993" height="243">
+                        <g id="Mask">
+                            <circle id="Ellipse1" cx="440.5" cy="249.5" r="116.5" fill="#C4C4C4" stroke="#144B84" stroke-width="10"/>
+                            <circle id="Ellipse2" cx="890.5" cy="249.5" r="116.5" fill="#C4C4C4" stroke="#144B84" stroke-width="10"/>
+                            <circle id="Ellipse3" cx="1340.5" cy="249.5" r="116.5" fill="#C4C4C4" stroke="#144B84" stroke-width="10"/>
+                            <circle id="Ellipse4" cx="1790.5" cy="249.5" r="116.5" fill="#C4C4C4" stroke="#144B84" stroke-width="10"/>
+                            <circle id="Ellipse5" cx="2240.5" cy="249.5" r="116.5" fill="#C4C4C4" stroke="#144B84" stroke-width="10"/>
+                            <rect id="Rectangle 3" x="72" y="211" width="2593" height="76" rx="38" fill="#C4C4C4"/>
+                        </g>
+                    </mask>
+                    <g mask="url(#mask0)">
+                        <rect id="Filling" x="-3250" y="133" width="3233" height="233" rx="35" fill="#144B84" stroke="#144B84" stroke-width="10"/>
+                    </g>
+                </g>
+            <g id="Numbers">
+                <text {% if data.tahapan >= 0 %}class="white-text"{% endif %} id="one" fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="144" letter-spacing="0em"><tspan x="409.203" y="298.82">1</tspan></text>
+                <text {% if data.tahapan >= 1 %}class="white-text"{% endif %} id="two" fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="144" letter-spacing="0em"><tspan x="840.742" y="298.82">2</tspan></text>
+                <text {% if data.tahapan >= 2 %}class="white-text"{% endif %} id="three" fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="144" letter-spacing="0em"><tspan x="1289.76" y="298.82">3</tspan></text>
+                <text {% if data.tahapan >= 3 %}class="white-text"{% endif %} id="four" fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="144" letter-spacing="0em"><tspan x="1738.28" y="298.82">4</tspan></text>
+                <text {% if data.tahapan >= 4 %}class="white-text"{% endif %} id="five" fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="144" letter-spacing="0em"><tspan x="2190.25" y="298.82">5</tspan></text>
+            </g>
+        </g>
+    </svg>
+
+	<div class="details-info detail-only-desktop">
+		<h1>Data Pesanan</h1>
+		<br>
+		<div class="row">
+			<div class="column">
+				<h3>Pemohon</h3>
+				<p>{{data.nama_birdep}}</p>
+				<h3>Nama Kegiatan</h3>
+				<p>{{data.nama_kegiatan}}</p>
+				<h3>Deskripsi Kegiatan</h3>
+				<p>{{data.deskripsi}}</p>
+				<h3>Link Docs</h3>
+				<a href="{{data.link_docs}}">Docs Surat</a>
+			</div>
+			<div class="column">
+                {% if data.isInsidental %}
+                    <h3 style="color: red">Surat Insidental</h3><br>
+                    <h3>Bukti Insidental</h3>
+                    <p>{{ data.buktiInsidental }}</p>
+                {% else %}
+                    <h3>Tidak Insidental</h3>
+                {% endif %}
+                {% if data.drive_surat %}
+                    <h3>Drive Surat</h3>
+                    <a href="{{data.drive_surat}}">Drive Surat</a>
+                {% endif %}
+			</div>
+		</div>
+	</div>
+	<div class="details-info only-mobile">
+		<h1>Data Pesanan</h1>
+		<br>
+		<h3>Pemohon</h3>
+		<p>{{data.nama_birdep}}</p>
+		<h3>Nama Kegiatan</h3>
+		<p>{{data.nama_kegiatan}}</p>
+		<h3>Deskripsi Kegiatan</h3>
+		<p>{{data.deskripsi}}</p>
+		<h3>Link Docs</h3>
+		<a href="{{data.link_docs}}">Docs Surat</a>
+        {% if data.drive_surat %}
+            <h3>Drive Surat</h3>
+            <a href="{{data.drive_surat}}">Drive Surat</a>
+        {% endif %}
+	</div>
+
+	{% if dokumen != "" %}
+	<div class="dokumen">
+		<h3>Dokumen</h3>
+		<embed src="{{dokumen}}" class="dokumen"/>
+	</div>
+	{% endif %}
+
+	<div class="button-outer">
+		{% if user.birdeptim in admin.tahap1 and data.tahapan == 0 %}
+		<form action="../diterima1" method="post">
+			{% csrf_token %}
+			<input name="id_request" type="hidden" value={{ id }}>
+			<button class="button" type="submit">Selesai QC SPI</button>
+		</form>
+
+		{% elif user.birdeptim in admin.tahap2 and data.tahapan == 1 %}
+		<form action="../diterima2" method="post">
+			{% csrf_token %}
+			<input name="id_request" type="hidden" value={{ id }}>
+			<button class="button" type="submit">Selesai QC Kestari</button>
+		</form>
+
+        {% elif user.birdeptim in admin.tahap3 and data.tahapan == 2 %}
+		<a href="{% url 'sb:form3' id=id %}" class="button">Masukkan berkas</a>
+
+        {% elif user.birdeptim in admin.tahap4 and data.tahapan == 3 %}
+		<form action="../diterima4" method="post">
+			{% csrf_token %}
+			<input name="id_request" type="hidden" value={{ id }}>
+			<button class="button" type="submit">Terima</button>
+		</form>
+
+        <form action="../ditolak4" method="post">
+			{% csrf_token %}
+			<input name="id_request" type="hidden" value={{ id }}>
+			<button class="button" type="submit">Tolak/Revisi</button>
+		</form>
+
+		{% endif %}
+	</div>
+</div>
+{% endblock content %}

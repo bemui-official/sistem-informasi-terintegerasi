@@ -9,7 +9,6 @@ if not firebase_admin._apps:
         'storageBucket' : 'sit-bemui.appspot.com'
     })
 
-fauth = firebase_init.firebaseInit().auth()
 db = firestore.client()
 ds = storage.bucket()
 
@@ -17,11 +16,15 @@ def uploadPhoto(request):
     print(2)
     if request.method == "POST" and request.FILES:
         file = request.FILES.get('file')
+        content_type = file.content_type
         file = file.file
         id_firebase = request.POST.get("id_firebase")
 
         blob = ds.blob(id_firebase)
-        metadata = {"firebaseStorageDownloadTokens": id_firebase}
+        metadata = {
+            "firebaseStorageDownloadTokens": id_firebase,
+        }
+        blob.content_type = content_type
         blob.metadata = metadata
         blob.upload_from_file(file)
 

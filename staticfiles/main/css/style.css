@@ -6,6 +6,7 @@
 	height: 40rem;
 	width: 100%;
 	font-size: 0.8em;
+
 	
 	background-repeat: no-repeat;
     background-position: top;
@@ -21,10 +22,10 @@
 }
 
 .home-top > div > div {
-	width: 85%;
-	display: flex;
-	flex-direction: column;
+	align-items: center;
 	justify-content: center;
+	width: 85%;
+	margin: auto;
 	color: #1C5188;
 }
 
@@ -33,13 +34,14 @@
 }
 
 .home-top > div > div > p {
-	font-size: em;
+	font-size: 1em;
 	margin: 0.25em 0 2em 0;
 }
 
 
 .home-middle {
 	padding: 5em 1em;
+	color: #1C5188;
 }
 
 .home-middle h2,
@@ -49,8 +51,6 @@
 
 .home-middle-top,
 .home-middle-middle {
-	display: flex;
-	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	text-align: center;
@@ -67,8 +67,6 @@
 }
 
 .home-middle-middle div {
-	display: flex;
-	flex-direction: column;
 	align-items: center;
 }
 
@@ -110,7 +108,7 @@
 .home-middle-bottom .home-card {
 	width: 100%;
 	height: 85%;
-	background-color: var(--primary-yellow);
+	background-color: var(--primary-blue);
 	padding: 8em 1.5em 3em 1.5em;
 	border-radius: 1em;
 
@@ -123,7 +121,33 @@
 	margin-bottom: 0.5em;
 }
 
+.home-middle-bottom .home-card div h2 {
+		font-size: 1.8em;
+		color: #FFFFFF;
+	}
 
+.home-middle-bottom object {
+	width: 40%;
+}
+
+.home-top > div > object{
+		width: 50%;
+	}
+
+.only-desktop {
+    display: none;
+}
+
+.only-mobile {
+    display: block;
+}
+
+.home-features {
+		flex-direction: row;
+		text-align: center;
+		font-size: 3em;
+		margin-top: 3em;
+	}
 
 @media only screen and (min-width: 800px) {
 
@@ -137,22 +161,26 @@
 		text-align: left;
 	}
 
+	.home-features {
+		flex-direction: row;
+		text-align: center;
+		font-size: 3em;
+		margin-top: 3em;
+	}
+
 	.home-top .button{
 		font-size: 1em;
 	}
 
-	.home-top > div > object{
-		margin: 2em;
-		width: auto;
-	}
-
 	.home-middle {
-		padding: 5em;
+		padding: 3em;
+		color: #1C5188;
 	}
 
 
 	.home-middle-top,
 	.home-middle-middle {
+		display: flex;
 		flex-direction: row;
 		text-align: left;
 	}
@@ -177,25 +205,28 @@
 
 	.home-middle-top p,
 	.home-middle-middle p {
-		font-size: 1.5em;
+		font-size: 1.2em;
 	}
 
 	.home-middle-top object,
 	.home-middle-middle object {
-		width: auto;
-		height: auto;
+		width: 35%;
+		height: 35%;
+		margin: 2em;
 	}
 
 	.home-middle-bottom {
 		flex-direction: row;
 		justify-content: space-around;
 		align-items: stretch;
-		padding: 2em;
-		margin: 2em 0 4em 0;
+		padding: 1em;
+		color: #FFFFFF;
+
 	}
 
 	.home-middle-bottom .home-card-container {
 		width: min(40%, 30em);
+		margin: 1em;
 	}
 
 	.home-middle-bottom .home-card div {
@@ -207,6 +238,19 @@
 	}
 
 	.home-middle-bottom .home-card p {
-		font-size: 1.2em;
+		font-size: 1em;
+	}
+
+	.home-middle-bottom object {
+	width: 75%;
+	}
+
+	.only-desktop {
+		display: block;
+	}
+
+	.only-mobile {
+		display: none;
 	}
 }
+

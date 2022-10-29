@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Dashboard Pengurus</title>
+<link rel="stylesheet" href="{% static 'user/css/dashboard.css' %}">
+ <script type="application/javascript" src="{% static 'main/js/script-dashboard.js' %}"></script>
+{% endblock meta %}
+
+{% block content %}
+	<div class="content dashboard-content">
+		<div class="dashboard-nav">
+			<a class="dashboard-home" href="{% url 'user:dashboard_pengurus' 'home' 'home' %}"><h1>Dashboard Pengurus</h1></a>
+			<div class="dashboard-nav-akun">
+				<h4>{{user.email}}</h4>
+				<p>{{user.nama}}</p>
+				<br>
+				<p>Total Pesanan: {{user.total_pesanan}}</p>
+				<br>
+                <a class="button logout" href="{% url 'user:dashboard' 'home' 'home' %}">Dashboard Request</a>
+                <a class="button-sec logout" href="{% url 'user:logout' %}">Logout</a>
+			</div>
+			<hr>
+			<div class="dashboard-nav-list">
+            {% if 'keuangan' in user.admin %}
+				<div class="dashboard-nav-list-judul">
+					<svg enable-background="new 0 0 48 48" id="Layer_1" version="1.1" viewBox="0 0 48 48" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path clip-rule="evenodd" d="M47,40L47,40c0,2.762-2.238,5-5,5l0,0H6l0,0c-2.762,0-5-2.238-5-5V11  c0-2.209,1.791-4,4-4l0,0h20.171l8.099-2.934c0.513-0.187,1.081,0.078,1.268,0.589L35.391,7H39c2.209,0,4,1.791,4,4v2l0,0  c2.209,0,4,1.791,4,4V40z M5,9L5,9c-1.104,0-2,0.896-2,2s0.896,2,2,2h3.445l0,0h0.189c0.013-0.005,0.021-0.016,0.034-0.021L19.65,9  H5z M34.078,9.181l-1.062-2.924l-0.001,0v0L30.964,7h0.003l-5.514,2h-0.01l-11.039,4h21.062L34.078,9.181z M41,11  c0-1.104-0.896-2-2-2h-2.883l1.454,4H41l0,0V11z M43,15H5l0,0c-0.732,0-1.41-0.211-2-0.555V40c0,1.657,1.344,3,3,3h36  c1.657,0,3-1.343,3-3v-7h-4c-2.209,0-4-1.791-4-4s1.791-4,4-4h4v-8C45,15.896,44.104,15,43,15z M45,31v-4h-4c-1.104,0-2,0.896-2,2  s0.896,2,2,2H45z M41,28h2v2h-2V28z" fill-rule="evenodd"/></svg>
+					<h3>Keuangan</h3>
+				</div>
+				<div class="dashboard-nav-list-item">
+					<br>
+					<a href="{% url 'user:dashboard_pengurus' 'reimbursement' 'semua' %}" class="nav-button"><p {% if 'reimbursement' in request.get_full_path %}id="category-focus"{% endif %}> Reimbursement</p></a>
+					<a href="{% url 'user:dashboard_pengurus' 'advanced' 'semua' %}" class="nav-button"><p {% if 'advanced' in request.get_full_path %}id="category-focus"{% endif %}> Cash Advanced</p></a>
+					<a href="{% url 'user:dashboard_pengurus' 'penyetoran' 'semua' %}" class="nav-button" ><p {% if 'penyetoran' in request.get_full_path %}id="category-focus"{% endif %}> Penyetoran</p></a>
+				</div>
+				<hr>
+            {% endif %}
+            {% if 'surat' in user.admin %}
+				<div class="dashboard-nav-list-judul">
+					<svg data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M116.73,31.83a3,3,0,0,0-4.2-.61L64.14,67.34a1,1,0,0,1-1.2,0L15.5,31.06a3,3,0,1,0-3.64,4.77L49.16,64.36,12.27,92.16A3,3,0,1,0,15.88,97L54.11,68.14l5.18,4a7,7,0,0,0,8.43.06l5.44-4.06L111.84,97a3,3,0,1,0,3.59-4.81L78.17,64.35,116.12,36A3,3,0,0,0,116.73,31.83Z"/><path d="M113,19H15A15,15,0,0,0,0,34V94a15,15,0,0,0,15,15h98a15,15,0,0,0,15-15V34A15,15,0,0,0,113,19Zm9,75a9,9,0,0,1-9,9H15a9,9,0,0,1-9-9V34a9,9,0,0,1,9-9h98a9,9,0,0,1,9,9Z"/></svg>
+					<h3>Surat Menyurat</h3>
+				</div>
+				<div class="dashboard-nav-list-item">
+					<br>
+					<a href="{% url 'user:dashboard_pengurus' 'surat_keluar' 'semua' %}" class="nav-button"><p {% if 'surat_keluar' in request.get_full_path %}id="category-focus"{% endif %} >Surat Keluar</p></a>
+					<a href="{% url 'user:dashboard_pengurus' 'surat_besar' 'semua' %}" class="nav-button"><p {% if 'surat_besar' in request.get_full_path %}id="category-focus"{% endif %} >LPJ, SPK, MoU</p></a>
+{#					<a href="{% url 'user:dashboard_pengurus' 'sertifikat' 'semua' %}" class="nav-button"><p {% if 'sertifikat' in request.get_full_path %}id="category-focus"{% endif %} >Sertifikat</p></a>#}
+				</div>
+				<hr>
+            {% endif %}
+{#            {% if 'publikasi' in user.admin %}#}
+{#				<div class="dashboard-nav-list-judul">#}
+{#					<svg id="Layer_1" style="enable-background:new 0 0 128 128;" version="1.1" viewBox="0 0 128 128" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M64,126c34.2,0,62-27.8,62-62S98.2,2,64,2S2,29.8,2,64S29.8,126,64,126z M16,88.7l25.2-0.2c2.8,10.1,7.5,19.9,13.9,28.7   C38,114.4,23.7,103.5,16,88.7z M47.6,47H79c2.3,11,2.3,22.3,0.2,33.3l-31.6,0.2C45.3,69.4,45.3,58,47.6,47z M63.3,114.9   c-6.3-8.1-10.9-17-13.7-26.4l27.5-0.2C74.2,97.7,69.6,106.7,63.3,114.9z M71.3,117.5c6.6-9,11.3-18.9,14.1-29.3l26.9-0.2   C104.5,103.7,89.3,115,71.3,117.5z M118,64c0,5.6-0.9,11-2.4,16l-28.3,0.2c2-11,1.9-22.2-0.2-33.2h28.1C117,52.3,118,58.1,118,64z    M111.8,39H85.2c-2.9-10-7.5-19.7-13.9-28.5C89,12.9,103.9,23.8,111.8,39z M76.9,39H49.7c2.9-9.2,7.4-17.9,13.6-25.9   C69.5,21.1,74,29.8,76.9,39z M55.1,10.8C48.8,19.5,44.2,29,41.4,39H16.2C23.9,24.3,38.1,13.6,55.1,10.8z M39.5,47   c-2.1,11.1-2.1,22.4-0.1,33.5l-26.7,0.2C10.9,75.4,10,69.8,10,64c0-5.9,1-11.7,2.8-17H39.5z"/></g></svg>#}
+{#					<h3>Publikasi</h3>#}
+{#				</div>#}
+{#				<div class="dashboard-nav-list-item">#}
+{#					<br>#}
+{#					<a href="{% url 'user:dashboard_pengurus' 'publikasi' 'semua' %}" class="nav-button"><p {% if 'publikasi' in request.get_full_path %}id="category-focus"{% endif %} >Publikasi</p></a>#}
+{#				</div>#}
+{#				<hr>#}
+{#            {% endif %}#}
+{#            {% if 'survei' in user.admin %}#}
+{#				<div class="dashboard-nav-list-judul">#}
+{#					<svg data-name="Layer 1" id="Layer_1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title/><polygon points="15.79 13.66 13.55 12.17 12.45 13.83 16.21 16.34 20.78 10.63 19.22 9.38 15.79 13.66"/><rect height="2" width="16" x="4" y="6"/><rect height="2" width="9" x="4" y="16"/><rect height="2" width="8" x="4" y="11"/><rect height="2" width="2" x="18" y="16"/><path d="M20.44,1H3.56A2.56,2.56,0,0,0,1,3.56V20.44A2.56,2.56,0,0,0,3.56,23H20.44A2.56,2.56,0,0,0,23,20.44V3.56A2.56,2.56,0,0,0,20.44,1ZM21,20.44a.56.56,0,0,1-.56.56H3.56A.56.56,0,0,1,3,20.44V3.56A.56.56,0,0,1,3.56,3H20.44a.56.56,0,0,1,.56.56Z"/></svg>#}
+{#					<h3>Survei</h3>#}
+{#				</div>#}
+{#				<div class="dashboard-nav-list-item">#}
+{#					<br>#}
+{#					<a href="{% url 'user:dashboard_pengurus' 'survei' 'semua' %}" class="nav-button"><p {% if 'survei' in request.get_full_path %}id="category-focus"{% endif %} >Survei</p></a>#}
+{#				</div>#}
+{#            {% endif %}#}
+			</div>
+		</div>
+
+		<div class="dashboard-body">
+			<div class="dashboard-content">
+				<div class="dashboard-content-card">
+                    <h1>{{ judul }}</h1>
+                    {% if category == "home" %}
+                    {% else %}
+                    <h2>List Permintaan</h2>
+                    <div class="category-selector category-selector-dashboard">
+                        <ul>
+                            <li><a href="{% url 'user:dashboard_pengurus' category 'semua' %}" {% if 'semua' in request.get_full_path %}id="sort-focus"{% endif %}>Semua</a></li>
+                        {% for key, val in tahapan.items %}
+                            <li><a href="{% url 'user:dashboard_pengurus' category key %}" {% if key|stringformat:"i" in request.get_full_path %}id="sort-focus"{% endif %}>{{ val }}</a></li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="dashboard-background">
+                        {% for data in datas %}
+                            <a onclick="openInNewTab('{{ hostname }}{{ category }}/detail/{{ data.idPermintaan }}');" class="request" {% if data.isInsidental %} style="background: #8b0000" {% endif %}>
+                                <div class="request-div">
+                                    <div class="request-div-header">
+                                        <h2>{{ data.judul }}</h2>
+                                        <div class="request-time-post-desktop">
+                                            {{ data.waktu_pengajuan }}<br>
+                                        </div>
+                                    </div>
+                                    <div class="request-div-body">
+                                        <div>
+                                            <p class="request-div-body-status">Status: <strong>{{ data.nama_tahapan }}</strong></p>
+                                            <p>Dipesan Oleh:</p>
+                                            <p><strong>{{ data.nama_birdep }}</strong></p>
+                                        </div>
+                                        <div class="request-time-post-mobile">
+                                            {{ data.waktu_pengajuan }}<br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		function openInNewTab(url) {
+			window.open(url, '_blank').focus();
+		}
+	</script>
+{% endblock content %}

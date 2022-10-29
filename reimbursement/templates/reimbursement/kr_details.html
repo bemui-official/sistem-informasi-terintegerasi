@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <title>Detail Request</title>
+    <link rel="stylesheet" href="{% static 'reimbursement/css/style-details.css' %}">
+{% endblock meta %}
+
+{% block content %}
+    <div class="content-root">
+		<a href="{% url 'home:keuangan' %}" id="button-kembali">&lt Kembali</a>
+		<div class="details-judul">
+			<h2>{{data.judul}}</h2> <br>
+			<h2>({{data.idPermintaan}})</h2>
+		</div>
+		<svg class="BarOuter" viewBox="0 0 2728 478" fill="#EBEBEB" xmlns="http://www.w3.org/2000/svg" style="--progress-bar: {% if data.tahapan != 3 %} {{data.tahapan}} {% else %} 3.45 {% endif %}">
+			<g id="BarOut">
+				<g id="OuterLayer">
+					<rect id="Rectangle 1" x="77" y="216" width="2583" height="66" rx="33" stroke="#144B84" stroke-width="5"/>
+					<circle id="Ellipse7" cx="480.5" cy="249.5" r="116.5" fill="#EBEBEB" stroke="#144B84" stroke-width="5"/>
+					<text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="350" y="450">Checking</tspan></text>
+					<circle id="Ellipse8" cx="1100.5" cy="249.5" r="116.5" fill="#EBEBEB" stroke="#144B84" stroke-width="5"/>
+					<text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="850" y="450">Creating Voucher</tspan></text>
+					<circle id="Ellipse9" cx="1700.5" cy="249.5" r="116.5" fill="#EBEBEB" stroke="#144B84" stroke-width="5"/>
+					<text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="1590" y="450">Transfer</tspan></text>
+					<circle id="Ellipse10" cx="2300.5" cy="249.5" r="116.5" fill="#EBEBEB" stroke="#144B84" stroke-width="5"/>
+					<text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="2190" y="450">Finished</tspan></text>
+				</g>
+				<g id="Bar">
+					<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="72" y="128" width="2993" height="243">
+						<g id="Mask">
+							<circle id="Ellipse1" cx="480.5" cy="249.5" r="116.5" fill="#C4C4C4" stroke="#144B84" stroke-width="10"/>
+							<circle id="Ellipse2" cx="1100.5" cy="249.5" r="116.5" fill="#C4C4C4" stroke="#144B84" stroke-width="10"/>
+							<circle id="Ellipse3" cx="1700.5" cy="249.5" r="116.5" fill="#C4C4C4" stroke="#144B84" stroke-width="10"/>
+							<circle id="Ellipse4" cx="2300.5" cy="249.5" r="116.5" fill="#C4C4C4" stroke="#144B84" stroke-width="10"/>
+							<rect id="Rectangle 3" x="72" y="211" width="2593" height="76" rx="38" fill="#C4C4C4"/>
+						</g>
+					</mask>
+					<g mask="url(#mask0)">
+						<rect id="Filling" x="-3250" y="133" width="3233" height="233" rx="35" fill="#144B84" stroke="#144B84" stroke-width="10"/>
+					</g>
+				</g>
+				<g id="Numbers">
+					<text {% if data.tahapan >= 0 %}class="white-text"{% endif %} id="one" fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="144" letter-spacing="0em"><tspan x="450.203" y="298.82">1</tspan></text>
+					<text {% if data.tahapan >= 1 %}class="white-text"{% endif %} id="two" fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="144" letter-spacing="0em"><tspan x="1050.742" y="298.82">2</tspan></text>
+					<text {% if data.tahapan >= 2 %}class="white-text"{% endif %} id="three" fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="144" letter-spacing="0em"><tspan x="1660" y="298.82">3</tspan></text>
+					<text {% if data.tahapan >= 3 %}class="white-text"{% endif %} id="four" fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="144" letter-spacing="0em"><tspan x="2250" y="298.82">4</tspan></text>
+				</g>
+			</g>
+		</svg>
+
+		<div class="details-info detail-only-desktop">
+			<h1>Data Pesanan</h1>
+			<br>
+			<div class="row">
+				<div class="column">
+					<h3>Pemohon</h3>
+					<p>{{data.nama_birdep}}</p>
+					<h3>Nama Kegiatan</h3>
+					<p>{{data.nama_kegiatan}}</p>
+					<h3>Deskripsi Kegiatan</h3>
+					<p>{{data.deskripsi}}</p>
+				</div>
+				<div class="column">
+					<h3>Nominal Reimbursement</h3>
+					<p class="currency">{{data.total_nominal}}</p>
+					<h3>Data Rekening</h3>
+					<p>{{data.AN_rekening}}<br>{{data.nomor_rekening}}<br>{{data.bank}}</p>
+					<p></p>
+					<h3>Voucher</h3>
+					<a href="{{data.link_voucher}}" target="_blank">Voucher</a>
+				</div>
+			</div>
+		</div>
+		<div class="details-info only-mobile">
+			<h1>Data Pesanan</h1>
+			<br>
+			<h3>Pemohon</h3>
+			<p>{{data.nama_birdep}}</p>
+			<h3>Nama Kegiatan</h3>
+			<p>{{data.nama_kegiatan}}</p>
+			<h3>Deskripsi Kegiatan</h3>
+			<p>{{data.deskripsi}}</p>
+			<h3>Nominal Reimbursement</h3>
+			<p class="currency">{{data.total_nominal}}</p>
+			<h3>Data Rekening</h3>
+			<p>{{data.AN_rekening}}</p>
+			<p>{{data.nomor_rekening}}</p>
+			<h3>Voucher</h3>
+			<a href="{{data.link_voucher}}" target="_blank" rel="noopener noreferrer">{{data.link_voucher}}</a>
+		</div>
+
+		<div class="bukti-pembayaran">
+			<h3>Bukti Pembayaran</h3>
+			{% for photo in photos %}
+			<img class="bukti-image" src='{{ photo }}'/>
+			<div class="modal">
+				<span class="close">&times;</span>
+				<img class="modal-content" src="{{photo}}">
+			</div>
+			{% endfor %}
+		</div>
+
+		{% if voucher != "" %}
+		<div class="voucher">
+			<h3>Voucher</h3>
+			<embed src="{{voucher}}" class="voucher"/>
+		</div>
+		{% endif %}
+
+		{% if transfer != "" %}
+		<div class="transfer">
+			<h3>Bukti Transfer</h3>
+			<img class="bukti-image" src='{{ transfer }}'/>
+			<div class="modal">
+				<span class="close">&times;</span>
+				<img class="modal-content" src="{{transfer}}">
+			</div>
+		</div>
+		{% endif %}
+
+		<div class="button-outer">
+			{% if user.birdeptim in admin.tahap1 and data.tahapan == 0 %}
+			<form action="../dibatalkan" method="post">
+				{% csrf_token %}
+				<input name="id_request" type="hidden" value={{ id }}>
+				<button class="button-sec" type="submit">Batalkan</button>
+			</form>
+			<form action="../diterima" method="post">
+				{% csrf_token %}
+				<input name="id_request" type="hidden" value={{ id }}>
+				<button class="button" type="submit">Terima</button>
+			</form>
+
+			{% elif user.birdeptim in admin.tahap1 and data.tahapan == 1 %}
+				<a href="{% url 'kr:form1' id=id %}" class="button">Masukkan berkas</a>
+			{% elif user.birdeptim in admin.tahap2 and data.tahapan == 2 %}
+				<a href="{% url 'kr:form2' id=id %}" class="button">Masukkan bukti transfer</a>
+			{% endif %}
+		</div>
+	</div>
+    <script type="application/javascript" src="{% static 'reimbursement/js/scripts-details.js' %}"></script>
+{% endblock content %}
