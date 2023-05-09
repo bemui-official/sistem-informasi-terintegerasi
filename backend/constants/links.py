@@ -1,6 +1,6 @@
 links_keuangan = {
-    'Reimbursement': 'https://docs.google.com/document/d/1MxwqQu9XoXFtqqbrW0N30_56ioqjencN/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
-    'Advanced': 'https://docs.google.com/document/d/1MxwqQu9XoXFtqqbrW0N30_56ioqjencN/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
+    'Reimbursement': 'https://drive.google.com/drive/folders/1hqHTm1BjLikyDT-t8f4fBupjGm3yL10V',
+    'Advanced': 'https://drive.google.com/drive/folders/1hqHTm1BjLikyDT-t8f4fBupjGm3yL10V',
     'Penyetoran': 'https://docs.google.com/document/d/1vQqcpURSI_A4LR12iQ11BnnXSWKod-9c/edit?usp=sharing&ouid=109525181806200227081&rtpof=true&sd=true',
     'lainnya': ''
 }
