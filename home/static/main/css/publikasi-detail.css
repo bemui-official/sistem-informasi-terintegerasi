@@ -1,0 +1,151 @@
+/* Publikasi from SIP */
+
+.home-content {
+    padding: 0;
+}
+
+.home-content h1 {
+    font-size: 1.25em;
+}
+
+.home-upper,
+.home-center,
+.home-lower {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.home-upper,
+.home-center,
+.home-lower {
+    padding: 2em 1em 2em 1em;
+}
+
+.home-upper {
+    background: var(--purple);
+    outline: 0.1em black solid;
+}
+
+.home-upper p {
+    margin-bottom: 2em;
+    color: white;
+}
+
+.home-upper h1 {
+    margin-top: 1.5em;
+    color: var(--yellow);
+}
+
+.home-upper .form-text-control {
+    width: 100%;
+}
+
+.home-center {
+    background: var(--light-purple);
+    color: var(--purple);
+    font-weight: bold;
+}
+
+.home-center-pic-container {
+    display: flex;
+    flex-direction: column;
+    margin: 1em 0 1em 0;
+}
+
+.home-center-pic-individual-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.home-center-pic-individual-container p {
+    margin: 0;
+
+}
+
+.home-center-pic {
+    font-size: 3em;
+    width: 1.6em;
+    height: 1.6em;
+    background: var(--purple);
+    color: white;
+    border-radius: 50%;
+
+    margin-bottom: 0.2em;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-center-pic-center {
+    margin: min(8vw, 7em) 0 min(6vw, 6em) 0;
+}
+
+.home-lower {
+    background: var(--purple);
+    color: var(--yellow);
+}
+
+.home-lower a {
+    background: var(--yellow);
+    color: var(--purple);
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 1.5em;
+}
+
+/* BUTTON IN FORM */
+
+.home-upper form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 95%;
+    height: 4em;
+
+    border: 0.11em solid var(--yellow);
+    border-radius: 10px;
+
+    margin-bottom: 1.5em;
+}
+
+.home-upper form input {
+    flex-grow: 2;
+    margin: 0;
+    background: transparent;
+    border: none;
+    color: white;
+}
+
+.home-upper form input:focus {
+    border: none;
+    color: white;
+}
+
+.home-upper form input:focus::placeholder {
+    color: rgb(255, 255, 255, 0.7);
+}
+
+.home-upper form input::placeholder {
+    color: white;
+}
+
+.home-upper form button {
+    height: 80%;
+
+    padding: 0 0.5em 0 0.5em;
+    margin: 0 0.5em 0 0;
+    background: var(--yellow);
+    border-radius: 10px;
+    color: var(--purple);
+    font-weight: bold;
+    border: none;
+    opacity: 0.9;
+}
+
+.home-upper form button:hover {
+    opacity: 1;
+}

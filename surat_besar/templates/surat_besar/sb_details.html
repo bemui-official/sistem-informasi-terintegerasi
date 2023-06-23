@@ -123,7 +123,7 @@
         {% endif %}
 	</div>
 
-	{% if dokumen != "" %}
+	{% if dokumen != "" and data.tahapan >= 4 %}
 	<div class="dokumen">
 		<h3>Dokumen</h3>
 		<embed src="{{dokumen}}" class="dokumen"/>
