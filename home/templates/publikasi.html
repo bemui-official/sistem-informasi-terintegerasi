@@ -2,83 +2,48 @@
 {% load static %}
 
 {% block meta %}
-    <meta charset="UTF-8">
-    <title>Home</title>
-<link rel="stylesheet" href="{% static 'main/css/style-detail.css' %}">
-  <script type="application/javascript" src="{% static 'main/js/script.js' %}"></script>
+<title> Publikasi BEM UI </title>
+<link rel="stylesheet" href="{% static 'main/css/publikasi-detail.css' %}">
 {% endblock meta %}
 
 {% block content %}
-	<div class="content-home">
-        <div class="filler"></div>
-        <div class="home-top">
-			<div class="home-top-color-filter">
-				<div>
-					<h1>Publikasi</h1>
-					<p>Lakukan pengajuan publikasi konten kamu di kanal media BEM UI dengan memencet tombol di bawah ya</p>
-                    <a href="https://www.sipbemui.xyz/" class="button fit-content">Gunakan SIP - Pindah ke SIP</a>
-				</div>
-				<object class="only-desktop" data="{% static 'main/svg/Content-pana.svg' %}" type="image/svg+xml"></object>
-			</div>
-		</div>
-        <div class="home-middle">
-			<div class="home-middle-top">
-				<object data="{% static 'main/svg/Questions-pana.svg' %}" type="image/svg+xml"></object>
-				<div class="only-desktop">
-					<h2>Simak cara melakukan permintaan publikasi di bawah ini!</h2>
-					<p>Kalian masih bingung cara menggunakan website SIT? Yuk, Kami ajarin!</p>
-				</div>
-				<div class="only-mobile">
-					<h2>Simak cara melakukan permintaan publikasi di bawah ini!</h2>
-					<p>Kalian masih bingung cara menggunakan website SIT? Yuk, Kami ajarin!</p>
-				</div>
-			</div>
-			<div>
-				<h1 class="home-features">Langkah-langkah</h1>
-				<div class="home-middle-bottom">
-					 <div class="home-card-container">
-						<div class="home-card-top-blank"></div>
-						<object data="{% static 'main/svg/Piggy-bank-pana.svg' %}" type="image/svg+xml"></object>
-						<div class="home-card">
-							<div>
-								<h2>Isi Form</h2>
-								<p>Isi form permintaan dengan memencet tombol di bawah ini</p>
-							</div>
-							<a href="" class="button fit-content">Telusuri</a>
-						</div>
-					 </div>
-					 <div class="home-card-container">
-						<div class="home-card-top-blank"></div>
-						<object data="{% static 'main/svg/Content-pana.svg' %}" type="image/svg+xml"></object>
-						<div class="home-card">
-							<div>
-								<h2 id="tahap-1">Masukkan data yang dibutuhkan</h2>
-								<p>Butuh melakukan permintaan publikasi di kanal media BEM UI?</p>
-							</div>
-						</div>
-					 </div>
-					<div class="home-card-container">
-						<div class="home-card-top-blank"></div>
-						<object data="{% static 'main/svg/Mail-sent-pana.svg' %}" type="image/svg+xml"></object>
-						<div class="home-card">
-							<div>
-								<h2>Pantau progress permintaan</h2>
-								<p>Ingin meminta persetujuan dan tanda tangan dari BEM UI?</p>
-							</div>
-						</div>
-					 </div>
-					 <div class="home-card-container">
-						<div class="home-card-top-blank"></div>
-						<object data="{% static 'main/svg/Customer-Survey-amico.svg' %}" type="image/svg+xml"></object>
-						<div class="home-card">
-							<div>
-								<h2>Selesai</h2>
-								<p>Membutuhkan survei untuk kepentingan penelitian dan pengembangan?</p>
-							</div>
-						</div>
-					 </div>
-				</div>
-			</div>
-		</div>
-	</div>
+	<div class="content home-content">
+        <div class="home-upper">
+            <h1>Temukan kemudahan dalam memesan dan melacak publikasimu</h1>
+            <form method="POST">
+				{% csrf_token %}
+                {{ form.id_pub_request }}
+                <button style="margin: 1em;" type="submit" class="button button-custom" id="button-submit">Cari</button>
+			</form>
+			{% if error_msg %}
+                <ul class="errorlist">
+    				<li style="color: #EC4E43;">{{ error_msg }}</li>
+                </ul>
+			{% endif %}
+        </div>
+
+        <div class="home-center">
+            <h1>Pesan publikasi dalam 3 langkah</h1>
+            <div class="home-center-pic-container">
+            	<div class="home-center-pic-individual-container">
+            		<div class="home-center-pic"><i class="fas fa-globe-americas"></i></div>
+            		<p>Buka web SIT</p>
+            	</div>
+            	<div class="home-center-pic-individual-container home-center-pic-center">
+            		<div class="home-center-pic"><i class="fas fa-align-left"></i></div>
+            		<p>Isi form</p>
+            	</div>
+            	<div class="home-center-pic-individual-container">
+            		<div class="home-center-pic"><i class="fas fa-spinner"></i></div>
+            		<p>Tunggu pesanan</p>
+            	</div>
+            </div>
+        </div>
+
+        <div class="home-lower">
+        	<h1>Mudahnya memesan publikasi dengan SIP</h1>
+			<a href="{% url 'publikasi:spoPublikasi' %}" class="button">Lihat SPO</a>
+        	<a href="{% url 'publikasi:publikasiCreate' %}" class="button">Buat Pesanan</a>
+        </div>
+    </div>
 {% endblock content %}

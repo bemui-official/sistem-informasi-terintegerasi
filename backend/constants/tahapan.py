@@ -30,3 +30,11 @@ tahap_surat_besar = {
     3: 'Approval',
     4: 'Finished'
 }
+
+tahap_publikasi = {
+    0: 'Quality Control',
+    1: 'Design',
+    2: 'Last Check',
+    3: 'Ready to Publish',
+    4: 'Published'
+}

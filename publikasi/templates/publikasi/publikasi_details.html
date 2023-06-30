@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Detail Request</title>
+<link rel="stylesheet" href="{% static 'publikasi/css/style-details.css' %}">
+{% endblock meta %}
+
+{% block content %}
+<div class="content-root">
+    <a href="{% url 'home:publikasi' %}" id="button-kembali">&lt Kembali</a>
+    {% if user.birdeptim in admin.admin %}
+            <div class="button-del" onclick="document.getElementById('modal_del').style.display='block'">
+            <svg enable-background="new 0 0 32 32" height="1em" id="Layer_1" version="1.1" viewBox="0 0 32 32" width="1em" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="trash"><path clip-rule="evenodd" d="M29.98,6.819c-0.096-1.57-1.387-2.816-2.98-2.816h-3v-1V3.001   c0-1.657-1.344-3-3-3H11c-1.657,0-3,1.343-3,3v0.001v1H5c-1.595,0-2.885,1.246-2.981,2.816H2v1.183v1c0,1.104,0.896,2,2,2l0,0v17   c0,2.209,1.791,4,4,4h16c2.209,0,4-1.791,4-4v-17l0,0c1.104,0,2-0.896,2-2v-1V6.819H29.98z M10,3.002c0-0.553,0.447-1,1-1h10   c0.553,0,1,0.447,1,1v1H10V3.002z M26,28.002c0,1.102-0.898,2-2,2H8c-1.103,0-2-0.898-2-2v-17h20V28.002z M28,8.001v1H4v-1V7.002   c0-0.553,0.447-1,1-1h22c0.553,0,1,0.447,1,1V8.001z" fill="#f00000" fill-rule="evenodd"/><path clip-rule="evenodd" d="M9,28.006h2c0.553,0,1-0.447,1-1v-13c0-0.553-0.447-1-1-1H9   c-0.553,0-1,0.447-1,1v13C8,27.559,8.447,28.006,9,28.006z M9,14.005h2v13H9V14.005z" fill="#f00000" fill-rule="evenodd"/><path clip-rule="evenodd" d="M15,28.006h2c0.553,0,1-0.447,1-1v-13c0-0.553-0.447-1-1-1h-2   c-0.553,0-1,0.447-1,1v13C14,27.559,14.447,28.006,15,28.006z M15,14.005h2v13h-2V14.005z" fill="#f00000" fill-rule="evenodd"/><path clip-rule="evenodd" d="M21,28.006h2c0.553,0,1-0.447,1-1v-13c0-0.553-0.447-1-1-1h-2   c-0.553,0-1,0.447-1,1v13C20,27.559,20.447,28.006,21,28.006z M21,14.005h2v13h-2V14.005z" fill="#f00000" fill-rule="evenodd"/></g></svg>
+            <span style="color: red">Delete</span>
+            </div>
+        {% endif %}
+
+    <div id="modal_del" class="modal">
+          <span onclick="document.getElementById('modal_del').style.display='none'" class="close" title="Close Modal">×</span>
+          <form class="modal-content-del" action="../delete/" method="post">
+              {% csrf_token %}
+              <input name="id_request" type="hidden" value={{ id }}>
+              <div class="container">
+              <h1>Delete Permohonan</h1>
+              <p>Apakah anda yakin untuk menghapus permohonan?</p>
+
+              <div class="clearfix">
+                <button type="button" onclick="document.getElementById('modal_del').style.display='none'" class="modal-button-del cancelbtn">Cancel</button>
+                <button type="submit" onclick="document.getElementById('modal_del').style.display='none'" class="modal-button-del deletebtn">Delete</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+    <div class="details-judul">
+        <h2>{{data.judul}}</h2> <br>
+        <h2>({{data.idPermintaan}})</h2>
+    </div>
+    <svg class="BarOuter" viewBox="0 0 2728 478" fill="#EBEBEB" xmlns="http://www.w3.org/2000/svg" style="--progress-bar: {% if data.tahapan != 4 %} {{data.tahapan}} {% else %} 5 {% endif %}">
+        <g id="BarOut">
+            <g id="OuterLayer">
+                <rect id="Rectangle 1" x="77" y="216" width="2583" height="66" rx="33" stroke="#144B84" stroke-width="5"/>
+                <circle id="Ellipse7" cx="440.5" cy="249.5" r="116.5" fill="#EBEBEB" stroke="#144B84" stroke-width="5"/>
+                <text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="200" y="450">{{ tahap.0 }}</tspan></text>
+                <circle id="Ellipse8" cx="890.5" cy="249.5" r="116.5" fill="#EBEBEB" stroke="#144B84" stroke-width="5"/>
+                <text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="795" y="450">{{ tahap.1 }}</tspan></text>
+                <circle id="Ellipse9" cx="1340.5" cy="249.5" r="116.5" fill="#EBEBEB" stroke="#144B84" stroke-width="5"/>
+                <text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="1175" y="450">{{ tahap.2 }}</tspan></text>
+                <circle id="Ellipse10" cx="1790.5" cy="249.5" r="116.5" fill="#EBEBEB" stroke="#144B84" stroke-width="5"/>
+                <text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="1575" y="450">{{ tahap.3 }}</tspan></text>
+                <circle id="Ellipse11" cx="2240.5" cy="249.5" r="116.5" fill="#EBEBEB" stroke="#144B84" stroke-width="5"/>
+                <text fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="54" letter-spacing="0em"><tspan x="2120" y="450">{{ tahap.4 }}</tspan></text>
+            </g>
+            <g id="Bar">
+                    <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="72" y="128" width="2993" height="243">
+                        <g id="Mask">
+                            <circle id="Ellipse1" cx="440.5" cy="249.5" r="116.5" fill="#C4C4C4" stroke="#144B84" stroke-width="10"/>
+                            <circle id="Ellipse2" cx="890.5" cy="249.5" r="116.5" fill="#C4C4C4" stroke="#144B84" stroke-width="10"/>
+                            <circle id="Ellipse3" cx="1340.5" cy="249.5" r="116.5" fill="#C4C4C4" stroke="#144B84" stroke-width="10"/>
+                            <circle id="Ellipse4" cx="1790.5" cy="249.5" r="116.5" fill="#C4C4C4" stroke="#144B84" stroke-width="10"/>
+                            <circle id="Ellipse5" cx="2240.5" cy="249.5" r="116.5" fill="#C4C4C4" stroke="#144B84" stroke-width="10"/>
+                            <rect id="Rectangle 3" x="72" y="211" width="2593" height="76" rx="38" fill="#C4C4C4"/>
+                        </g>
+                    </mask>
+                    <g mask="url(#mask0)">
+                        <rect id="Filling" x="-3250" y="133" width="3233" height="233" rx="35" fill="#144B84" stroke="#144B84" stroke-width="10"/>
+                    </g>
+                </g>
+            <g id="Numbers">
+                <text {% if data.tahapan >= 0 %}class="white-text"{% endif %} id="one" fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="144" letter-spacing="0em"><tspan x="409.203" y="298.82">1</tspan></text>
+                <text {% if data.tahapan >= 1 %}class="white-text"{% endif %} id="two" fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="144" letter-spacing="0em"><tspan x="840.742" y="298.82">2</tspan></text>
+                <text {% if data.tahapan >= 2 %}class="white-text"{% endif %} id="three" fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="144" letter-spacing="0em"><tspan x="1289.76" y="298.82">3</tspan></text>
+                <text {% if data.tahapan >= 3 %}class="white-text"{% endif %} id="four" fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="144" letter-spacing="0em"><tspan x="1738.28" y="298.82">4</tspan></text>
+                <text {% if data.tahapan >= 4 %}class="white-text"{% endif %} id="five" fill="#144B84" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="144" letter-spacing="0em"><tspan x="2190.25" y="298.82">5</tspan></text>
+            </g>
+        </g>
+    </svg>
+
+    <div class="read-pub-body">
+        <div class="read-pub-body-column-left" style = "display: flex; flex-direction: column; gap: 10px; box-shadow: 0 2px 10px rgb(0 0 0 / 0.9); border-radius: 20px">
+            <h2>DATA PEMESANAN</h2>
+            <p>PEMESAN</p>
+            <p class="read-pub-data">{{ data.nama_birdep }}</p>
+            <p>TANGGAL/WAKTU PEMESANAN</p>
+            <p class="read-pub-data">{{ data.waktu_pengajuan_str }}</p>
+
+            <div class="notes-container">
+                <div class="notes-container-read" id="notes-container-read" style="border: 0.2em solid #4F3376;">
+                    {% for d in data.notes %}
+                        {% if d.type == 'komen' %}
+                            <div class="individual-notes" >
+                                <span style="font-size: 0.9em; font-weight: bold;">{{ d.writer }}</span> <span style="font-size: 0.7em;">{{ d.time_stamp }}</span> <br>
+                                <span style="white-space: pre-wrap; word-break: break-word;">&gt {{ d.note }}</span> <br>	
+                            </div>
+                        {% elif type == 'notifikasi_acc' %}
+                            <div class="individual-notes">
+                                <span style="font-size: 0.9em; font-weight: bold;">{{ writer }}</span> <span style="font-size: 0.7em;">{{ timestamp }}</span> <br>
+                                <span style="color: green;">> {{ note|safe }}</span> <br>
+                            </div>
+                        {% elif type == 'notifikasi_dec' %}
+                            <div class="individual-notes">
+                                <span style="font-size: 0.9em; font-weight: bold;">{{ writer }}</span> <span style="font-size: 0.7em;">{{ timestamp }}</span> <br>
+                                <span style="color: red;">> {{ note|safe }}</span> <br>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <form class="notes-post-form" method="post">
+                    {% csrf_token %}
+                    {{ form.notes }}
+                    <button type="submit" class="button" id="button-submit">Tambah Catatan</button>
+                </form>
+            </div>
+
+        </div>
+        <div class="read-pub-body-column-right" style = "display: flex; flex-direction: column; gap: 10px; box-shadow: 0 2px 10px rgb(0 0 0 / 0.9); border-radius: 20px">
+            <div style="display: flex; justify-content: space-between;">
+                <h2>DETAIL PESANAN</h2>
+                {% if request.user == pub_request.requester %}
+                    <a class="button read-pub-edit-button" href="{% url 'main:editRequest' pub_request.id %}">Edit</a>
+                {% endif %}
+            </div>
+            <p>TANGGAL PUBLIKASI</p>
+            <p class="read-pub-data">{{ data.date_posted|date:'j M Y' }}</p>
+            <p>WAKTU PUBLIKASI</p>
+            <p class="read-pub-data">{{ data.time_posted }}</p>
+            <p>INSIDENTAL</p>
+            <p class="read-pub-data">{% if pub_request.is_insidental %}YA{% else %}TIDAK{% endif %}</p>
+
+            {% if pub_request.bukti_insidental %}
+                <p>BUKTI INSIDENTAL</p>
+                <p class="read-pub-data"><a href={{ pub_request.bukti_insidental }} target="_blank">{{ pub_request.bukti_insidental }}</a></p>
+            {% endif %}
+
+            <p>BAHAN PUBLIKASI</p>
+            <p class="read-pub-data"><a href={{ data.publikasi }} target="_blank">{{ data.publikasi }}</a></p>
+
+            <p>KANAL PUBLIKASI</p>
+            <div class="read-pub-kanal-publikasi-container read-pub-data">
+                {% for channel in data.channels %} 
+                    <div class="read-pub-kanal-publikasi">
+                        {{ channel }} 
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% if pub_request.design_link %}
+                <p>LINK PUBLIKASI</p>
+                <p class="read-pub-data"><a href={{ pub_request.design_link }} target="_blank">{{ pub_request.design_link }}</a></p>
+            {% elif pub_request.status.status == '3' or pub_request.status.status == '4' or pub_request.status.status == '5' %}
+                <p>LINK PUBLIKASI</p>
+                <p class="read-pub-data">Tidak Diberikan</p>
+            {% endif %}
+        </div>
+    </div>
+
+	<div class="button-outer">
+		{% if user.birdeptim in admin.tahap1 and data.tahapan == 0 %}
+		<form action="../diterima1" method="post">
+			{% csrf_token %}
+			<input name="id_request" type="hidden" value={{ id }}>
+			<button class="button" type="submit">Selesai QC SPI</button>
+		</form>
+
+		{% elif user.birdeptim in admin.tahap2 and data.tahapan == 1 %}
+		<form action="../diterima2" method="post">
+			{% csrf_token %}
+			<input name="id_request" type="hidden" value={{ id }}>
+			<button class="button" type="submit">Selesai QC Kestari</button>
+		</form>
+
+        {% elif user.birdeptim in admin.tahap3 and data.tahapan == 2 %}
+		<a href="{% url 'sb:form3' id=id %}" class="button">Masukkan berkas</a>
+
+        {% elif user.birdeptim in admin.tahap4 and data.tahapan == 3 %}
+		<form action="../diterima4" method="post">
+			{% csrf_token %}
+			<input name="id_request" type="hidden" value={{ id }}>
+			<button class="button" type="submit">Terima</button>
+		</form>
+
+        <form action="../ditolak4" method="post">
+			{% csrf_token %}
+			<input name="id_request" type="hidden" value={{ id }}>
+			<button class="button" type="submit">Tolak/Revisi</button>
+		</form>
+
+		{% endif %}
+	</div>
+</div>
+{% endblock content %}

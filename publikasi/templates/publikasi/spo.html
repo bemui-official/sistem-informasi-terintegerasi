@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>SPO Publikasi </title>
+<link rel="stylesheet" href="{% static 'publikasi/css/style.css' %}?20181209">
+{% endblock meta %}
+
+{% block content %}
+<div class="content read-pub-content">
+    <div class="read-pub-content-background">
+        <div class="read-pub-content-header">
+            <div class="read-pub-content-header-left">
+                <a href="{% url 'home:publikasi' %}" id="button-kembali">&lt Kembali</a>
+            </div>
+        </div>
+
+        <div class="read-pub-body">
+            <h1>SPO Publikasi</h1>
+        </div>
+
+        <div class="read-pub-body">
+        <iframe width="680" height="700" src="https://docs.google.com/document/d/e/2PACX-1vTsuq35gnOyC488-47MpzSZlWZHH6bztJnbBTJG0d4XF90wVCcmOQxgAmdBJVtXLRW2JaqvrhuL7foS/pub?embedded=true"></iframe>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,12 +1,13 @@
 from django.http import Http404
 from django.shortcuts import render, redirect
+from backend.CRUD.crud_publikasi import publikasi_read_requests
 
 from backend.CRUD.crud_sb import sb_read_all, sb_read_requests
 from backend.CRUD.crud_user import user_create, user_read, user_update_admin
 from backend.CRUD.crud_dashboard import read_requests
 from django.contrib import auth
 
-from backend.constants.tahapan import tahap_reimbursement, tahap_advanced, tahap_penyetoran, tahap_surat_keluar, tahap_surat_besar
+from backend.constants.tahapan import tahap_reimbursement, tahap_advanced, tahap_penyetoran, tahap_surat_keluar, tahap_surat_besar, tahap_publikasi
 from backend.misc import firebase_init
 from backend.constants.birdeptim import pi, birdeptim, kode_fungsionaris
 
@@ -109,7 +110,10 @@ def dashboard(request, category, sort):
 					data = sb_read_requests(user["id"], sort)
 					judul = "Dokumen - Surat"
 					tahapan = tahap_surat_besar
-
+				elif category == "publikasi":
+					data = publikasi_read_requests(user["id"], sort)
+					judul = "Publikasi"
+					tahapan = tahap_publikasi
 				def extract_time(json):
 					try:
 						# Also convert to int since update_time will be string.  When comparing

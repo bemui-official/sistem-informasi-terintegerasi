@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Buat Permintaan Publikasi</title>
+<link rel="stylesheet" href="{% static 'publikasi/css/style.css' %}?20181209">
+<script type="application/javascript" src="{% static 'publikasi/js/script-create-request.js' %}"></script>
+{% endblock meta %}
+
+{% block content %}
+    <div class="create-pub-content">
+        <div class="create-pub-form-background"> 
+
+            <div id="loading-background" class="loading-background">
+                <div class="loading-content">
+                    <div>
+                        <div class="loading-circle" style="--delay: 0;"></div>
+                        <div class="loading-circle" style="--delay: 1;"></div>
+                        <div class="loading-circle" style="--delay: 2;"></div>
+                    </div>
+                    <p>Mohon tunggu, permintaan Anda sedang kami proses.</p>
+                </div>
+            </div>
+
+            <i class="fas fa-globe-americas main-icon"></i>
+            <h1>Buat Permintaan Publikasi</h1>
+            <form method="POST" class="form">
+                {% csrf_token %}
+
+                {{ form.non_field_errors }}
+                {% if form.errors %}
+                    <ul class="errorlist">
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+                <label class="form-label">JUDUL KONTEN *</label>
+                {{ form.program }}
+
+                <label class="form-label">TANGGAL PUBLIKASI *</label>
+                {{ form.date_posted }}
+
+                <label class="form-label">WAKTU PUBLIKASI *</label>
+                {{ form.time_posted }}
+
+                <label class="form-label">INSIDENTAL *</label>
+                <div style="display: flex;">
+                    {% for choice in form.is_insidental %}
+                        {{ choice.tag }}   
+                    {% endfor %}
+                    <label for="id_is_insidental_0" id="radio-is-insidental-0">YA</label>
+                    <label for="id_is_insidental_1" id="radio-is-insidental-1">TIDAK</label>
+                </div>
+
+                <div id="bukti-insidental">
+                    <label class="form-label" id="form-label-bukti-insidental">BUKTI INSIDENTAL *</label>
+                    {{ form.bukti_insidental }}
+                </div>
+
+                <label class="form-label">TAUTAN KONTEN *</label>
+                {{ form.publikas }}
+
+                <label class="form-label">KANAL PUBLIKASI *</label>
+                <div class="kanal-publikasi-container">
+                    {% for channel in channels %}
+                        <div class="kanal-publikasi-child">
+                            <label class="slider-container">
+                                <input type="checkbox" name="checkboxkanal-{{ channel.name_label }}" class="form-checkbox">
+                                <span class="slider round"></span>
+                            </label>
+                            <label class="form-sub-label">{{ channel.name_label }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <label class="form-label">TAMBAH CATATAN</label>
+                {{ form.notes }}
+                <button type="submit" class="button hundredwidth" id="button-submit">Pesan Publikasi</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var time_taken_dict = {{ time_taken_dict|safe }};
+        var self_date = "{{ self_date }}";
+        var self_time = "{{ pub_request.time_posted }}";
+    </script>
+{% endblock content %}
