@@ -97,7 +97,6 @@ def diterima_1(request):
             if (user_session):
                 user = user_read(user_session['users'][0]['localId'])
                 if (user['birdeptim'] in suratbesar_admin2["tahap1"]):
-                    print('masuk')
                     id_request = request.POST.get("id_request")
                     sb_update(request, id_request, 1)
                     return redirect('sb:detail', id=id_request)

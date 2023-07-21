@@ -42,6 +42,9 @@ def publikasi_create(request, judul_konten, date_posted, time_posted, is_insiden
             'is_insidental': is_insidental,
             'publikasi': publikasi,
             'notes': notes,
+            "design_link": "",
+            "preview_link_instagram": "",
+            "preview_link_twitter": "",
             'bukti_insidental': bukti_insidental,
             'tahapan': 0,
             'nama_tahapan': tahap_publikasi[0],
@@ -96,6 +99,87 @@ def publikasi_add_to_notes(id, note, writer):
     except Exception as e:
         print(e) 
         return "terjadi error"
+
+def publikasi_update(request, id, num, design_link = "", preview_link_instagram = "", preview_link_twitter = ""):
+    try:
+        if(num == 2):
+            if(design_link != ""):
+                db.collection('publikasi').document(id).update({
+                    "tahapan": num,
+                    "nama_tahapan": tahap_publikasi[num],
+                    "design_link": design_link
+                })
+            else:
+                db.collection('publikasi').document(id).update({
+                    "tahapan": num,
+                    "nama_tahapan": tahap_publikasi[num]
+                })
+        elif(num == 4):
+            if(preview_link_instagram != "" and preview_link_twitter != ""):
+                db.collection('publikasi').document(id).update({
+                    "tahapan": num,
+                    "nama_tahapan": tahap_publikasi[num],
+                    "preview_link_instagram": preview_link_instagram,
+                    "preview_link_twitter": preview_link_twitter
+                })
+            elif(preview_link_instagram != ""):
+                db.collection('publikasi').document(id).update({
+                    "tahapan": num,
+                    "nama_tahapan": tahap_publikasi[num],
+                    "preview_link_instagram": preview_link_instagram,
+                })
+            elif(preview_link_twitter != ""):
+                db.collection('publikasi').document(id).update({
+                    "tahapan": num,
+                    "nama_tahapan": tahap_publikasi[num],
+                    "preview_link_twitter": preview_link_twitter
+                })
+            else:
+                db.collection('publikasi').document(id).update({
+                    "tahapan": num,
+                    "nama_tahapan": tahap_publikasi[num]
+                })
+        else:
+            db.collection('publikasi').document(id).update({
+                "tahapan": num,
+                "nama_tahapan": tahap_publikasi[num]
+            })
+        return ""
+    except:
+        return "terjadi error"
+
+def publikasi_tolak(request, id, tahapan: int):
+    try:
+        if(tahapan != 0):
+            if(tahapan == 3):
+                db.collection('publikasi').document(id).update({
+                    "tahapan": tahapan - 2,
+                    "nama_tahapan": tahap_publikasi[tahapan - 2]
+                })
+            else:
+                db.collection('publikasi').document(id).update({
+                    "tahapan": tahapan - 1,
+                    "nama_tahapan": tahap_publikasi[tahapan - 1]
+                })
+        return ""
+    except:
+        return "terjadi error"
+
+def publikasi_edit(request, id, judul_konten, date_posted, time_posted, is_insidental, publikasi, notes, bukti_insidental, channels):
+    try:
+        db.collection('publikasi').document(id).update({
+            'judul': judul_konten,
+            'date_posted': date_posted,
+            'time_posted': time_posted,
+            'is_insidental': is_insidental,
+            'publikasi': publikasi,
+            'notes': notes,
+            'bukti_insidental': bukti_insidental,
+            'channels': channels
+        })
+        return ""
+    except:
+        return "terjadi error"
 # ---------------------
 # Update data counter
 # --------------------
@@ -109,7 +193,7 @@ def publikasi_getCounter():
     num = data['length']
     publikasi_updateCounter()
     return num
-
+    
 # ---------------------
 # Read list of requests
 # --------------------
@@ -150,4 +234,22 @@ def publikasi_read_all_line():
         return data_dict
     except:
         data_dict = []
+    return data_dict
+
+def publikasi_notification(notInTahapan):
+    today = datetime.datetime.today()
+    try:
+        data_dict = []
+        datas = db.collection('publikasi') \
+        .where('tahapan', '==', notInTahapan) \
+        .where('date_posted', '>=', today) \
+        .order_by('date_posted') \
+        .limit(10)
+        for data in datas:
+            data_dict.append(data.to_dict())
+        return data_dict
+    except Exception as e:
+        print(e)
+        data_dict = []
+    
     return data_dict

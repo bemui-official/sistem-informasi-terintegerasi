@@ -14,6 +14,11 @@ import os
 from pathlib import Path
 import dj_database_url
 
+from dotenv import load_dotenv
+
+# Load .env file
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -176,5 +181,5 @@ CORS_ORIGIN_ALLOW_ALL = True
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Line Bot Credentials
-LINE_CHANNEL_ACCESS_TOKEN = 'kaPsqQV6XHaJWRR4L4I2o1Z0pGSLIEPbN5FR0YOjKrJk3pBQHLdEGZ0nzfraWJM7G63NxupKU/HLtTftejXJF9MW+y8SwKj2APq8ofKL2lmr2UGAvDGL/XSPcEncdbbGiNcKnm8UmyIWR/0Vf02irgdB04t89/1O/w1cDnyilFU='
-LINE_CHANNEL_SECRET = '19a194fbe7b4f253c7398d36bc91efd6'
+LINE_CHANNEL_ACCESS_TOKEN = os.getenv('LINE_CHANNEL_ACCESS_TOKEN')
+LINE_CHANNEL_SECRET = os.getenv('LINE_CHANNEL_SECRET')

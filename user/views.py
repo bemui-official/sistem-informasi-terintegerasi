@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render, redirect
-from backend.CRUD.crud_publikasi import publikasi_read_requests
+from backend.CRUD.crud_publikasi import publikasi_read_all, publikasi_read_requests
 
 from backend.CRUD.crud_sb import sb_read_all, sb_read_requests
 from backend.CRUD.crud_user import user_create, user_read, user_update_admin
@@ -171,6 +171,10 @@ def dashboard_pengurus(request, category, sort):
 						data = sb_read_all(sort)
 						judul = "Dokumen - Surat"
 						tahapan = tahap_surat_besar
+					elif category == "publikasi":
+						data = publikasi_read_all(sort)
+						judul = "Publikasi"
+						tahapan = tahap_publikasi
 					hostname = request.build_absolute_uri("/")
 					print(request.get_full_path)
 

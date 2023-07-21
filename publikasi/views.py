@@ -2,10 +2,10 @@ from django.http import Http404
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.shortcuts import render, redirect
-from backend.CRUD.crud_publikasi import publikasi_add_to_notes, publikasi_create, publikasi_delete, publikasi_read
+from backend.CRUD.crud_publikasi import publikasi_add_to_notes, publikasi_create, publikasi_delete, publikasi_edit, publikasi_read, publikasi_tolak, publikasi_update
 from backend.CRUD.crud_user import user_read
 from backend.misc import firebase_init
-from .forms import AddNotesForm, PublicationRequestCreateForm
+from .forms import AddNotesForm, DesignLinkForm, PreviewPublicationLinkForm, PublicationRequestCreateForm, PublicationRequestEditForm
 from backend.constants.admins import publikasi_admin, publikasi_admin2 
 from backend.constants.tahapan import tahap_publikasi
 from datetime import datetime
@@ -54,16 +54,22 @@ def formPublikasi(request):
                     date_posted = request.POST.get("date_posted")
                     time_posted = request.POST.get("time_posted")
                     is_insidental = request.POST.get("is_insidental")
+                    if(is_insidental):
+                        bukti_insidental = request.POST.get("bukti_insidental")
+                    else:
+                        bukti_insidental = None
+
                     publikasi = request.POST.get("publikas")
                     notes = []
-                    note = {
-                        "type": "komen",
-                        "time_stamp": datetime.now().strftime('%d-%m-%Y %H:%M:%S'),
-                        "note": request.POST.get("notes"),
-                        "writer": current_user.get("panggilan")
-                    }
-                    notes.append(note)
-                    bukti_insidental = request.POST.get("bukti_is_insidental")
+                    print(request.POST.get("notes"))
+                    if(request.POST.get("notes") != ""):
+                        note = {
+                            "type": "komen",
+                            "time_stamp": datetime.now().strftime('%d-%m-%Y %H:%M:%S'),
+                            "note": request.POST.get("notes"),
+                            "writer": current_user.get("panggilan")
+                        }
+                        notes.append(note)
 
                     publikasi_create(request, judul_konten, date_posted, time_posted, is_insidental, publikasi, notes, bukti_insidental, selected_channels)
                     
@@ -99,6 +105,14 @@ def detail(request, id):
                     form = AddNotesForm()
                     data_detail = publikasi_read(id)
                     user = user_read(user_session['users'][0]['localId'])
+                    #if current status is status '2' or '4', make a form for design links or preview links
+                    if data_detail.get("tahapan") == 1:
+                        form_pub = DesignLinkForm()
+                    elif data_detail.get("tahapan") == 3:
+                        form_pub = PreviewPublicationLinkForm()
+                    else:
+                        form_pub = None
+                    
                     if (data_detail != []):
                         data_detail['date_posted'] = datetime.strptime(data_detail['date_posted'], '%Y-%m-%d')
                         if (user["id"] == data_detail["idBirdep"] or user['birdeptim'] in publikasi_admin2["admin"]):
@@ -109,6 +123,7 @@ def detail(request, id):
                                 'id': id,
                                 'tahap': tahap_publikasi,
                                 'form': form,
+                                'form_pub': form_pub
                             })
                         else:
                             raise Http404
@@ -127,6 +142,7 @@ def detail(request, id):
         else:
             return redirect("/user/signin")
     except Exception as e:
+        print(e)
         return redirect("/user/signin")
 
 def delete_publikasi(request):
@@ -143,6 +159,165 @@ def delete_publikasi(request):
                 return redirect("/user/logout")
     except:
         return redirect("/user/signin")
+
+def add_to_notif(id, tahap, user):
+    if(tahap != 4):
+        notification_msg = f'Tahap <strong>{tahap_publikasi[tahap]}</strong> telah disetujui oleh <strong>{str(user["nama"])}</strong>. Tahap saat ini: <strong>{tahap_publikasi[tahap+1]}</strong>'
+    else:
+        notification_msg = f'Tahap <strong>{tahap_publikasi[tahap]}</strong> telah disetujui oleh <strong>{str(user["nama"])}</strong>.'
     
-def edit_publikasi(request): 
-    pass
+    publikasi_add_to_notes(id, notification_msg, user.get("panggilan"))
+    
+def diterima_1(request):
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                user = user_read(user_session['users'][0]['localId'])
+                if (user['birdeptim'] in publikasi_admin2["tahap1"]):
+                    id_request = request.POST.get("id_request")
+                    publikasi_update(request, id_request, 1)
+                    add_to_notif(id_request, 0, user)
+                    return redirect('publikasi:detail', id=id_request)
+            else:
+                redirect('user:logout')
+    except:
+        redirect('user:signin')
+        
+def diterima_2(request):
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                user = user_read(user_session['users'][0]['localId'])
+                if (user['birdeptim'] in publikasi_admin2["tahap2"]):
+                    id_request = request.POST.get("id_request")
+                    if(request.POST.get("design_link") != ""):
+                        design_link = request.POST.get("design_link")
+                    else:
+                        design_link = ""
+                        
+                    publikasi_update(request, id_request, 2, design_link)
+                    add_to_notif(id_request, 1, user)
+
+                    return redirect('publikasi:detail', id=id_request)
+            else:
+                redirect('user:logout')
+    except:
+        redirect('user:signin')
+        
+def diterima_3(request):
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                user = user_read(user_session['users'][0]['localId'])
+                if (user['birdeptim'] in publikasi_admin2["tahap3"]):
+                    id_request = request.POST.get("id_request")
+                    publikasi_update(request, id_request, 3)
+                    add_to_notif(id_request, 3, user)
+                    return redirect('publikasi:detail', id=id_request)
+            else:
+                redirect('user:logout')
+    except:
+        redirect('user:signin')
+        
+def diterima_4(request):
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                user = user_read(user_session['users'][0]['localId'])
+                if (user['birdeptim'] in publikasi_admin2["tahap4"]):
+                    if(request.POST.get("preview_link_instagram") != ""):
+                        preview_link_instagram = request.POST.get("preview_link_instagram")
+                    else:
+                        preview_link_instagram = ""
+                        
+                    if(request.POST.get("preview_link_twitter") != ""):
+                        preview_link_twitter = request.POST.get("preview_link_twitter")
+                    else:
+                        preview_link_twitter = ""
+                        
+                    id_request = request.POST.get("id_request")
+                    publikasi_update(request, id_request, 4, "", preview_link_instagram, preview_link_twitter)
+                    
+                    add_to_notif(id_request, 4, user)
+                    return redirect('publikasi:detail', id=id_request)
+            else:
+                redirect('user:logout')
+    except:
+        redirect('user:signin')
+        
+def declineRequest(request, id: str, tahapan: int):
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                user = user_read(user_session['users'][0]['localId'])
+                if (user['birdeptim'] in publikasi_admin2["admin"]):
+                    publikasi_tolak(request, id, tahapan)
+                    return redirect('publikasi:detail', id=id)
+            else:
+                redirect('user:logout')
+    except:
+        redirect('user:signin')
+        
+def edit_publikasi(request, id):
+    try:
+        if (request.session['uid']):
+            user_session = fauth.get_account_info(request.session['uid'])
+            if (user_session):
+                user = user_read(user_session['users'][0]['localId'])
+                data_detail = publikasi_read(id)
+                if(request.method != "POST"):
+                    form = PublicationRequestEditForm(initial = {
+                        "program": data_detail.get("judul"),
+                        "id_pub_request": data_detail.get("idPermintaan"),  # Replace with appropriate keys from data_detail
+                        "date_posted": data_detail.get("date_posted"),
+                        "time_posted": data_detail.get("time_posted"),
+                        "is_insidental": data_detail.get("is_insidental"),
+                        "bukti_insidental": data_detail.get("bukti_insidental"),
+                        "publikas": data_detail.get("publikasi"),
+                    })
+                    if(data_detail.get("idBirdep") == user['id']):
+                        return render(request, 'publikasi/form_edit_publication_request.html', {
+                            "form": form,
+                            "channels": channels,
+                            "pub_request_channels": data_detail.get("channels")
+                        })
+                else:
+                    selected_channels = []
+                    for key, _ in request.POST.items():
+                        if key.startswith("checkboxkanal-"):
+                            channel_name = key[len("checkboxkanal-"):]
+                            selected_channels.append(channel_name)
+
+                    judul_konten = request.POST.get("program")
+                    date_posted = request.POST.get("date_posted")
+                    time_posted = request.POST.get("time_posted")
+                    is_insidental = request.POST.get("is_insidental")
+                    
+                    if(is_insidental):
+                        bukti_insidental = request.POST.get("bukti_insidental")
+                    else:
+                        bukti_insidental = None
+
+                    publikasi = request.POST.get("publikas")
+                    notes = data_detail.get("notes")
+                    note = {
+                        "type": "komen",
+                        "time_stamp": datetime.now().strftime('%d-%m-%Y %H:%M:%S'),
+                        "note": "Dilakuakan pengeditan pada publikasi ini.",
+                        "writer": user.get("panggilan")
+                    }
+                    notes.append(note)
+
+                    publikasi_edit(request, id, judul_konten, date_posted, time_posted, is_insidental, publikasi, notes, bukti_insidental, selected_channels)
+                    
+                    return HttpResponseRedirect(f"/publikasi/detail/{id}")
+            else:
+                redirect('user:logout')
+    except Exception as e:
+        print(e)
+        redirect('user:signin')

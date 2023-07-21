@@ -962,7 +962,6 @@ hr {
 .read-pub-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
   padding: 2em 2em;
   font-size: 0.8rem;
 }
@@ -1074,6 +1073,7 @@ hr {
 }
 
 .notes-container {
+  overflow: 'scroll';
   width: 100%;
 }
 
@@ -1088,19 +1088,17 @@ hr {
   min-width: 2em;
 
   overflow: auto;
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: scroll;
 
-  -ms-overflow-style: thin;  /* IE and Edge */
-  scrollbar-width: thin;  /* Firefox */
-  scrollbar-color: var(--accent) transparent; /* Firefox */
+  scrollbar-color: red; /* Firefox */
 }
 
 .notes-container-read::-webkit-scrollbar {
   display: block;
+  width: 10px;
   overflow: auto;
-  width: 0.5em;
-  height: 0em;
+  color: red;
 }
 
 .notes-container-read::-webkit-scrollbar-track {
@@ -1108,7 +1106,7 @@ hr {
 }
 
 .notes-container-read::-webkit-scrollbar-thumb {
-  background-color: var(--accent);
+  background-color: #474e5d;
   border-radius: 5px;
   opacity: 1;
 }
