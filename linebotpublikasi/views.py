@@ -200,18 +200,18 @@ def handle_message(event):
 				for channel in pub_request_channels:
 					pub_request_channels_result += f"- {channel}\n"
 
-
-				response = (f"{pub_request.get('judul_konten')} \n({pub_request.get('idPermintaan')})\n\n" 
-							+ f"> Status : {pub_request.get('nama_tahapan')}\n"
-							+ f"> Peminta : {pub_request.get('nama_birdep')}\n"
-							+ f"> Tgl Publikasi : \n{date_posted}\n"
-							+ f"> Waktu Publikasi : \n{pub_request.get('time_posted')}\n\n"
-							+ f"{insidental_msg}\n\n"
-							+ f"> Kanal Publikasi :\n{pub_request_channels_result}\n" 
-							+ f"> Bahan Publikasi : {pub_request.get('publikasi')}\n"
-							+ f"{design_link}\n\n"
-							+ f"Lihat pada website : " + LINK_TO_REQUEST + pub_request.get("idPermintaan")
-							)
+				response = f"Masuk disini bro"
+				# response = (f"{pub_request.get('judul_konten')} \n({pub_request.get('idPermintaan')})\n\n" 
+				# 			+ f"> Status : {pub_request.get('nama_tahapan')}\n"
+				# 			+ f"> Peminta : {pub_request.get('nama_birdep')}\n"
+				# 			+ f"> Tgl Publikasi : \n{date_posted}\n"
+				# 			+ f"> Waktu Publikasi : \n{pub_request.get('time_posted')}\n\n"
+				# 			+ f"{insidental_msg}\n\n"
+				# 			+ f"> Kanal Publikasi :\n{pub_request_channels_result}\n" 
+				# 			+ f"> Bahan Publikasi : {pub_request.get('publikasi')}\n"
+				# 			+ f"{design_link}\n\n"
+				# 			+ f"Lihat pada website : " + LINK_TO_REQUEST + pub_request.get("idPermintaan")
+				# 			)
 			elif pub_request and len(cmd_and_param) == 2 and cmd_and_param[1] == "komentar":
 				notes_writers = pub_request.publicationnotes.get_writers()
 				notes_writers.reverse()

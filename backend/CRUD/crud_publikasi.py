@@ -241,7 +241,7 @@ def publikasi_notification(notInTahapan):
     try:
         data_dict = []
         datas = db.collection('publikasi') \
-        .where('tahapan', '==', notInTahapan) \
+        .where('tahapan', 'not-in', notInTahapan) \
         .where('date_posted', '>=', today) \
         .order_by('date_posted') \
         .limit(10)
