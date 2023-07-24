@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from backend.CRUD.crud_publikasi import publikasi_add_to_notes, publikasi_create, publikasi_delete, publikasi_edit, publikasi_read, publikasi_tolak, publikasi_update
 from backend.CRUD.crud_user import user_read
 from backend.misc import firebase_init
+from linebotpublikasi.views import translateDateToIndo
 from .forms import AddNotesForm, DesignLinkForm, PreviewPublicationLinkForm, PublicationRequestCreateForm, PublicationRequestEditForm
 from backend.constants.admins import publikasi_admin, publikasi_admin2 
 from backend.constants.tahapan import tahap_publikasi
@@ -61,7 +62,7 @@ def formPublikasi(request):
 
                     publikasi = request.POST.get("publikas")
                     notes = []
-                    print(request.POST.get("notes"))
+
                     if(request.POST.get("notes") != ""):
                         note = {
                             "type": "komen",
@@ -71,8 +72,52 @@ def formPublikasi(request):
                         }
                         notes.append(note)
 
-                    publikasi_create(request, judul_konten, date_posted, time_posted, is_insidental, publikasi, notes, bukti_insidental, selected_channels)
+                    pub_id = publikasi_create(request, judul_konten, date_posted, time_posted, is_insidental, publikasi, notes, bukti_insidental, selected_channels)
                     
+                    # ''' --------- LINE PUSH MESSAGE --------- '''
+
+                    # #INSIDENTAL
+                    # insidental = ""
+                    # if is_insidental:
+                    #     insidental = "Ya"
+                    #     insidental += f"\n> Bukti Insidental: {bukti_insidental}"
+                    # else:
+                    #     insidental = "Tidak"
+                    # insidental_msg = f'> Insidental : {insidental}'
+
+                    # #DATE_POSTED
+                    # date_posted = date_posted.strftime('%A, %d %b %Y')
+                    # date_posted = translateDateToIndo(date_posted)
+
+                    # #CHANNELS
+                    # pub_request_channels = selected_channels
+                    # pub_request_channels_result = ""
+
+                    # for channel in pub_request_channels:
+                    #     pub_request_channels_result += f"- {channel}\n"
+
+                    # push_message = f"[PESANAN PUBLIKASI BARU TELAH DATANG!!] \n\nPublikasi baru dengan ID '{pub_id}' telah dibuat.\n\n"
+                    # push_message += (f"Judul : {judul_konten}\n\n" 
+                    #                 + f"> Peminta : {pub_request.requester}\n"
+                    #                 + f"> BirDepTim : {pub_request.birdep_requester}\n"
+                    #                 + f"> Tgl Publikasi : \n{date_posted}\n"
+                    #                 + f"> Waktu Publikasi : \n{time_posted}\n\n"
+                    #                 + f"{insidental_msg}\n\n"
+                    #                 + f"> Kanal Publikasi :\n{pub_request_channels_result}\n" 
+                    #                 + f"> Bahan Publikasi : {publikasi}\n\n"
+                    #                 + f"Lihat pada website : " + request.build_absolute_uri("/publikasi/detail/") + pub_id
+                    #                 )
+                    # status1 = PublicationStatus.objects.get(status='1')
+                    # list_of_line_ids = status1.get_allowed_line_ids_push_message()
+                    # if len(list_of_line_ids) != 0:
+                    #     for id_line in list_of_line_ids:
+                    #         try:
+                    #             line_bot_api.push_message(id_line, TextSendMessage(text=push_message))
+                    #         except LineBotApiError as e:
+                    #             pass
+
+                    # ''' --------- END OF LINE PUSH MESSAGE --------- '''
+
                     return HttpResponseRedirect("/")
             else:
                 return redirect("/user/logout")
