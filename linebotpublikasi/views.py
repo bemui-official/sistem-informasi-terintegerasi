@@ -20,7 +20,7 @@ LINK_TO_REQUEST = "https://sitbemui.com/publikasi/detail/"
 
 
 def index(request):
-	return HttpResponse("test!!")
+	return HttpResponse("test 1")
 
 # this is code is modeified from https://github.com/line/line-bot-sdk-python
 @csrf_exempt # this is used for avoid csrf request from line server
