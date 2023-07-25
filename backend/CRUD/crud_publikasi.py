@@ -239,17 +239,24 @@ def publikasi_read_all_line():
 def publikasi_notification(notInTahapan):
     today = datetime.datetime.today()
     try:
+        data_dict_temp = []
         data_dict = []
-        datas = db.collection('publikasi') \
-        .where('tahapan', 'not-in', notInTahapan) \
-        .where('date_posted', '>=', today) \
-        .order_by('date_posted') \
-        .limit(10)
+        datas = db.collection('publikasi').get()
         for data in datas:
-            data_dict.append(data.to_dict())
-        return data_dict
+            # Convert 'date_posted' string to a datetime object
+            used_data = data.to_dict()
+            date_posted_str = used_data.get("date_posted")
+            date_posted = datetime.datetime.strptime(date_posted_str, "%Y-%m-%d")  # Adjust format if needed
+            if date_posted >= today:
+                data_dict_temp.append(used_data)
+        
+        for data in data_dict_temp:
+            tahapan = data.get("tahapan")
+            if(tahapan not in notInTahapan):
+                data_dict.append(data)
+                
+        return data_dict[:10]
     except Exception as e:
         print(e)
         data_dict = []
-    
-    return data_dict
+        return data_dict

@@ -20,7 +20,7 @@ LINK_TO_REQUEST = "https://sitbemui.com/publikasi/detail/"
 
 
 def index(request):
-	return HttpResponse("test 1")
+	return HttpResponse("test!")
 
 # this is code is modeified from https://github.com/line/line-bot-sdk-python
 @csrf_exempt # this is used for avoid csrf request from line server
@@ -51,7 +51,7 @@ def handle_message(event):
 	users_msg = event.message.text
 	CMD_NOT_FOUND = (f"Maaf, pesan '{users_msg}' tidak dapat diproses.\n\n" 
 					+ "Ketik '!sit help' untuk melihat semua perintah yang ada.")
-	HELP_MSG_GENERAL = ("[HELP GENERAL] \n\nSelamat datang di SIT BEM UI LineBot!\n\n" 
+	HELP_MSG_GENERAL = ("[HELP GENERAL] \n\nSelamat datang di Publikasi SIT BEM UI LineBot!\n\n" 
 				+ "1.) Ketik '!sit kode-pub'\n" 
 				+ "> (ex: '!sit mulmed-1') untuk melihat status publikasi yang memiliki kode tersebut.\n\n"
 				+ "2.) Ketik '!sit kode-pub komentar'\n" 
@@ -63,7 +63,7 @@ def handle_message(event):
 				+ "5.) Ketik '!sit help-humas' atau '!sit help-dkv'\n"
 				+ "> Untuk melihat perintah yang ada bagi HUMAS atau DKV."
 				)
-	HELP_MSG_HUMAS = ("[HELP HUMAS] \n\nHalo Humas! Selamat datang di SIT BEM UI LineBot!\n\n" 
+	HELP_MSG_HUMAS = ("[HELP HUMAS] \n\nHalo Humas! Selamat datang di Publikasi SIT BEM UI LineBot!\n\n" 
 				+ "1.) Ketik '!sit kode-pub terima'\n" 
 				+ "> (ex: '!sit mulmed-1 terima') untuk menerima dan melanjutkan proses pemesanan publikasi ke status selanjutnya. (Dapat dilakukan pada status tertentu saja)\n\n"
 				+ "2.) Ketik '!sit kode-pub tolak'\n" 
@@ -77,7 +77,7 @@ def handle_message(event):
 				+ "6.) Ketik '!sit getidline'\n"
 				+ "> Untuk mendapatkan ID Line Anda."
 				)
-	HELP_MSG_DKV = ("[HELP DKV] \n\nHalo DKV! Selamat datang di SIT BEM UI LineBot!\n\n" 
+	HELP_MSG_DKV = ("[HELP DKV] \n\nHalo DKV! Selamat datang di Publikasi SIT BEM UI LineBot!\n\n" 
 				+ "1.) Ketik '!sit kode-pub terima link-desain'\n" 
 				+ "> (Hanya untuk tahap: DESIGN)\n"
 				+ "(ex: '!sit mulmed-1 terima https://www.google.com')\n\n"
@@ -106,20 +106,23 @@ def handle_message(event):
 			response = HELP_MSG_HUMAS
 		elif users_msg == 'help-dkv':
 			response = HELP_MSG_DKV
-		elif users_msg == 'list':
+		elif users_msg == 'publikasi':
 			response = f"[LIST PUBLIKASI TERDEKAT] \n\n10 pesanan publikasi dengan waktu post terdekat (MULAI DARI HARI INI):"
 			pub_requests = publikasi_notification([4])
-			
+
 			if len(pub_requests) != 0:
 				for pub_request in pub_requests:
 					#DATE_POSTED
-					date_posted = pub_request.date_posted.strftime('%A, %d %b %Y')
+					date_posted_str = pub_request.get("date_posted")
+
+					date_posted = datetime.datetime.strptime(date_posted_str, "%Y-%m-%d")     
+
 					date_posted = translateDateToIndo(date_posted)
 
-					response += f"\n\n{pub_request.judul_konten}\n> kode ID: {pub_request.idPermintaan}\n> Tgl: {date_posted}\n> Waktu: {pub_request.time_posted}"
+					response += f"\n\n{pub_request.get('judul')}\n> kode ID: {pub_request.get('idPermintaan')}\n> Tgl: {date_posted}\n> Waktu: {pub_request.get('time_posted')}"
 			else:
 				response += f"\n\nBelum ada pesanan publikasi lagi."
-		elif users_msg == 'list-humas':
+		elif users_msg == 'publikasi-humas':
 			response = f"[LIST PUBLIKASI TERDEKAT HUMAS] \n\n10 pesanan publikasi yang perlu diperhatikan oleh HUMAS diurutkan dari waktu post terdekat:"
 			pub_requests = publikasi_notification([1, 4])
 
@@ -127,23 +130,29 @@ def handle_message(event):
 			if len(pub_requests) != 0:
 				for pub_request in pub_requests:
 					#DATE_POSTED
-					date_posted = pub_request.date_posted.strftime('%A, %d %b %Y')
+					date_posted_str = pub_request.get("date_posted")
+     
+					date_posted = datetime.datetime.strptime(date_posted_str, "%Y-%m-%d")     
+
 					date_posted = translateDateToIndo(date_posted)
 
-					response += f"\n\n{pub_request.judul_konten}\n> kode ID: {pub_request.idPermintaan}\n> Tgl: {date_posted}\n> Waktu: {pub_request.time_posted}"
+					response += f"\n\n{pub_request.get('judul')}\n> kode ID: {pub_request.get('idPermintaan')}\n> Tgl: {date_posted}\n> Waktu: {pub_request.get('time_posted')}"
 			else:
 				response += f"\n\nBelum ada pesanan publikasi lagi."
-		elif users_msg == 'list-dkv':
+		elif users_msg == 'publikasi-dkv':
 			response = f"[LIST PUBLIKASI TERDEKAT DKV] \n\n10 pesanan publikasi yang perlu diperhatikan oleh DKV diurutkan dari waktu post terdekat:"
 			pub_requests = publikasi_notification([0, 2, 3, 4])
 			
 			if len(pub_requests) != 0:
 				for pub_request in pub_requests:
 					#DATE_POSTED
-					date_posted = pub_request.date_posted.strftime('%A, %d %b %Y')
+					date_posted_str = pub_request.get("date_posted")
+
+					date_posted = datetime.datetime.strptime(date_posted_str, "%Y-%m-%d")   
+
 					date_posted = translateDateToIndo(date_posted)
 
-					response += f"\n\n{pub_request.judul_konten}\n> kode ID: {pub_request.idPermintaan}\n> Tgl: {date_posted}\n> Waktu: {pub_request.time_posted}"
+					response += f"\n\n{pub_request.get('judul')}\n> kode ID: {pub_request.get('idPermintaan')}\n> Tgl: {date_posted}\n> Waktu: {pub_request.get('time_posted')}"
 			else:
 				response += f"\n\nBelum ada pesanan publikasi lagi."
 		elif users_msg == 'getidline':
@@ -156,7 +165,7 @@ def handle_message(event):
 				id_line = event.source.room_id
 			response = f"ID Line Anda : {id_line}"
 		elif users_msg == '':
-			response = f"Halo semua!! Aku adalah Line bot untuk SIT BEM UI.\n\nSetiap perintah yang akan diproses harus didahului dengan kata '!sit' dan perintah selanjutnya dipisahkan dengan spasi. \n\nKetik '!sit help' untuk menampilkan semua perintah yang ada. \n\nTerima kasih telah menggunakan Line bot SIT BEM UI!"
+			response = f"Halo semua!! Aku adalah Line bot untuk Publikasi SIT BEM UI.\n\nSetiap perintah yang akan diproses harus didahului dengan kata '!sit' dan perintah selanjutnya dipisahkan dengan spasi. \n\nKetik '!sit help' untuk menampilkan semua perintah yang ada. \n\nTerima kasih telah menggunakan Line bot Publikasi SIT BEM UI!"
 		else:
 			temp = users_msg.split(" ")
 			cmd_and_param = ""
@@ -175,7 +184,7 @@ def handle_message(event):
 
 				#INSIDENTAL
 				insidental = ""
-				if pub_request.get("is_insidental"):
+				if pub_request.get("is_insidental") == "True":
 					insidental = "Ya"
 					insidental += f"\n> Bukti Insidental: {pub_request.get('bukti_insidental')}"
 				else:
@@ -190,7 +199,10 @@ def handle_message(event):
 					design_link = '> Belum ada link desain publikasi yang diberikan.'
 
 				#DATE_POSTED
-				date_posted = pub_request.date_posted.strftime('%A, %d %b %Y')
+				date_posted_str = pub_request.get("date_posted")
+
+				date_posted = datetime.datetime.strptime(date_posted_str, "%Y-%m-%d")     
+
 				date_posted = translateDateToIndo(date_posted)
 
 				#CHANNELS
@@ -199,19 +211,18 @@ def handle_message(event):
 
 				for channel in pub_request_channels:
 					pub_request_channels_result += f"- {channel}\n"
-
-				response = f"Masuk disini bro"
-				# response = (f"{pub_request.get('judul_konten')} \n({pub_request.get('idPermintaan')})\n\n" 
-				# 			+ f"> Status : {pub_request.get('nama_tahapan')}\n"
-				# 			+ f"> Peminta : {pub_request.get('nama_birdep')}\n"
-				# 			+ f"> Tgl Publikasi : \n{date_posted}\n"
-				# 			+ f"> Waktu Publikasi : \n{pub_request.get('time_posted')}\n\n"
-				# 			+ f"{insidental_msg}\n\n"
-				# 			+ f"> Kanal Publikasi :\n{pub_request_channels_result}\n" 
-				# 			+ f"> Bahan Publikasi : {pub_request.get('publikasi')}\n"
-				# 			+ f"{design_link}\n\n"
-				# 			+ f"Lihat pada website : " + LINK_TO_REQUEST + pub_request.get("idPermintaan")
-				# 			)
+    
+				response = (f"{pub_request.get('judul')} \n({pub_request.get('idPermintaan')})\n\n" 
+							+ f"> Status : {pub_request.get('nama_tahapan')}\n"
+							+ f"> Peminta : {pub_request.get('nama_birdep')}\n"
+							+ f"> Tgl Publikasi : \n{date_posted}\n"
+							+ f"> Waktu Publikasi : \n{pub_request.get('time_posted')}\n\n"
+							+ f"{insidental_msg}\n\n"
+							+ f"> Kanal Publikasi :\n{pub_request_channels_result}\n" 
+							+ f"> Bahan Publikasi : {pub_request.get('publikasi')}\n"
+							+ f"{design_link}\n\n"
+							+ f"Lihat pada website : " + LINK_TO_REQUEST + pub_request.get("idPermintaan")
+							)
 			elif pub_request and len(cmd_and_param) == 2 and cmd_and_param[1] == "komentar":
 				notes_writers = pub_request.publicationnotes.get_writers()
 				notes_writers.reverse()
@@ -259,6 +270,8 @@ def handle_message(event):
 ''' -------------------------- Custom Methods ------------------------------- '''
 
 def translateDateToIndo(date):
+	date = date.strftime('%A, %d %b %Y')
+	
 	idx = date.find(",")
 	date_en = date[:idx].lower()
 	date_id = date[idx:]
