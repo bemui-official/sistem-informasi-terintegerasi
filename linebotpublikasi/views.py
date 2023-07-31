@@ -9,15 +9,25 @@ import datetime
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
+from backend.CRUD.crud_ka import ka_notification, ka_read
+from backend.CRUD.crud_kr import kr_notification, kr_read
+from backend.CRUD.crud_ks import ks_notification, ks_read
 
 from backend.CRUD.crud_publikasi import publikasi_notification, publikasi_read
+from backend.CRUD.crud_sb import sb_read
+from backend.CRUD.crud_sd import sb_notification
+from backend.CRUD.crud_sk import sk_notification, sk_read
 
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(settings.LINE_CHANNEL_SECRET)
 
 # constant
-LINK_TO_REQUEST = "https://sitbemui.com/publikasi/detail/"
-
+LINK_TO_REQUEST_PUBLIKASI = "https://sitbemui.com/publikasi/detail/"
+LINK_TO_REQUEST_REIMBURSEMENT = "https://sitbemui.com/reimbursement/detail/"
+LINK_TO_REQUEST_ADVANCED = "https://sitbemui.com/advanced/detail/"
+LINK_TO_REQUEST_PENYETORAN = "https://sitbemui.com/penyetoran/detail/"
+LINK_TO_REQUEST_SURATKELUAR = "https://sitbemui.com/surat_keluar/detail/"
+LINK_TO_REQUEST_SURATBESAR = "https://sitbemui.com/surat_besar/detail/"
 
 def index(request):
 	return HttpResponse("test!")
@@ -56,11 +66,21 @@ def handle_message(event):
 				+ "> (ex: '!sit mulmed-1') untuk melihat status publikasi yang memiliki kode tersebut.\n\n"
 				+ "2.) Ketik '!sit kode-pub komentar'\n" 
 				+ "> Untuk melihat 5 komentar terakhir yang ada pada publikasi tersebut.\n\n"
-				+ "3.) Ketik '!sit list'\n"
+				+ "3.) Ketik '!sit p'\n"
 				+ "> Untuk melihat 10 publikasi dengan waktu publikasi terdekat. (MULAI DARI HARI INI)\n\n"
-				+ "4.) Ketik '!sit help'\n"
+				+ "4.) Ketik '!sit ka'\n"
+				+ "> Untuk melihat 10 keuangan advanced. (KECUALI YANG SUDAH SELESAI)\n\n"
+				+ "5.) Ketik '!sit kr'\n"
+				+ "> Untuk melihat 10 keuangan reimbursment. (KECUALI YANG SUDAH SELESAI)\n\n"
+				+ "5.) Ketik '!sit ks'\n"
+				+ "> Untuk melihat 10 keuangan penyetoran. (KECUALI YANG SUDAH SELESAI)\n\n"
+				+ "6.) Ketik '!sit sb'\n"
+				+ "> Untuk melihat 10 surat besar yang ada. (KECUALI YANG SUDAH SELESAI)\n\n"
+				+ "7.) Ketik '!sit sk'\n"
+				+ "> Untuk melihat 10 surat keluar yang ada. (KECUALI YANG SUDAH SELESAI)\n\n"
+				+ "8.) Ketik '!sit help'\n"
 				+ "> Untuk melihat perintah yang ada.\n\n"
-				+ "5.) Ketik '!sit help-humas' atau '!sit help-dkv'\n"
+				+ "9.) Ketik '!sit help-humas' atau '!sit help-dkv'\n"
 				+ "> Untuk melihat perintah yang ada bagi HUMAS atau DKV."
 				)
 	HELP_MSG_HUMAS = ("[HELP HUMAS] \n\nHalo Humas! Selamat datang di Publikasi SIT BEM UI LineBot!\n\n" 
@@ -106,10 +126,10 @@ def handle_message(event):
 			response = HELP_MSG_HUMAS
 		elif users_msg == 'help-dkv':
 			response = HELP_MSG_DKV
-		elif users_msg == 'publikasi':
+		elif users_msg == 'p':
 			response = f"[LIST PUBLIKASI TERDEKAT] \n\n10 pesanan publikasi dengan waktu post terdekat (MULAI DARI HARI INI):"
 			pub_requests = publikasi_notification([4])
-
+   
 			if len(pub_requests) != 0:
 				for pub_request in pub_requests:
 					#DATE_POSTED
@@ -122,6 +142,51 @@ def handle_message(event):
 					response += f"\n\n{pub_request.get('judul')}\n> kode ID: {pub_request.get('idPermintaan')}\n> Tgl: {date_posted}\n> Waktu: {pub_request.get('time_posted')}"
 			else:
 				response += f"\n\nBelum ada pesanan publikasi lagi."
+		elif users_msg == 'ka':
+			response = f"[LIST KEUANGAN ADVANCED] \n\n10 permintaan keuangan advanced (KECUALI YANG SUDAH SELESAI):"
+			pub_requests = ka_notification()
+
+			if len(pub_requests) != 0:
+				for pub_request in pub_requests:
+					response += f"\n\n{pub_request.get('judul')}\n> kode ID: {pub_request.get('idPermintaan')}\n> Nama Kegiatan: {pub_request.get('nama_kegiatan')}\n> Nama Birdept: {pub_request.get('nama_birdep')}"
+			else:
+				response += f"\n\nBelum ada list keuangan advanced lagi."
+		elif users_msg == 'kr':
+			response = f"[LIST KEUANGAN REIMBURSEMENT] \n\n10 permintaan keuangan reimbursement (KECUALI YANG SUDAH SELESAI):"
+			pub_requests = kr_notification()
+
+			if len(pub_requests) != 0:
+				for pub_request in pub_requests:
+					response += f"\n\n{pub_request.get('judul')}\n> kode ID: {pub_request.get('idPermintaan')}\n> Nama Kegiatan: {pub_request.get('nama_kegiatan')}\n> Nama Birdept: {pub_request.get('nama_birdep')}"
+			else:
+				response += f"\n\nBelum ada list keuangan reimbursement lagi."
+		elif users_msg == 'ks':
+			response = f"[LIST KEUANGAN PENYETORAN] \n\n10 permintaan keuangan reimbursement (KECUALI YANG SUDAH SELESAI):"
+			pub_requests = ks_notification()
+
+			if len(pub_requests) != 0:
+				for pub_request in pub_requests:
+					response += f"\n\n{pub_request.get('judul')}\n> kode ID: {pub_request.get('idPermintaan')}\n> Nama Kegiatan: {pub_request.get('nama_kegiatan')}\n> Nama Birdept: {pub_request.get('nama_birdep')}"
+			else:
+				response += f"\n\nBelum ada list keuangan penyetoran lagi."
+		elif users_msg == 'sb':
+			response = f"[LIST SURAT BESAR] \n\n10 permintaan SURAT BESAR (KECUALI YANG SUDAH SELESAI):"
+			pub_requests = sb_notification()
+
+			if len(pub_requests) != 0:
+				for pub_request in pub_requests:
+					response += f"\n\n{pub_request.get('judul')}\n> kode ID: {pub_request.get('idPermintaan')}\n> Nama Kegiatan: {pub_request.get('nama_kegiatan')}\n> Nama Birdept: {pub_request.get('nama_birdep')}"
+			else:
+				response += f"\n\nBelum ada list surat besar lagi."
+		elif users_msg == 'sk':
+				response = f"[LIST SURAT KELUAR] \n\n10 permintaan SURAT KELUAR (KECUALI YANG SUDAH SELESAI):"
+				pub_requests = sk_notification()
+				if len(pub_requests) != 0:
+					for pub_request in pub_requests:
+						print(pub_request.get("nama_kegiatan"))
+						response += f"\n\n{pub_request.get('judul')}\n> kode ID: {pub_request.get('idPermintaan')}\n> Nama Kegiatan: {pub_request.get('nama_kegiatan')}\n> Nama Birdept: {pub_request.get('nama_birdep')}"
+				else:
+					response += f"\n\nBelum ada list surat keluar lagi."
 		elif users_msg == 'publikasi-humas':
 			response = f"[LIST PUBLIKASI TERDEKAT HUMAS] \n\n10 pesanan publikasi yang perlu diperhatikan oleh HUMAS diurutkan dari waktu post terdekat:"
 			pub_requests = publikasi_notification([1, 4])
@@ -178,51 +243,70 @@ def handle_message(event):
 			else:
 				cmd_and_param = users_msg.lower().split(" ")
 
-			pub_request = publikasi_read(cmd_and_param[0])
+			kode = cmd_and_param[0].split("-")[0]
 
-			if pub_request:
+			isValid = True
+			if(kode == "publikasi"):
+				isValid = False
+				pub_request = publikasi_read(cmd_and_param[0])
+				if pub_request:
+					#INSIDENTAL
+					insidental = ""
+					if pub_request.get("is_insidental") == "True":
+						insidental = "Ya"
+						insidental += f"\n> Bukti Insidental: {pub_request.get('bukti_insidental')}"
+					else:
+						insidental = "Tidak"
+					insidental_msg = f'> Insidental : {insidental}'
 
-				#INSIDENTAL
-				insidental = ""
-				if pub_request.get("is_insidental") == "True":
-					insidental = "Ya"
-					insidental += f"\n> Bukti Insidental: {pub_request.get('bukti_insidental')}"
-				else:
-					insidental = "Tidak"
-				insidental_msg = f'> Insidental : {insidental}'
+					#Link Publikasi
+					design_link = '> Link Publikasi : '
+					if pub_request.get("link_publikasi"):
+						design_link += pub_request.get("link_publikasi")
+					else:
+						design_link = '> Belum ada link desain publikasi yang diberikan.'
 
-				#Link Publikasi
-				design_link = '> Link Publikasi : '
-				if pub_request.get("link_publikasi"):
-					design_link += pub_request.get("link_publikasi")
-				else:
-					design_link = '> Belum ada link desain publikasi yang diberikan.'
+					#DATE_POSTED
+					date_posted_str = pub_request.get("date_posted")
 
-				#DATE_POSTED
-				date_posted_str = pub_request.get("date_posted")
+					date_posted = datetime.datetime.strptime(date_posted_str, "%Y-%m-%d")     
 
-				date_posted = datetime.datetime.strptime(date_posted_str, "%Y-%m-%d")     
+					date_posted = translateDateToIndo(date_posted)
 
-				date_posted = translateDateToIndo(date_posted)
+					#CHANNELS
+					pub_request_channels = pub_request.get("channels")
+					pub_request_channels_result = ""
 
-				#CHANNELS
-				pub_request_channels = pub_request.get("channels")
-				pub_request_channels_result = ""
+					for channel in pub_request_channels:
+						pub_request_channels_result += f"- {channel}\n"
 
-				for channel in pub_request_channels:
-					pub_request_channels_result += f"- {channel}\n"
-    
-				response = (f"{pub_request.get('judul')} \n({pub_request.get('idPermintaan')})\n\n" 
-							+ f"> Status : {pub_request.get('nama_tahapan')}\n"
-							+ f"> Peminta : {pub_request.get('nama_birdep')}\n"
-							+ f"> Tgl Publikasi : \n{date_posted}\n"
-							+ f"> Waktu Publikasi : \n{pub_request.get('time_posted')}\n\n"
-							+ f"{insidental_msg}\n\n"
-							+ f"> Kanal Publikasi :\n{pub_request_channels_result}\n" 
-							+ f"> Bahan Publikasi : {pub_request.get('publikasi')}\n"
-							+ f"{design_link}\n\n"
-							+ f"Lihat pada website : " + LINK_TO_REQUEST + pub_request.get("idPermintaan")
-							)
+					response = (f"{pub_request.get('judul')} \n({pub_request.get('idPermintaan')})\n\n" 
+								+ f"> Status : {pub_request.get('nama_tahapan')}\n"
+								+ f"> Peminta : {pub_request.get('nama_birdep')}\n"
+								+ f"> Tgl Publikasi : \n{date_posted}\n"
+								+ f"> Waktu Publikasi : \n{pub_request.get('time_posted')}\n\n"
+								+ f"{insidental_msg}\n\n"
+								+ f"> Kanal Publikasi :\n{pub_request_channels_result}\n" 
+								+ f"> Bahan Publikasi : {pub_request.get('publikasi')}\n"
+								+ f"{design_link}\n\n"
+								+ f"Lihat pada website : " + LINK_TO_REQUEST_PUBLIKASI + pub_request.get("idPermintaan")
+								)
+			elif (kode == "ka"):
+				pub_request = ka_read(cmd_and_param[0])
+				link_web = LINK_TO_REQUEST_ADVANCED
+			elif (kode == "kr"):
+				pub_request = kr_read(cmd_and_param[0])
+				link_web = LINK_TO_REQUEST_REIMBURSEMENT
+			elif(kode == "ks"):
+				pub_request = ks_read(cmd_and_param[0])
+				link_web = LINK_TO_REQUEST_PENYETORAN
+			elif(kode == "sb"):
+				pub_request = sb_read(cmd_and_param[0])
+				link_web = LINK_TO_REQUEST_SURATBESAR
+			elif(kode == "sk"):
+				pub_request = sk_read(cmd_and_param[0])
+				link_web = LINK_TO_REQUEST_SURATKELUAR
+			        
 			elif pub_request and len(cmd_and_param) == 2 and cmd_and_param[1] == "komentar":
 				notes_writers = pub_request.publicationnotes.get_writers()
 				notes_writers.reverse()
@@ -254,12 +338,22 @@ def handle_message(event):
 			# 	response = selesai_publikasi(event, pub_request)
 			# elif pub_request and len(cmd_and_param) > 2 and cmd_and_param[1] == 'komen':
 			# 	response = comment_on_pub_request(event, pub_request, cmd_and_param)
-			elif not pub_request and len(cmd_and_param) > 0 and cmd_and_param[0] != "":
-				response = f"Tidak ada publikasi dengan kode '{cmd_and_param[0]}'. Silakan coba lagi."
+		if not pub_request and len(cmd_and_param) > 0 and cmd_and_param[0] != "":
+			response = f"Tidak ada id dengan kode '{cmd_and_param[0]}'. Silakan coba lagi."
+
+		if isValid and pub_request:
+			if(kode == "kr" or kode == "ks" or kode == "ka"):
+				link_surat = pub_request.get('link_voucher')
 			else:
-				response = CMD_NOT_FOUND
+				link_surat = pub_request.get('link_docs')
 
-
+			response = (f"{users_msg} \n({pub_request.get('judul')})\n\n"
+						+ f"> Status : {pub_request.get('nama_tahapan')}\n"
+						+ f"> Birdeptim : {pub_request.get('nama_birdep')}\n"
+						+ f"> Tgl Permintaan : \n{pub_request.get('waktu_pengajuan')}\n"
+						+ f"> Link Surat : \n{link_surat}\n\n"
+						+ f"Lihat pada website : " + link_web + users_msg
+						)
 		line_bot_api.reply_message(
 			event.reply_token,
 			TextSendMessage(text=response))

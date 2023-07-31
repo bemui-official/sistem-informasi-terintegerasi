@@ -68,3 +68,14 @@ def sd_getCounter():
     num = data['length']
     sd_updateCounter()
     return num
+
+def sb_notification():
+    try:
+        data_dict = []
+        datas = db.collection('sb').where('tahapan', '!=', 4).get()
+        for data in datas:
+            data_dict.append(data.to_dict())
+        return data_dict[:10]
+    except:
+        data_dict = []
+    return data_dict[:10]

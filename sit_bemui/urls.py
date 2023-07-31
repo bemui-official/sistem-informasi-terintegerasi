@@ -27,8 +27,7 @@ urlpatterns = [
     path('advanced/', include(('advanced.urls', 'ka'), namespace='ka')),
     path('surat_besar/', include(('surat_besar.urls', 'sb'), namespace='sb')),
     path('backend/', include('backend.urls')),
-    path('linebotsit/', include('linebotsit.urls')),
-    path('linebotpublikasi/', include('linebotpublikasi.urls')),
+    path('linebotsit/', include('linebotpublikasi.urls')),
 ]
 
 handler404 = "sit_bemui.views.page_not_found_view"

@@ -166,3 +166,13 @@ def ka_read_all_line():
         data_dict = []
     return data_dict
 
+def ka_notification():
+    try:
+        data_dict = []
+        datas = db.collection('ka').where('tahapan', '!=', 3).get()
+        for data in datas:
+            data_dict.append(data.to_dict())
+        return data_dict[:10]
+    except:
+        data_dict = []
+    return data_dict[:10]

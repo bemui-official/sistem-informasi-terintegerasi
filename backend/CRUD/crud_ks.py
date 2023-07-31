@@ -165,3 +165,14 @@ def ks_read_all_line():
     except:
         data_dict = []
     return data_dict
+
+def ks_notification():
+    try:
+        data_dict = []
+        datas = db.collection('ks').where('tahapan', '!=', 4).get()
+        for data in datas:
+            data_dict.append(data.to_dict())
+        return data_dict[:10]
+    except:
+        data_dict = []
+    return data_dict[:10]
