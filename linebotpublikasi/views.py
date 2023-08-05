@@ -30,7 +30,7 @@ LINK_TO_REQUEST_SURATKELUAR = "https://sitbemui.com/surat_keluar/detail/"
 LINK_TO_REQUEST_SURATBESAR = "https://sitbemui.com/surat_besar/detail/"
 
 def index(request):
-	return HttpResponse("test!")
+	return HttpResponse("test!!!")
 
 # this is code is modeified from https://github.com/line/line-bot-sdk-python
 @csrf_exempt # this is used for avoid csrf request from line server
@@ -338,22 +338,22 @@ def handle_message(event):
 			# 	response = selesai_publikasi(event, pub_request)
 			# elif pub_request and len(cmd_and_param) > 2 and cmd_and_param[1] == 'komen':
 			# 	response = comment_on_pub_request(event, pub_request, cmd_and_param)
-		if not pub_request and len(cmd_and_param) > 0 and cmd_and_param[0] != "":
-			response = f"Tidak ada id dengan kode '{cmd_and_param[0]}'. Silakan coba lagi."
+			if not pub_request and len(cmd_and_param) > 0 and cmd_and_param[0] != "":
+				response = f"Tidak ada id dengan kode '{cmd_and_param[0]}'. Silakan coba lagi."
 
-		if isValid and pub_request:
-			if(kode == "kr" or kode == "ks" or kode == "ka"):
-				link_surat = pub_request.get('link_voucher')
-			else:
-				link_surat = pub_request.get('link_docs')
+			if isValid and pub_request:
+				if(kode == "kr" or kode == "ks" or kode == "ka"):
+					link_surat = pub_request.get('link_voucher')
+				else:
+					link_surat = pub_request.get('link_docs')
 
-			response = (f"{users_msg} \n({pub_request.get('judul')})\n\n"
-						+ f"> Status : {pub_request.get('nama_tahapan')}\n"
-						+ f"> Birdeptim : {pub_request.get('nama_birdep')}\n"
-						+ f"> Tgl Permintaan : \n{pub_request.get('waktu_pengajuan')}\n"
-						+ f"> Link Surat : \n{link_surat}\n\n"
-						+ f"Lihat pada website : " + link_web + users_msg
-						)
+				response = (f"{users_msg} \n({pub_request.get('judul')})\n\n"
+							+ f"> Status : {pub_request.get('nama_tahapan')}\n"
+							+ f"> Birdeptim : {pub_request.get('nama_birdep')}\n"
+							+ f"> Tgl Permintaan : \n{pub_request.get('waktu_pengajuan')}\n"
+							+ f"> Link Surat : \n{link_surat}\n\n"
+							+ f"Lihat pada website : " + link_web + users_msg
+							)
 		line_bot_api.reply_message(
 			event.reply_token,
 			TextSendMessage(text=response))
