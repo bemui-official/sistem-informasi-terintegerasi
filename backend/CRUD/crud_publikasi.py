@@ -31,7 +31,11 @@ def publikasi_create(request, judul_konten, date_posted, time_posted, is_insiden
         user_data2 = user_read(idBirdep)
         print(user_data2)
         nama_birdep = user_data2['nama']
-        idPermintaan = "publikasi-" + idBirdep + "-" + str(publikasi_getCounter())
+        if(idBirdep.endswith('-bem_ui')):
+            useBirdep = idBirdep[:-7]
+        else:
+            useBirdep = idBirdep
+        idPermintaan = "publikasi-" + useBirdep + "-" + str(publikasi_getCounter())
         data = {
             'idPermintaan': idPermintaan,
             'idBirdep': idBirdep,
