@@ -82,3 +82,12 @@ def user_update_admin(idBirdep, permission):
     data = db.collection('users').document(idBirdep).get().to_dict()
     data['admin'] = data['admin'].append(permission)
     db.collection('users').document(idBirdep).set(data)
+    
+def get_user_from_abbreviation(abbrev):
+    query = db.collection('users').get()
+    matching_documents = [doc for doc in query if doc.get('panggilan').lower() == abbrev.lower()]
+    list_users = []
+    for document in matching_documents:
+        list_users.append(document.get("id"))
+    
+    return list_users

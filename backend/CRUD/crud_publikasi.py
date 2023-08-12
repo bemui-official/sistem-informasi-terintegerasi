@@ -250,6 +250,8 @@ def publikasi_notification(notInTahapan):
             if date_posted >= today:
                 data_dict_temp.append(used_data)
         
+        data_dict_temp.sort(key=lambda x: datetime.datetime.strptime(x["date_posted"], "%Y-%m-%d"))
+
         for data in data_dict_temp:
             tahapan = data.get("tahapan")
             if(tahapan not in notInTahapan):
@@ -260,3 +262,13 @@ def publikasi_notification(notInTahapan):
         print(e)
         data_dict = []
         return data_dict
+
+def get_publikasi_from_user(user):
+    documents = db.collection('publikasi').where('idBirdep', '==', user).get()
+    publikasi = []
+    
+    for document in documents:
+        if(document.get("tahapan") != 4):
+            publikasi.append(document.to_dict())
+
+    return publikasi

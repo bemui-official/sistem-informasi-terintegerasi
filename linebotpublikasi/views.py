@@ -13,10 +13,11 @@ from backend.CRUD.crud_ka import ka_notification, ka_read
 from backend.CRUD.crud_kr import kr_notification, kr_read
 from backend.CRUD.crud_ks import ks_notification, ks_read
 
-from backend.CRUD.crud_publikasi import publikasi_notification, publikasi_read
+from backend.CRUD.crud_publikasi import get_publikasi_from_user, publikasi_notification, publikasi_read
 from backend.CRUD.crud_sb import sb_read
 from backend.CRUD.crud_sd import sb_notification
 from backend.CRUD.crud_sk import sk_notification, sk_read
+from backend.CRUD.crud_user import get_user_from_abbreviation
 
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(settings.LINE_CHANNEL_SECRET)
@@ -30,7 +31,7 @@ LINK_TO_REQUEST_SURATKELUAR = "https://sitbemui.com/surat_keluar/detail/"
 LINK_TO_REQUEST_SURATBESAR = "https://sitbemui.com/surat_besar/detail/"
 
 def index(request):
-	return HttpResponse("test!!!")
+	return HttpResponse("test!")
 
 # this is code is modeified from https://github.com/line/line-bot-sdk-python
 @csrf_exempt # this is used for avoid csrf request from line server
@@ -132,6 +133,15 @@ def handle_message(event):
    
 			if len(pub_requests) != 0:
 				for pub_request in pub_requests:
+					pub_request_channels = pub_request.get("channels")
+					pub_request_channels_result = ""
+
+					for index, channel in enumerate(pub_request_channels):
+						if(index != len(pub_request_channels) - 1):
+							pub_request_channels_result += f"{channel}, "
+						else:
+							pub_request_channels_result += f"{channel}"
+
 					#DATE_POSTED
 					date_posted_str = pub_request.get("date_posted")
 
@@ -139,7 +149,7 @@ def handle_message(event):
 
 					date_posted = translateDateToIndo(date_posted)
 
-					response += f"\n\n{pub_request.get('judul')}\n> kode ID: {pub_request.get('idPermintaan')}\n> Tgl: {date_posted}\n> Waktu: {pub_request.get('time_posted')}"
+					response += f"\n\n{pub_request.get('judul')}\n🆔 kode ID: {pub_request.get('idPermintaan')}\n🗓️ Tgl: {date_posted}\n🕕 Waktu: {pub_request.get('time_posted')}\n📱 Kanal Publikasi: {pub_request_channels_result}"
 			else:
 				response += f"\n\nBelum ada pesanan publikasi lagi."
 		elif users_msg == 'ka':
@@ -148,7 +158,7 @@ def handle_message(event):
 
 			if len(pub_requests) != 0:
 				for pub_request in pub_requests:
-					response += f"\n\n{pub_request.get('judul')}\n> kode ID: {pub_request.get('idPermintaan')}\n> Nama Kegiatan: {pub_request.get('nama_kegiatan')}\n> Nama Birdept: {pub_request.get('nama_birdep')}"
+					response += f"\n\n{pub_request.get('judul')}\n🆔 kode ID: {pub_request.get('idPermintaan')}\n⛳ Nama Kegiatan: {pub_request.get('nama_kegiatan')}\n> Nama Birdept: {pub_request.get('nama_birdep')}"
 			else:
 				response += f"\n\nBelum ada list keuangan advanced lagi."
 		elif users_msg == 'kr':
@@ -157,7 +167,7 @@ def handle_message(event):
 
 			if len(pub_requests) != 0:
 				for pub_request in pub_requests:
-					response += f"\n\n{pub_request.get('judul')}\n> kode ID: {pub_request.get('idPermintaan')}\n> Nama Kegiatan: {pub_request.get('nama_kegiatan')}\n> Nama Birdept: {pub_request.get('nama_birdep')}"
+					response += f"\n\n{pub_request.get('judul')}\n🆔 kode ID: {pub_request.get('idPermintaan')}\n⛳ Nama Kegiatan: {pub_request.get('nama_kegiatan')}\n> Nama Birdept: {pub_request.get('nama_birdep')}"
 			else:
 				response += f"\n\nBelum ada list keuangan reimbursement lagi."
 		elif users_msg == 'ks':
@@ -166,7 +176,7 @@ def handle_message(event):
 
 			if len(pub_requests) != 0:
 				for pub_request in pub_requests:
-					response += f"\n\n{pub_request.get('judul')}\n> kode ID: {pub_request.get('idPermintaan')}\n> Nama Kegiatan: {pub_request.get('nama_kegiatan')}\n> Nama Birdept: {pub_request.get('nama_birdep')}"
+					response += f"\n\n{pub_request.get('judul')}\n🆔 kode ID: {pub_request.get('idPermintaan')}\n⛳ Nama Kegiatan: {pub_request.get('nama_kegiatan')}\n> Nama Birdept: {pub_request.get('nama_birdep')}"
 			else:
 				response += f"\n\nBelum ada list keuangan penyetoran lagi."
 		elif users_msg == 'sb':
@@ -175,7 +185,7 @@ def handle_message(event):
 
 			if len(pub_requests) != 0:
 				for pub_request in pub_requests:
-					response += f"\n\n{pub_request.get('judul')}\n> kode ID: {pub_request.get('idPermintaan')}\n> Nama Kegiatan: {pub_request.get('nama_kegiatan')}\n> Nama Birdept: {pub_request.get('nama_birdep')}"
+					response += f"\n\n{pub_request.get('judul')}\n🆔 kode ID: {pub_request.get('idPermintaan')}\n⛳ Nama Kegiatan: {pub_request.get('nama_kegiatan')}\n> Nama Birdept: {pub_request.get('nama_birdep')}"
 			else:
 				response += f"\n\nBelum ada list surat besar lagi."
 		elif users_msg == 'sk':
@@ -183,8 +193,7 @@ def handle_message(event):
 				pub_requests = sk_notification()
 				if len(pub_requests) != 0:
 					for pub_request in pub_requests:
-						print(pub_request.get("nama_kegiatan"))
-						response += f"\n\n{pub_request.get('judul')}\n> kode ID: {pub_request.get('idPermintaan')}\n> Nama Kegiatan: {pub_request.get('nama_kegiatan')}\n> Nama Birdept: {pub_request.get('nama_birdep')}"
+						response += f"\n\n{pub_request.get('judul')}\n🆔 kode ID: {pub_request.get('idPermintaan')}\n⛳ Nama Kegiatan: {pub_request.get('nama_kegiatan')}\n> Nama Birdept: {pub_request.get('nama_birdep')}"
 				else:
 					response += f"\n\nBelum ada list surat keluar lagi."
 		elif users_msg == 'publikasi-humas':
@@ -194,6 +203,14 @@ def handle_message(event):
 			
 			if len(pub_requests) != 0:
 				for pub_request in pub_requests:
+					pub_request_channels = pub_request.get("channels")
+					pub_request_channels_result = ""
+
+					for index, channel in enumerate(pub_request_channels):
+						if(index != len(pub_request_channels) - 1):
+							pub_request_channels_result += f"{channel}, "
+						else:
+							pub_request_channels_result += f"{channel}"
 					#DATE_POSTED
 					date_posted_str = pub_request.get("date_posted")
      
@@ -201,7 +218,7 @@ def handle_message(event):
 
 					date_posted = translateDateToIndo(date_posted)
 
-					response += f"\n\n{pub_request.get('judul')}\n> kode ID: {pub_request.get('idPermintaan')}\n> Tgl: {date_posted}\n> Waktu: {pub_request.get('time_posted')}"
+					response += f"\n\n{pub_request.get('judul')}\n🆔 kode ID: {pub_request.get('idPermintaan')}\n🗓️ Tgl: {date_posted}\n🕕 Waktu: {pub_request.get('time_posted')}\n📱 Kanal Publikasi: {pub_request_channels_result}"
 			else:
 				response += f"\n\nBelum ada pesanan publikasi lagi."
 		elif users_msg == 'publikasi-dkv':
@@ -210,6 +227,14 @@ def handle_message(event):
 			
 			if len(pub_requests) != 0:
 				for pub_request in pub_requests:
+					pub_request_channels = pub_request.get("channels")
+					pub_request_channels_result = ""
+
+					for index, channel in enumerate(pub_request_channels):
+						if(index != len(pub_request_channels) - 1):
+							pub_request_channels_result += f"{channel}, "
+						else:
+							pub_request_channels_result += f"{channel}"
 					#DATE_POSTED
 					date_posted_str = pub_request.get("date_posted")
 
@@ -217,7 +242,7 @@ def handle_message(event):
 
 					date_posted = translateDateToIndo(date_posted)
 
-					response += f"\n\n{pub_request.get('judul')}\n> kode ID: {pub_request.get('idPermintaan')}\n> Tgl: {date_posted}\n> Waktu: {pub_request.get('time_posted')}"
+					response += f"\n\n{pub_request.get('judul')}\n🆔 kode ID: {pub_request.get('idPermintaan')}\n🗓️ Tgl: {date_posted}\n🕕 Waktu: {pub_request.get('time_posted')}\n📱 Kanal Publikasi: {pub_request_channels_result}"
 			else:
 				response += f"\n\nBelum ada pesanan publikasi lagi."
 		elif users_msg == 'getidline':
@@ -306,7 +331,37 @@ def handle_message(event):
 			elif(kode == "sk"):
 				pub_request = sk_read(cmd_and_param[0])
 				link_web = LINK_TO_REQUEST_SURATKELUAR
-			        
+			elif(kode == "p"):
+				isValid = False
+				singkatan = cmd_and_param[0][2:]
+				list_users = get_user_from_abbreviation(singkatan)
+				response = f"[LIST PUBLIKASI AKUN DENGAN PANGGILAN {singkatan} (KECUALI YANG SUDAH SELESAI)]:"
+
+				pub_requests = []
+				for user in list_users:
+					pub_request = get_publikasi_from_user(user)	
+					pub_requests += pub_request
+				
+				if len(pub_requests) != 0:
+					for pub_request in pub_requests:
+						pub_request_channels = pub_request.get("channels")
+						pub_request_channels_result = ""
+
+						for index, channel in enumerate(pub_request_channels):
+							if(index != len(pub_request_channels) - 1):
+								pub_request_channels_result += f"{channel}, "
+							else:
+								pub_request_channels_result += f"{channel}"
+						#DATE_POSTED
+						date_posted_str = pub_request.get("date_posted")
+
+						date_posted = datetime.datetime.strptime(date_posted_str, "%Y-%m-%d")   
+
+						date_posted = translateDateToIndo(date_posted)
+
+						response += f"\n\n{pub_request.get('judul')}\n🆔 kode ID: {pub_request.get('idPermintaan')}\n🗓️ Tgl: {date_posted}\n🕕 Waktu: {pub_request.get('time_posted')}\n📱 Kanal Publikasi: {pub_request_channels_result}"
+				else:
+					response += f"\n\nBelum ada pesanan publikasi lagi dari akun dengan panggilan {singkatan}."
 			elif pub_request and len(cmd_and_param) == 2 and cmd_and_param[1] == "komentar":
 				notes_writers = pub_request.publicationnotes.get_writers()
 				notes_writers.reverse()
