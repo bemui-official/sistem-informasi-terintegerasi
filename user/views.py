@@ -111,7 +111,11 @@ def dashboard(request, category, sort):
 					judul = "Dokumen - Surat"
 					tahapan = tahap_surat_besar
 				elif category == "publikasi":
-					data = publikasi_read_requests(user["id"], sort)
+					if(user['birdeptim'] not in ["201", "202", "203"]):
+						data = publikasi_read_requests(user["id"], sort)
+					else:
+						data = publikasi_read_all(sort)
+
 					judul = "Publikasi"
 					tahapan = tahap_publikasi
 				def extract_time(json):
@@ -123,7 +127,8 @@ def dashboard(request, category, sort):
 						return 0
 
 				# lines.sort() is more efficient than lines = lines.sorted()
-				data.sort(key=extract_time, reverse=False)
+				if(category != "publikasi"):
+					data.sort(key=extract_time, reverse=False)
 
 				hostname = request.build_absolute_uri("/")
 				print(request.get_full_path)
@@ -176,7 +181,6 @@ def dashboard_pengurus(request, category, sort):
 						judul = "Publikasi"
 						tahapan = tahap_publikasi
 					hostname = request.build_absolute_uri("/")
-					print(request.get_full_path)
 
 					def extract_time(json):
 						try:
@@ -187,7 +191,10 @@ def dashboard_pengurus(request, category, sort):
 							return 0
 
 					# lines.sort() is more efficient than lines = lines.sorted()
-					data.sort(key=extract_time, reverse=False)
+
+     
+					if(category != "publikasi"):
+						data.sort(key=extract_time, reverse=False)
 
 					return render(request, 'dashboard_pengurus.html', {
 						'datas': data,

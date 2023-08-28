@@ -29,7 +29,6 @@ def publikasi_create(request, judul_konten, date_posted, time_posted, is_insiden
         user_data = fauth.get_account_info(request.session['uid'])
         idBirdep = user_data['users'][0]['localId']
         user_data2 = user_read(idBirdep)
-        print(user_data2)
         nama_birdep = user_data2['nama']
         if(idBirdep.endswith('-bem_ui')):
             useBirdep = idBirdep[:-7]
@@ -66,11 +65,18 @@ def publikasi_create(request, judul_konten, date_posted, time_posted, is_insiden
 
 def publikasi_read(id):
     try:
-        data = db.collection('publikasi').document(id).get().to_dict()
+        query = db.collection('publikasi').get()
+        matching_documents = [doc for doc in query if doc.get('idPermintaan').lower() == id.lower()]
+        list_publikasi = []
+        for document in matching_documents:
+            list_publikasi.append(document.get("idPermintaan"))
+
+        data = db.collection('publikasi').document(list_publikasi.pop()).get().to_dict()
+
         return data
     except:
-        data = []
-    return data
+        list_publikasi = []
+    return list_publikasi
 
 def publikasi_delete(id):
     try:
@@ -197,7 +203,12 @@ def publikasi_getCounter():
     num = data['length']
     publikasi_updateCounter()
     return num
-    
+
+def sort_key(item):
+    date_posted = datetime.datetime.strptime(item['date_posted'], '%Y-%m-%d')
+    time_posted = datetime.datetime.strptime(item['time_posted'], '%H:%M')
+    return (date_posted, time_posted)
+
 # ---------------------
 # Read list of requests
 # --------------------
@@ -208,6 +219,7 @@ def publikasi_read_requests(idBirdep, tahap):
             datas = db.collection('publikasi').where('idBirdep', '==', idBirdep).limit(10).get()
         else:
             datas = db.collection('publikasi').where('idBirdep', '==', idBirdep).where('tahapan', '==', int(tahap)).get()
+            
         for data in datas:
             data_dict.append(data.to_dict())
         return data_dict
@@ -224,8 +236,11 @@ def publikasi_read_all(tahap):
             datas = db.collection('publikasi').where('tahapan', '==', int(tahap)).get()
         for data in datas:
             data_dict.append(data.to_dict())
-        return data_dict
-    except:
+            
+        sorted_data = sorted(data_dict, key=sort_key)
+        
+        return sorted_data
+    except Exception as e:
         data_dict = []
     return data_dict
 
@@ -241,27 +256,26 @@ def publikasi_read_all_line():
     return data_dict
 
 def publikasi_notification(notInTahapan):
-    today = datetime.datetime.today()
+    today = datetime.datetime.now()
     try:
-        data_dict_temp = []
         data_dict = []
         datas = db.collection('publikasi').get()
-        for data in datas:
-            # Convert 'date_posted' string to a datetime object
-            used_data = data.to_dict()
-            date_posted_str = used_data.get("date_posted")
-            date_posted = datetime.datetime.strptime(date_posted_str, "%Y-%m-%d")  # Adjust format if needed
-            if date_posted >= today:
-                data_dict_temp.append(used_data)
         
-        data_dict_temp.sort(key=lambda x: datetime.datetime.strptime(x["date_posted"], "%Y-%m-%d"))
-
-        for data in data_dict_temp:
-            tahapan = data.get("tahapan")
-            if(tahapan not in notInTahapan):
-                data_dict.append(data)
-                
-        return data_dict[:10]
+        for data in datas:
+            data_dict.append(data.to_dict())
+            
+        sorted_data = sorted(data_dict, key=sort_key)
+        
+        filtered_data = []
+        for data in sorted_data:
+            date_posted = datetime.datetime.strptime(data['date_posted'], '%Y-%m-%d')
+            time_posted = datetime.datetime.strptime(data['time_posted'], '%H:%M')
+            item_datetime = datetime.datetime.combine(date_posted.date(), time_posted.time())
+            
+            if item_datetime >= today and data['tahapan'] not in notInTahapan:
+                filtered_data.append(data)
+        
+        return filtered_data[:10]
     except Exception as e:
         print(e)
         data_dict = []
@@ -276,3 +290,30 @@ def get_publikasi_from_user(user):
             publikasi.append(document.to_dict())
 
     return publikasi
+
+def checkIfUnique(date_posted, time_posted):
+    today = datetime.datetime.now()
+    try:
+        date_posted_temp = datetime.datetime.strptime(date_posted, '%Y-%m-%d')
+        time_posted_temp = datetime.datetime.strptime(time_posted, '%H:%M')
+        item_datetime = datetime.datetime.combine(date_posted_temp.date(), time_posted_temp.time())
+        
+        if item_datetime < today:
+            return False
+        
+        encountered_date_times = set()
+
+        datas = db.collection('publikasi').get()
+        for data in datas:
+            data_dict = data.to_dict()    
+            encountered_date_times.add((data_dict['date_posted'], data_dict['time_posted']))
+                    
+        if (date_posted, time_posted) in encountered_date_times:
+            return False
+        
+        return True
+        
+    except Exception as e:
+        print(e)
+        
+    return False

@@ -11,14 +11,19 @@
     <div class="create-pub-content">
         <div class="create-pub-form-background"> 
 
-            <div id="loading-background" class="loading-background">
+            <div id="loading-background" class="loading-background" style="display: {% if error %}flex{% endif %};">
                 <div class="loading-content">
                     <div>
                         <div class="loading-circle" style="--delay: 0;"></div>
                         <div class="loading-circle" style="--delay: 1;"></div>
                         <div class="loading-circle" style="--delay: 2;"></div>
                     </div>
-                    <p>Mohon tunggu, permintaan Anda sedang kami proses.</p>
+                    {% if error  %}
+                        <p> {{error}} </p>
+                        <p style="color: red; cursor: pointer;" onclick="document.getElementById('loading-background').style.display = 'none';"> Tutup pesan ini. </p>
+                    {% else %}
+                        <p>Mohon tunggu, permintaan Anda sedang kami proses.</p>
+                    {% endif %}
                 </div>
             </div>
 

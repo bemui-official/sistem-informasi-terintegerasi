@@ -17,7 +17,7 @@ class PublicationRequestCreateForm(forms.Form):
 	program = forms.CharField(label='Judul Konten *', required=True, max_length=200, widget=forms.TextInput(attrs={'type' : 'text', 'placeholder' : 'Judul Konten', 'class' : 'form-text-control', 'autocomplete' : 'off'}))
 	date_posted = forms.DateField(widget=DateInput)
 	time_posted = forms.ChoiceField(label='Waktu Publikasi *', choices=TIME_HOUR_CHOICES, widget=forms.Select(attrs={'type' : 'text', 'placeholder' : '00', 'class' : 'form-choice-control', 'autocomplete' : 'off', 'id' : 'time_posted_form'}))
-	is_insidental = forms.ChoiceField(label='Insidental', choices=YES_OR_NO, widget=forms.RadioSelect(attrs={'type' : 'radio', 'class' : 'form-radio'}))
+	is_insidental = forms.ChoiceField(label='Insidental', choices=YES_OR_NO, widget=forms.RadioSelect(attrs={'type' : 'radio', 'class' : 'form-radio'}), initial=False)
 	bukti_insidental = forms.URLField(label='Link Bukti Insidental *', required=False, widget=forms.URLInput(attrs={'type' : 'url', 'placeholder' : '(Hanya isi bila insidental)', 'class' : 'form-text-control', 'autocomplete' : 'off'}))
 	publikas = forms.URLField(label='Tautan Konten *', required=True, widget=forms.URLInput(attrs={'type' : 'url', 'placeholder' : 'Tautan Konten (Google Slide)', 'class' : 'form-text-control', 'autocomplete' : 'off'}))
 	notes = forms.CharField(label='Catatan', required=False, widget=forms.Textarea(attrs={'type' : 'text', 'placeholder' : 'Catatan', 'class' : 'form-text-control', 'autocomplete' : 'off'}))

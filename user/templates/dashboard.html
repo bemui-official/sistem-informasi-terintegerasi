@@ -174,12 +174,16 @@
                                                 <p><strong>{{ data.nama_birdep }}</strong></p>
                                             </div>
                                             <div class="request-time-post-mobile">
+                                              {% if category != "publikasi" %}
                                                 {% if data.waktu_pengajuan_str %}
                                                     {{ data.waktu_pengajuan_str }}
                                                 {% else %}
                                                     {{ data.waktu_pengajuan }}
                                                 {% endif %}
                                                 <br>
+                                              {% else %}
+                                                {{ data.date_posted }}, {{data.time_posted}}
+                                              {% endif %}
                                             </div>
                                         </div>
                                     </div>

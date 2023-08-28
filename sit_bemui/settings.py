@@ -37,7 +37,7 @@ ALLOWED_HOSTS = ["sitbemui.com"]
 
 if not PRODUCTION:
     DEBUG = True
-    ALLOWED_HOSTS += ['.localhost', '127.0.0.1', '[::1]', '5036-36-70-40-168.ngrok-free.app']
+    ALLOWED_HOSTS += ['.localhost', '127.0.0.1', '[::1]', '95b2-152-118-150-207.ngrok-free.app']
 
 # Application definition
 

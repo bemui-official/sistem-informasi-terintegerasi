@@ -3,7 +3,7 @@ from django.conf import settings
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.shortcuts import render, redirect
-from backend.CRUD.crud_publikasi import publikasi_add_to_notes, publikasi_create, publikasi_delete, publikasi_edit, publikasi_read, publikasi_tolak, publikasi_update
+from backend.CRUD.crud_publikasi import checkIfUnique, publikasi_add_to_notes, publikasi_create, publikasi_delete, publikasi_edit, publikasi_read, publikasi_tolak, publikasi_update
 from backend.CRUD.crud_user import user_read
 from backend.misc import firebase_init
 from .forms import AddNotesForm, DesignLinkForm, PreviewPublicationLinkForm, PublicationRequestCreateForm, PublicationRequestEditForm
@@ -38,12 +38,13 @@ def formPublikasi(request):
         if (request.session['uid']):
             user_session = fauth.get_account_info(request.session['uid'])
             current_user = user_read(user_session['users'][0]['localId']) # To make sure that they are still authenticated
+            form = PublicationRequestCreateForm()
             if (user_session):
                 if(request.method != "POST"):
-                    form = PublicationRequestCreateForm()
                     return render(request, 'publikasi/form_create_publication_request.html', {
                         "form": form,
-                        "channels": channels
+                        "channels": channels,
+                        "error": None
                     })
                 else : 
                     selected_channels = []
@@ -73,12 +74,23 @@ def formPublikasi(request):
                         }
                         notes.append(note)
 
-                    publikasi_create(request, judul_konten, date_posted, time_posted, is_insidental, publikasi, notes, bukti_insidental, selected_channels)
+                    if(checkIfUnique(date_posted, time_posted)):
+                        publikasi_create(request, judul_konten, date_posted, time_posted, is_insidental, publikasi, notes, bukti_insidental, selected_channels)
+                    else:
+                        print("ada yang sama")
+                        error = "Sudah terdapat publikasi pada waktu tersebut. Tolong pilih waktu yang lain."
+
+                        return render(request, 'publikasi/form_create_publication_request.html', {
+                            "form": form,
+                            "channels": channels,
+                            "error": "Tidak dapat membuat publikasi sebelum hari ini atau sudah terdapat publikasi pada waktu tersebut. Tolong pilih waktu yang lain."
+                        })
                     
                     return HttpResponseRedirect("/")
             else:
                 return redirect("/user/logout")
-    except:
+    except Exception as e:
+        print(e)
         return redirect("/user/signin")
 
 def spo_publikasi(request):
