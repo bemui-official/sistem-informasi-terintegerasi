@@ -33,7 +33,7 @@ PRODUCTION = os.getenv('SECRET_KEY') is not None
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["sitbemui.com"]
+ALLOWED_HOSTS = ["https://web-production-6402.up.railway.app/"]
 
 if not PRODUCTION:
     DEBUG = True
