@@ -16,6 +16,8 @@ from backend.CRUD.crud_ka import ka_read_requests, ka_read_all
 from backend.CRUD.crud_ks import ks_read_requests, ks_read_all
 from backend.CRUD.crud_sk import sk_read_requests, sk_read_all
 
+from django.views.decorators.csrf import csrf_protect
+
 fauth = firebase_init
 
 
@@ -29,6 +31,7 @@ def signUp(request):
 		"kode_fungsionaris": kode_fungsionaris
 	})
 
+@csrf_protect
 def postSignUp(request):
 	try:
 		idBirdep = request.POST.get("username")
@@ -52,6 +55,7 @@ def postSignUp(request):
 def signIn(request):
 	return render(request, 'signIn.html')
 
+@csrf_protect
 def postSignIn(request):
 	try:
 		email = request.POST.get("email")

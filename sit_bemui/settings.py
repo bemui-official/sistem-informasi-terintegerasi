@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', '%*6xd(4q!7f!$9e%ap@x(it_xr7e)zlgf%l)v1_5r*
 PRODUCTION = os.getenv('SECRET_KEY') is not None
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["sitbemui.com"]
 
