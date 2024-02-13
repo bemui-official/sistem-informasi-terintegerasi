@@ -30,6 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', '%*6xd(4q!7f!$9e%ap@x(it_xr7e)zlgf%l)v1_5r*
 # (e.g. Heroku Postgres).
 PRODUCTION = os.getenv('SECRET_KEY') is not None
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
@@ -111,19 +112,21 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-# Set database settings automatically using DATABASE_URL.
+
+
+# # # Set database settings automatically using DATABASE_URL.
 if PRODUCTION:
     DATABASES = {
         'default': dj_database_url.config()
     }
-# 'default': {
-#           'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#           'NAME': os.getenv('DATABASE_NAME', ''),
-#           'USER': os.getenv('DATABASE_USER', ''),
-#           'PASSWORD': os.getenv('DATABASE_USER_PASSWORD', ''),
-#           'HOST': 'localhost',
-#           'PORT': '5432',
-#        }
+    # 'default': {
+    #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #         'NAME': os.getenv('DATABASE_NAME', ''),
+    #         'USER': os.getenv('DATABASE_USER', ''),
+    #         'PASSWORD': os.getenv('DATABASE_USER_PASSWORD', ''),
+    #         'HOST': 'localhost',
+    #         'PORT': '5432',
+    #     }
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -182,3 +185,4 @@ LINE_CHANNEL_ACCESS_TOKEN = "E5sp4EoXeya7iYkTuTBzo560ivdrG9V9C5E9fr1+z/N+m+EvVK3
 LINE_CHANNEL_SECRET = 'd4067c1268925e0442d47cd9fba9e742'
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
