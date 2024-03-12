@@ -122,6 +122,7 @@ def dashboard(request, category, sort):
 
 					judul = "Publikasi"
 					tahapan = tahap_publikasi
+					data.reverse() 
 				def extract_time(json):
 					try:
 						# Also convert to int since update_time will be string.  When comparing
